@@ -1,8 +1,8 @@
 import React from "react";
 import CarGrid from "../comps/car-grid";
 import { Link } from "react-router-dom";
-// import { connect } from "react-redux";
-// import { getExpandedServiceHistory, getCarCount } from "../components/datastore/selectors";
+import { connect } from "react-redux";
+import { getExpandedServiceHistory, getCarCount } from "../store/selectors";
 import NoDataComponent from "../comps/no-data-comp";
 
 const ServiceHistoryTable = ({ history }) => {
@@ -65,13 +65,11 @@ function Overview({ carCount, serviceHistory }) {
     )
 }
 
-export default Overview
+const mapStateToProps = (state) => {
+    return {
+        carCount: getCarCount(state),
+        serviceHistory: getExpandedServiceHistory(state)
+    }
+}
 
-// const mapStateToProps = (state) => {
-//     return {
-//         carCount: getCarCount(state),
-//         serviceHistory: getExpandedServiceHistory(state)
-//     }
-// }
-
-// export default connect(mapStateToProps)(Overview);
+export default connect(mapStateToProps)(Overview);

@@ -1,8 +1,8 @@
 import React from 'react';
 import logo from "./img/logo.png"
 import { Link } from "react-router-dom";
-// import { connect } from "react-redux";
-// import { getUser } from "./datastore/selectors";
+import { connect } from "react-redux";
+import { getUser } from "./store/selectors";
 
 const NoNavLayout = (props) => {
     return (
@@ -69,12 +69,10 @@ const NavLayout = ({ user, children }) => {
     )
 }
 
-export default { NoNavLayout, NavLayout }
+const mapStateToProps = (state) => {
+    return {
+        user: getUser(state)
+    }
+}
 
-// const mapStateToProps = (state) => {
-//     return {
-//         user: getUser(state)
-//     }
-// }
-
-// export default { NoNavLayout, NavLayout: connect(mapStateToProps)(NavLayout) }
+export default { NoNavLayout, NavLayout: connect(mapStateToProps)(NavLayout) }

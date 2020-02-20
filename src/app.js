@@ -15,19 +15,19 @@ function App() {
           <Redirect to="/overview" />
         </Route>
         <Route path="/overview">
-          <Layouts.NavLayout user={{}}><Overview serviceHistory={{}} /></Layouts.NavLayout>
+          <Layouts.NavLayout><Overview /></Layouts.NavLayout>
         </Route>
         <Route path="/cars">
-          <Layouts.NavLayout user={{}}><Cars /></Layouts.NavLayout>
+          <Layouts.NavLayout><Cars /></Layouts.NavLayout>
         </Route>
         <Route path="/service-history">
-          <Layouts.NavLayout user={{}}><ServiceHistory cars={{}} serviceHistory={{}} /></Layouts.NavLayout>
+          <Layouts.NavLayout><ServiceHistory /></Layouts.NavLayout>
         </Route>
         <Route path="/settings">
-          <Layouts.NavLayout user={{}}><Settings orphanedServices={[]} orphanedLocations={[]} /></Layouts.NavLayout>
+          <Layouts.NavLayout><Settings /></Layouts.NavLayout>
         </Route>
         <Route path="/login">
-          <Layouts.NoNavLayout user={{}}><Login /></Layouts.NoNavLayout>
+          <Layouts.NoNavLayout><Login /></Layouts.NoNavLayout>
         </Route>
       </Switch>
     </Router>

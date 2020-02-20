@@ -2,9 +2,9 @@ import DeleteModal from "../comps/delete-modal";
 import NoDataComponent from "../comps/no-data-comp";
 import AddServiceRecordForm from "../comps/add-service-form";
 import React, { useState } from "react";
-// import { connect } from "react-redux";
-// import { getExpandedServiceHistory, getCars } from "../components/datastore/selectors";
-// import { modifyServiceHistory } from "../components/datastore/actions/service-history-actons";
+import { connect } from "react-redux";
+import { getExpandedServiceHistory, getCars } from "../store/selectors";
+import { modifyServiceHistory } from "../store/actions/service-history-actons";
 
 const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion }) => {
     return (
@@ -98,7 +98,7 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory }) {
                 </div>
             </div>
             <AddServiceRecordModal title={(editItemIndex === -1 ? "Add" : "Edit") + " Service Record"}>
-                <AddServiceRecordForm key={editItemIndex === -1 ? Date.now() : editItemIndex} {...serviceHistory[editItemIndex]} modifyServiceHistory={modifyServiceHistory} carsList={[]} locationsList={[]} servicesList={[]} />
+                <AddServiceRecordForm key={editItemIndex === -1 ? Date.now() : editItemIndex} {...serviceHistory[editItemIndex]} modifyServiceHistory={modifyServiceHistory} />
             </AddServiceRecordModal>
             <DeleteModal
                 title="Delete Service Record"
@@ -111,15 +111,13 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory }) {
     )
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         cars: getCars(state),
-//         serviceHistory: getExpandedServiceHistory(state)
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        cars: getCars(state),
+        serviceHistory: getExpandedServiceHistory(state)
+    }
+}
 
-// const mapDispatchToProps = { modifyServiceHistory }
+const mapDispatchToProps = { modifyServiceHistory }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(ServiceHistory);
-
-export default ServiceHistory
+export default connect(mapStateToProps, mapDispatchToProps)(ServiceHistory);

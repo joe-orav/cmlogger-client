@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import DeleteModal from "../comps/delete-modal";
 import connectCheck from "../img/connect-check.svg";
-// import { connect } from "react-redux";
-// import { getOrphanedServices, getOrphanedLocations, getUser } from "../components/datastore/selectors";
-// import { modifyServiceData } from "../components/datastore/actions/service-actions";
-// import { modifyLocationData } from "../components/datastore/actions/locations-actions";
-// import { disconnectAccount, deleteAccount } from "../components/datastore/actions/user-actions";
+import { connect } from "react-redux";
+import { getOrphanedServices, getOrphanedLocations, getUser } from "../store/selectors";
+import { modifyServiceData } from "../store/actions/service-actions";
+import { modifyLocationData } from "../store/actions/locations-actions";
+import { disconnectAccount, deleteAccount } from "../store/actions/user-actions";
 
 const SettingsSectionHeader = (props) => {
     return (
@@ -194,16 +194,14 @@ function Settings(props) {
     )
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         orphanedServices: getOrphanedServices(state),
-//         orphanedLocations: getOrphanedLocations(state),
-//         user: getUser(state)
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        orphanedServices: getOrphanedServices(state),
+        orphanedLocations: getOrphanedLocations(state),
+        user: getUser(state)
+    }
+}
 
-// const mapDispatchToProps = { modifyServiceData, modifyLocationData, disconnectAccount, deleteAccount }
+const mapDispatchToProps = { modifyServiceData, modifyLocationData, disconnectAccount, deleteAccount }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Settings);
-
-export default Settings
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

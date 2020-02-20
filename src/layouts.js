@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from "./img/logo.png"
 import { Link } from "react-router-dom";
+// import { connect } from "react-redux";
+// import { getUser } from "./datastore/selectors";
 
 const NoNavLayout = (props) => {
     return (
@@ -18,7 +20,7 @@ const ProfileDropdown = (props) => {
             </a>
             <div className="dropdown-menu" aria-labelledby="profile-icon-dropdown-link">
                 <h5 className="dropdown-header">{props.name}</h5>
-                <Link href="/settings" className="dropdown-item">Settings</Link>
+                <Link to="/settings" className="dropdown-item">Settings</Link>
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href="/">Sign out</a>
             </div>
@@ -68,3 +70,11 @@ const NavLayout = ({ user, children }) => {
 }
 
 export default { NoNavLayout, NavLayout }
+
+// const mapStateToProps = (state) => {
+//     return {
+//         user: getUser(state)
+//     }
+// }
+
+// export default { NoNavLayout, NavLayout: connect(mapStateToProps)(NavLayout) }

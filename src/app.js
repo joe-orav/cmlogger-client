@@ -1,6 +1,7 @@
 import React from "react";
 import Layouts from "./layouts";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import Overview from "./pages/overview";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
           <Redirect to="/overview" />
         </Route>
         <Route path="/overview">
-          <Layouts.NavLayout user={{}}><Overview /></Layouts.NavLayout>
+          <Layouts.NavLayout user={{}}><Overview serviceHistory={{}} /></Layouts.NavLayout>
         </Route>
         <Route path="/cars">
           <Layouts.NavLayout user={{}}><Cars /></Layouts.NavLayout>
@@ -26,9 +27,9 @@ function App() {
   );
 }
 
-function Overview() {
-  return <p>Overview</p>
-}
+// function Overview() {
+//   return <p>Overview</p>
+// }
 
 function Cars() {
   return <p>Cars</p>

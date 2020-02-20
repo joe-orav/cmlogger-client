@@ -2,6 +2,7 @@ import React from "react";
 import Layouts from "./layouts";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Overview from "./pages/overview";
+import Cars from "./pages/cars";
 
 function App() {
   return (
@@ -25,14 +26,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
-
-// function Overview() {
-//   return <p>Overview</p>
-// }
-
-function Cars() {
-  return <p>Cars</p>
 }
 
 function ServiceHistory() {

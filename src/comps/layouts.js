@@ -1,8 +1,8 @@
-import React from 'react';
-import logo from "./img/logo.png"
+import React, { useEffect } from 'react';
+import logo from "../img/logo.png"
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser } from "./store/selectors";
+import { getUser } from "../store/selectors";
 
 const NoNavLayout = (props) => {
     return (
@@ -43,6 +43,11 @@ const ProfileSection = (props) => {
 }
 
 const NavLayout = ({ user, children }) => {
+
+    useEffect(() => {
+        document.getElementById("cm-navbar-toggler").classList.remove("show");
+    })
+    
     return (
         <div className="d-flex min-vh-100">
             <nav className="cm-navbar">

@@ -4,9 +4,9 @@ import DeleteModal from "./delete-modal";
 import CarFormModal from "./car-form-modal";
 import plusSymbol from "../img/plus.svg";
 import sedanImg from "../img/sedan.svg";
-// import { connect } from "react-redux";
-// import { modifyCarData } from "./datastore/actions/car-actions";
-// import { getCars, getUserId } from "./datastore/selectors";
+import { connect } from "react-redux";
+import { modifyCarData } from "../store/actions/car-actions";
+import { getCars, getUserId } from "../store/selectors";
 
 const AddCar = (props) => {
     return (
@@ -77,15 +77,13 @@ const CarGrid = (props) => {
     )
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         cars: getCars(state),
-//         user_id: getUserId(state)
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        cars: getCars(state),
+        user_id: getUserId(state)
+    }
+}
 
-// const mapDispatchToProps = { modifyCarData }
+const mapDispatchToProps = { modifyCarData }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(CarGrid);
-
-export default CarGrid
+export default connect(mapStateToProps, mapDispatchToProps)(CarGrid);

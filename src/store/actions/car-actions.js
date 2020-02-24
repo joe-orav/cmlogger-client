@@ -49,7 +49,7 @@ export function modifyCarData(carData) {
 
         let requestMethod = null;
         
-        if(carData.id != -1 && Object.keys(carData).length != 1) {
+        if(carData.id !== -1 && Object.keys(carData).length !== 1) {
             requestMethod = "PUT"
         } else if(carData.id === -1) {
             requestMethod = "POST"

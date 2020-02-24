@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import flatpickr from "flatpickr";
 import $ from "jquery";
-// import { connect } from "react-redux";
-// import { getCars, getLocations, getServices, getUserId } from "./datastore/selectors";
+import { connect } from "react-redux";
+import { getCars, getLocations, getServices, getUserId } from "../store/selectors";
 
 const usStates = [
     'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA',
@@ -297,15 +297,13 @@ const AddServiceRecordForm = (props) => {
     )
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         carsList: getCars(state),
-//         locationsList: getLocations(state),
-//         servicesList: getServices(state),
-//         user_id_from_state: getUserId(state)
-//     }
-// }
+const mapStateToProps = (state) => {
+    return {
+        carsList: getCars(state),
+        locationsList: getLocations(state),
+        servicesList: getServices(state),
+        user_id_from_state: getUserId(state)
+    }
+}
 
-// export default connect(mapStateToProps)(AddServiceRecordForm);
-
-export default AddServiceRecordForm
+export default connect(mapStateToProps)(AddServiceRecordForm);

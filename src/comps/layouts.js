@@ -56,9 +56,9 @@ const NavLayout = ({ user, children }) => {
                 </button>
                 <div className="collapse navbar-collapse" id="cm-navbar-toggler">
                     <div className="cl-nav-items">
-                        <Link to="/overview" className="nav-item nav-link">Overview</Link>
-                        <Link to="/cars" className="nav-item nav-link">My Cars</Link>
-                        <Link to="/service-history" className="nav-item nav-link">Service History</Link>
+                        <Link to="/overview" className="nav-item nav-link"><i class="fas fa-home"></i> Overview</Link>
+                        <Link to="/cars" className="nav-item nav-link"><i class="fas fa-car"></i> My Cars</Link>
+                        <Link to="/service-history" className="nav-item nav-link"><i class="fas fa-wrench"></i> Service History</Link>
                     </div>
                 </div>
             </nav>

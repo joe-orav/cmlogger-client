@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layouts from "./comps/layouts";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./pages/login";
@@ -8,10 +8,19 @@ import ServiceHistory from "./pages/service-history";
 import Settings from "./pages/settings";
 import { connect } from "react-redux";
 import { getUser } from "./store/selectors";
+import FetchActions from "./store/fetch-actions";
+import AlertContainer from "./comps/alerts";
 
-function App(props) {
+function App({ user, fetchCarData, fetchLocationData, fetchServicesData, fetchServiceHistoryData }) {
 
-  let isAuthenticated = props.user.id;
+  let isAuthenticated = user.id;
+
+  useEffect(() => {
+    fetchCarData()
+    fetchLocationData()
+    fetchServicesData()
+    fetchServiceHistoryData()
+  }, [fetchCarData, fetchLocationData, fetchServicesData, fetchServiceHistoryData])
 
   return (
     <Router>
@@ -35,6 +44,7 @@ function App(props) {
           <Redirect to="/overview" />
         </PrivateRoute>
       </Switch>
+      <AlertContainer />
     </Router>
   );
 }
@@ -53,4 +63,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = { ...FetchActions }
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

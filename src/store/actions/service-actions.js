@@ -1,5 +1,4 @@
 import * as ActionTypes from "../action-types";
-import fetch from "isomorphic-unfetch";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
 
 function fetchServicesDataStart() {
@@ -27,7 +26,7 @@ export function fetchServicesData() {
         dispatch(fetchServicesDataStart())
 
         const res = await fetch("/api/services");
-        let data = res.json();
+        let data = await res.json();
 
         if(data.error) {
             dispatch(fetchServicesDataFailure(data))

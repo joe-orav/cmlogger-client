@@ -1,6 +1,7 @@
 import React from "react";
-import $ from "jquery";
 import { useState } from "react";
+import $ from 'jquery';
+import 'bootstrap';
 
 const YEAR_MAX = new Date().getFullYear(), YEAR_MIN = YEAR_MAX - 85;
 const yearRange = Array.from({ length: YEAR_MAX - YEAR_MIN + 1 }, (v, i) => YEAR_MAX - i);

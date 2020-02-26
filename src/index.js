@@ -4,11 +4,11 @@ import "./main.scss";
 import "flatpickr/dist/flatpickr.min.css";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import { fetchUserData } from "./store/actions/user-actions"
+import FetchActions from "./store/fetch-actions"
 import App from './app';
 
 let fetchUser = new Promise((resolve, reject) => {
-    resolve(store.dispatch(fetchUserData()))
+    resolve(store.dispatch(FetchActions.fetchUserData()))
 })
 
 fetchUser.then(() => {

@@ -4,7 +4,7 @@ import { getAlerts } from "../store/selectors";
 
 const AppAlert = ({ alert }) => {
 
-    let alertType = "alert-primary";
+    let alertType;
 
     switch (alert.type) {
         case "success":
@@ -13,6 +13,8 @@ const AppAlert = ({ alert }) => {
         case "danger":
             alertType = "alert-danger"
             break;
+        default:
+            alertType = "alert-primary"
     }
 
     return (

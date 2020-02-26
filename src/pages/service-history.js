@@ -3,8 +3,9 @@ import NoDataComponent from "../comps/no-data-comp";
 import AddServiceRecordForm from "../comps/add-service-form";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { getExpandedServiceHistory, getCars } from "../store/selectors";
+import { getExpandedServiceHistory, getCars, getServiceHistoryDataLoading } from "../store/selectors";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
+import LoadingIcon from "../comps/loading";
 
 const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion }) => {
     return (
@@ -63,7 +64,7 @@ const AddServiceRecordModal = ({ title, children }) => {
     )
 }
 
-function ServiceHistory({ cars, serviceHistory, modifyServiceHistory }) {
+function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHistoryDataLoading }) {
 
     const [editItemIndex, setEditItemIndex] = useState(-1);
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
@@ -90,9 +91,11 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory }) {
                         <div className="col"><p className="font-weight-bold">Service Provided</p></div>
                     </div>
                     <div className="row border-bottom d-sm-none d-block"></div>
-                    {(serviceHistory.length && serviceHistory.map((sItem, i) =>
-                        <ServiceRecord key={sItem.id} index={i} historyItem={sItem} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} />)
-                    ) ||
+                    {
+                        (serviceHistoryDataLoading && <LoadingIcon />) ||
+                        (serviceHistory.length && serviceHistory.map((sItem, i) =>
+                            <ServiceRecord key={sItem.id} index={i} historyItem={sItem} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} />)
+                        ) ||
                         <NoDataComponent title="No records found" noDivider noIcon>Click "Add Service Record" to add a new service record</NoDataComponent>
                     }
                 </div>
@@ -114,7 +117,8 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory }) {
 const mapStateToProps = (state) => {
     return {
         cars: getCars(state),
-        serviceHistory: getExpandedServiceHistory(state)
+        serviceHistory: getExpandedServiceHistory(state),
+        serviceHistoryDataLoading: getServiceHistoryDataLoading(state)
     }
 }
 

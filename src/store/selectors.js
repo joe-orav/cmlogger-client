@@ -12,6 +12,9 @@ export const getServiceHistoryError = (state) => state.serviceHistory.error;
 export const getServicesError = (state) => state.services.error;
 export const getLocationsError = (state) => state.locations.error;
 
+export const getCarsDataLoading = (state) => state.cars.loading;
+export const getServiceHistoryDataLoading = (state) => state.serviceHistory.loading;
+
 export const getCarCount = (state) => state.cars.items.length;
 
 export const getCars = createSelector(

@@ -2,8 +2,9 @@ import React from "react";
 import CarGrid from "../comps/car-grid";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getExpandedServiceHistory, getCarCount } from "../store/selectors";
+import { getExpandedServiceHistory, getCarCount, getCarsDataLoading, getServiceHistoryDataLoading } from "../store/selectors";
 import NoDataComponent from "../comps/no-data-comp";
+import LoadingIcon from "../comps/loading";
 
 const ServiceHistoryTable = ({ history }) => {
 
@@ -39,7 +40,7 @@ const ServiceHistoryTable = ({ history }) => {
     )
 }
 
-function Overview({ carCount, serviceHistory }) {
+function Overview({ carCount, serviceHistory, carsDataLoading, serviceHistoryDataLoading }) {
     return (
         <div className="row mt-3 pb-4">
             <div className="col-12 mb-4">
@@ -47,7 +48,9 @@ function Overview({ carCount, serviceHistory }) {
             </div>
             <div className="col-12 mb-5">
                 <p className="h4">My Cars</p>
-                {(carCount && <CarGrid readOnly />) ||
+                {
+                    (carsDataLoading && <LoadingIcon />) ||
+                    (carCount && <CarGrid readOnly />) ||
                     <NoDataComponent title="No Cars Found" noIcon>
                         Go to <Link to="/cars" className="default-link">My Cars</Link> to add a new car
                     </NoDataComponent>
@@ -55,7 +58,9 @@ function Overview({ carCount, serviceHistory }) {
             </div>
             <div className="col-12">
                 <p className="h4">Service History</p>
-                {(serviceHistory.length && <ServiceHistoryTable history={serviceHistory} />) ||
+                {
+                    (serviceHistoryDataLoading && <LoadingIcon />) ||
+                    (serviceHistory.length && <ServiceHistoryTable history={serviceHistory} />) ||
                     <NoDataComponent title="No Service Records Found" noIcon>
                         Go to <Link to="/service-history" className="default-link">Service History</Link> to add a new record
                     </NoDataComponent>
@@ -68,7 +73,9 @@ function Overview({ carCount, serviceHistory }) {
 const mapStateToProps = (state) => {
     return {
         carCount: getCarCount(state),
-        serviceHistory: getExpandedServiceHistory(state)
+        serviceHistory: getExpandedServiceHistory(state),
+        carsDataLoading: getCarsDataLoading(state),
+        serviceHistoryDataLoading: getServiceHistoryDataLoading(state)
     }
 }
 

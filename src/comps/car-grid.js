@@ -6,7 +6,8 @@ import plusSymbol from "../img/plus.svg";
 import sedanImg from "../img/sedan.svg";
 import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
-import { getCars, getUserId } from "../store/selectors";
+import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
+import LoadingIcon from "../comps/loading";
 
 const AddCar = (props) => {
     return (
@@ -46,6 +47,7 @@ const CarGrid = (props) => {
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
     
     return (
+        props.carsDataLoading ? <LoadingIcon /> :
         <div className="container-fluid">
             <div className="car-grid-items">
                 {props.cars.map((c, i) =>
@@ -80,7 +82,8 @@ const CarGrid = (props) => {
 const mapStateToProps = (state) => {
     return {
         cars: getCars(state),
-        user_id: getUserId(state)
+        user_id: getUserId(state),
+        carsDataLoading: getCarsDataLoading(state)
     }
 }
 

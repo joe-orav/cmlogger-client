@@ -43,7 +43,6 @@ const ProfileSection = (props) => {
 }
 
 const NavLayout = ({ user, children }) => {
-
     useEffect(() => {
         document.getElementById("cm-navbar-toggler").classList.remove("show");
     })

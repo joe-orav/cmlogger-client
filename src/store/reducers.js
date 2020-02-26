@@ -50,6 +50,8 @@ function userReducer(state = {}, action) {
 
             return Object.assign({}, state, {
                 profile: {
+                    id: state.profile.id,
+                    name: state.profile.name,
                     googleConnected: disconnectedAccount !== "google",
                     facebookConnected: disconnectedAccount !== "facebook",
                     google_pic: action.payload.google_profile_pic,

@@ -7,13 +7,11 @@ import Cars from "./pages/cars";
 import ServiceHistory from "./pages/service-history";
 import Settings from "./pages/settings";
 import { connect } from "react-redux";
-import { getUser } from "./store/selectors";
 import FetchActions from "./store/fetch-actions";
 import AlertContainer from "./comps/alerts";
+import PrivateRoute from "./comps/private-route";
 
-function App({ user, fetchCarData, fetchLocationData, fetchServicesData, fetchServiceHistoryData }) {
-
-  let isAuthenticated = user.id;
+function App({ fetchCarData, fetchLocationData, fetchServicesData, fetchServiceHistoryData }) {
 
   useEffect(() => {
     fetchCarData()
@@ -25,44 +23,19 @@ function App({ user, fetchCarData, fetchLocationData, fetchServicesData, fetchSe
   return (
     <Router>
       <Switch>
-        <Route path="/login">
-          <Layouts.NoNavLayout><Login /></Layouts.NoNavLayout>
-        </Route>
-        <PrivateRoute path="/overview" authStatus={isAuthenticated} >
-          <Layouts.NavLayout><Overview /></Layouts.NavLayout>
-        </PrivateRoute>
-        <PrivateRoute path="/cars" authStatus={isAuthenticated} >
-          <Layouts.NavLayout><Cars /></Layouts.NavLayout>
-        </PrivateRoute>
-        <PrivateRoute path="/service-history" authStatus={isAuthenticated} >
-          <Layouts.NavLayout><ServiceHistory /></Layouts.NavLayout>
-        </PrivateRoute>
-        <PrivateRoute path="/settings" authStatus={isAuthenticated} >
-          <Layouts.NavLayout><Settings /></Layouts.NavLayout>
-        </PrivateRoute>
-        <PrivateRoute exact path="/" authStatus={isAuthenticated} >
-          <Redirect to="/overview" />
-        </PrivateRoute>
+        <Route path="/login" render={() => <Layouts.NoNavLayout><Login /></Layouts.NoNavLayout>} />
+        <PrivateRoute path="/overview" render={<Layouts.NavLayout><Overview /></Layouts.NavLayout>} />
+        <PrivateRoute path="/cars" render={<Layouts.NavLayout><Cars /></Layouts.NavLayout>} />
+        <PrivateRoute path="/service-history" render={<Layouts.NavLayout><ServiceHistory /></Layouts.NavLayout>} />
+        <PrivateRoute path="/settings" render={<Layouts.NavLayout><Settings /></Layouts.NavLayout>} />
+        <PrivateRoute path="/overview" render={<Layouts.NavLayout><Overview /></Layouts.NavLayout>} />
+        <PrivateRoute exact path="/" render={<Redirect to="/overview" />} />
       </Switch>
       <AlertContainer />
     </Router>
   );
 }
 
-const PrivateRoute = ({ path, children, authStatus, ...rest }) => {
-  return (
-    <Route {...rest} path={path}>
-      {authStatus ? children : <Redirect to="/login" />}
-    </Route>
-  )
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: getUser(state)
-  }
-}
-
 const mapDispatchToProps = { ...FetchActions }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

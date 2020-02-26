@@ -45,7 +45,7 @@ function disconnectAccountSuccess(userDataResponse) {
 
 export function disconnectAccount(userData) {
     return async (dispatch) => {
-        let res = await fetch("/api/user/disconnect/", {
+        let res = await fetch("/api/user/disconnect", {
             method: "PUT",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData)
@@ -66,7 +66,7 @@ function deleteAccountSuccess() {
 
 export function deleteAccount(userData) {
     return async (dispatch) => {
-        let res = await fetch("/api/user/delete/", {
+        let res = await fetch("/api/user/delete", {
             method: "POST",
             redirect: 'follow',
             headers: { 'Content-Type': 'application/json' },

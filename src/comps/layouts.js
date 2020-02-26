@@ -22,7 +22,7 @@ const ProfileDropdown = (props) => {
                 <h5 className="dropdown-header">{props.name}</h5>
                 <Link to="/settings" className="dropdown-item">Settings</Link>
                 <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="/">Sign out</a>
+                <a className="dropdown-item" href="/logout">Sign out</a>
             </div>
         </div>
     )
@@ -36,7 +36,7 @@ const ProfileSection = (props) => {
             </div>
             <div className="profile-links">
                 <Link to="/settings" className="profile-link" title="Settings"><i className="fas fa-cog"></i></Link>
-                <a className="profile-link" href="/" title="Sign out"><i className="fas fa-sign-out-alt"></i></a>
+                <a className="profile-link" href="/logout" title="Sign out"><i className="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     )

@@ -12,7 +12,6 @@ import AlertContainer from "./comps/alerts";
 import PrivateRoute from "./comps/private-route";
 
 function App({ fetchCarData, fetchLocationData, fetchServicesData, fetchServiceHistoryData }) {
-
   useEffect(() => {
     fetchCarData()
     fetchLocationData()

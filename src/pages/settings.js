@@ -6,6 +6,8 @@ import { getOrphanedServices, getOrphanedLocations, getUser } from "../store/sel
 import { modifyServiceData } from "../store/actions/service-actions";
 import { modifyLocationData } from "../store/actions/locations-actions";
 import { disconnectAccount, deleteAccount } from "../store/actions/user-actions";
+import { useLocation } from "react-router-dom";
+import queryString from 'query-string'
 
 const SettingsSectionHeader = (props) => {
     return (
@@ -126,6 +128,8 @@ const LocationItems = ({ orphanedLocations, modifyLocationData }) => {
 
 const LinkedAccountsSection = (props) => {
 
+    console.log(props.addSecondAccountStatus);
+
     let showDisconnectButton = props.googleConnected && props.facebookConnected;
 
     function handleAccountDisconnection(e, authProvider) {
@@ -161,6 +165,8 @@ const LinkedAccountsSection = (props) => {
 }
 
 function Settings(props) {
+    let queryValues = queryString.parse(useLocation().search);
+
     return (
         <div className="row mt-3 pb-4 pl-2">
             <div className="col-12 mb-4">
@@ -178,7 +184,7 @@ function Settings(props) {
             <SettingsSectionHeader title="Account Settings" />
             <div className="section-items">
                 <SectionRow label="Linked Accounts">
-                    <LinkedAccountsSection {...props.user} disconnectAccount={props.disconnectAccount} addSecondAccountStatus={props.addSecondAccountStatus} />
+                    <LinkedAccountsSection {...props.user} disconnectAccount={props.disconnectAccount} addSecondAccountStatus={queryValues.addaccount === "true" || queryValues.addaccount === undefined} />
                 </SectionRow>
                 <SectionRow label="Delete Account">
                     <button type="button" className="btn btn-danger" data-toggle="modal" data-target="#delete-modal">Delete Account</button>

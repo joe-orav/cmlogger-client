@@ -7,11 +7,11 @@ import Cars from "./pages/cars";
 import ServiceHistory from "./pages/service-history";
 import Settings from "./pages/settings";
 import { connect } from "react-redux";
-import { getUserId } from "./store/selectors";
+import { getUser } from "./store/selectors";
 
-function App({ userId }) {
+function App(props) {
 
-  let isAuthenticated = userId != null;
+  let isAuthenticated = props.user.id;
 
   return (
     <Router>
@@ -19,9 +19,6 @@ function App({ userId }) {
         <Route path="/login">
           <Layouts.NoNavLayout><Login /></Layouts.NoNavLayout>
         </Route>
-        <PrivateRoute exact path="/" authStatus={isAuthenticated} >
-          <Redirect to="/overview" />
-        </PrivateRoute>
         <PrivateRoute path="/overview" authStatus={isAuthenticated} >
           <Layouts.NavLayout><Overview /></Layouts.NavLayout>
         </PrivateRoute>
@@ -33,6 +30,9 @@ function App({ userId }) {
         </PrivateRoute>
         <PrivateRoute path="/settings" authStatus={isAuthenticated} >
           <Layouts.NavLayout><Settings /></Layouts.NavLayout>
+        </PrivateRoute>
+        <PrivateRoute exact path="/" authStatus={isAuthenticated} >
+          <Redirect to="/overview" />
         </PrivateRoute>
       </Switch>
     </Router>
@@ -49,7 +49,7 @@ const PrivateRoute = ({ path, children, authStatus, ...rest }) => {
 
 const mapStateToProps = (state) => {
   return {
-    userId: getUserId(state)
+    user: getUser(state)
   }
 }
 

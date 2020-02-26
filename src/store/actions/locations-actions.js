@@ -2,10 +2,38 @@ import * as ActionTypes from "../action-types";
 import fetch from "isomorphic-unfetch";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
 
-export function getLocationData(data) {
+function fetchLocationDataStart() {
     return {
-        type: ActionTypes.GET_LOCATION_DATA,
+        type: ActionTypes.FETCH_LOCATION_DATA_START
+    }
+}
+
+function fetchLocationDataSuccess(data) {
+    return {
+        type: ActionTypes.FETCH_LOCATION_DATA_SUCCESS,
         payload: data
+    }
+}
+
+function fetchLocationDataFailure(data) {
+    return {
+        type: ActionTypes.FETCH_LOCATION_DATA_FAILURE,
+        payload: data
+    }
+}
+
+export function fetchLocationData() {
+    return async (dispatch) => {
+        dispatch(fetchLocationDataStart())
+
+        const res = await fetch("/api/locations");
+        let data = res.json();
+
+        if(data.error) {
+            dispatch(fetchLocationDataFailure(data))
+        } else {
+            dispatch(fetchLocationDataSuccess(data))
+        }
     }
 }
 

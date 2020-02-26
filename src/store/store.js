@@ -5,13 +5,17 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 let initialState = {
     user: {
-        id: null,
-        name: "",
-        googleConnected: false,
-        facebookConnected: false,
-        google_pic: null,
-        facebook_pic: null,
-        default_pic: null
+        loading: false,
+        error: null,
+        profile: {
+            id: null,
+            name: "",
+            googleConnected: false,
+            facebookConnected: false,
+            google_pic: null,
+            facebook_pic: null,
+            default_pic: null
+        }
     },
     cars: {
         items: [],

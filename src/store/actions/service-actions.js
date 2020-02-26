@@ -2,11 +2,38 @@ import * as ActionTypes from "../action-types";
 import fetch from "isomorphic-unfetch";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
 
-
-export function getServiceData(data) {
+function fetchServicesDataStart() {
     return {
-        type: ActionTypes.GET_SERVICE_DATA,
+        type: ActionTypes.FETCH_SERVICE_DATA_START
+    }
+}
+
+function fetchServicesDataSuccess(data) {
+    return {
+        type: ActionTypes.FETCH_SERVICE_DATA_SUCCESS,
         payload: data
+    }
+}
+
+function fetchServicesDataFailure(data) {
+    return {
+        type: ActionTypes.FETCH_SERVICE_DATA_FAILURE,
+        payload: data
+    }
+}
+
+export function fetchServicesData() {
+    return async (dispatch) => {
+        dispatch(fetchServicesDataStart())
+
+        const res = await fetch("/api/services");
+        let data = res.json();
+
+        if(data.error) {
+            dispatch(fetchServicesDataFailure(data))
+        } else {
+            dispatch(fetchServicesDataSuccess(data))
+        }
     }
 }
 

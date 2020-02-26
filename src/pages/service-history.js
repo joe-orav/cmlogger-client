@@ -4,7 +4,7 @@ import AddServiceRecordForm from "../comps/add-service-form";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { getExpandedServiceHistory, getCars } from "../store/selectors";
-import { modifyServiceHistory } from "../store/actions/service-history-actons";
+import { modifyServiceHistory } from "../store/actions/service-history-actions";
 
 const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion }) => {
     return (

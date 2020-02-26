@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-export const getUser = (state) => state.user;
-export const getUserId = (state) => state.user.id;
+export const getUser = (state) => state.user.profile;
+export const getUserId = (state) => state.user.profile.id;
 export const getServiceHistory = (state) => state.serviceHistory.items;
 export const getServices = (state) => state.services.items;
 export const getLocations = (state) => state.locations.items;

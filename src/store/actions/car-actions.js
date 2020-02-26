@@ -2,10 +2,38 @@ import * as ActionTypes from "../action-types";
 import fetch from "isomorphic-unfetch";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
 
-export function getCarData(data) {
+function fetchCarDataStart() {
     return {
-        type: ActionTypes.GET_CAR_DATA,
+        type: ActionTypes.FETCH_CAR_DATA_START
+    }
+}
+
+function fetchCarDataSuccess(data) {
+    return {
+        type: ActionTypes.FETCH_CAR_DATA_SUCCESS,
         payload: data
+    }
+}
+
+function fetchCarDataFailure(data) {
+    return {
+        type: ActionTypes.FETCH_CAR_DATA_FAILURE,
+        payload: data
+    }
+}
+
+export function fetchCarData() {
+    return async (dispatch) => {
+        dispatch(fetchCarDataStart())
+
+        const res = await fetch("/api/cars");
+        let data = res.json();
+
+        if(data.error) {
+            dispatch(fetchCarDataFailure(data))
+        } else {
+            dispatch(fetchCarDataSuccess(data))
+        }
     }
 }
 

@@ -4,10 +4,10 @@ import googleLogo from "../img/google-logo.svg"
 import facebookLogo from "../img/facebook-logo.svg";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUserId } from "../store/selectors";
+import { getUser } from "../store/selectors";
 
 function Login(props) {
-    return props.userId !== null ? <Redirect to="/overview" /> :
+    return props.user.id != null ? <Redirect to="/overview" /> :
         <div className="login-page">
             <div className="col d-flex justify-content-center">
                 <div className="login-card">
@@ -28,7 +28,7 @@ function Login(props) {
 
 const mapStateToProps = (state) => {
     return {
-        userId: getUserId(state)
+        user: getUser(state)
     }
 }
 

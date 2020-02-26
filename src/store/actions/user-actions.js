@@ -1,10 +1,38 @@
 import * as ActionTypes from "../action-types";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
 
-export function getUserData(data) {
+function fetchUserDataStart() {
     return {
-        type: ActionTypes.GET_USER_DATA,
+        type: ActionTypes.FETCH_USER_DATA_START
+    }
+}
+
+function fetchUserDataSuccess(data) {
+    return {
+        type: ActionTypes.FETCH_USER_DATA_SUCCESS,
         payload: data
+    }
+}
+
+function fetchUserDataFailure(data) {
+    return {
+        type: ActionTypes.FETCH_USER_DATA_FAILURE,
+        payload: data
+    }
+}
+
+export function fetchUserData() {
+    return async (dispatch) => {
+        dispatch(fetchUserDataStart())
+
+        const res = await fetch("/api/user");
+        let data = await res.json();
+
+        if(data.error) {
+            dispatch(fetchUserDataFailure(data))
+        } else {
+            dispatch(fetchUserDataSuccess(data))
+        }
     }
 }
 

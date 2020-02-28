@@ -6,7 +6,7 @@ import { getUser } from "../store/selectors";
 
 const NoNavLayout = (props) => {
     return (
-        <div className="container-fluid vh-100">
+        <div className="container-fluid h-100">
             {props.children}
         </div>
     )

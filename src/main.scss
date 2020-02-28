@@ -5,6 +5,10 @@ $nav-offset: 172px;
 
 @import "~bootstrap/scss/bootstrap";
 
+html, body, #root {
+    height: 100%;
+}
+
 .center-xy {
     display: flex;
     justify-content: center;
@@ -27,14 +31,7 @@ $nav-offset: 172px;
     @extend .h-100;
     @extend .justify-content-center;
     @extend .align-items-center;
-    background: url("./img/login-bg.jpg") center no-repeat;
-}
-
-.login-page:before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0,0,0, 0.6);
+    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url("./img/login-bg.jpg") center no-repeat;
 }
 
 .login-card {

@@ -3,11 +3,13 @@ import { useState } from "react";
 import DeleteModal from "./delete-modal";
 import CarFormModal from "./car-form-modal";
 import plusSymbol from "../img/plus.svg";
-import sedanImg from "../img/sedan.svg";
 import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
 import LoadingIcon from "../comps/loading";
+import imgImport from "./img-import";
+
+let siteImages = imgImport(require.context("../img", false));
 
 const AddCar = (props) => {
     return (
@@ -26,7 +28,7 @@ const CarCard = ({carIndex, car, readOnly, selectForEdit, selectForDeletion}) =>
     return (
         <div className="col mt-3 mt-lg-3">
             <div className="car-card card h-100">
-                <img src={sedanImg} className="card-img-top" alt={car.type} />
+                <img src={siteImages[car.type]} className="card-img-top" alt={car.type} />
                 <div className="card-body bg-primary text-light">
                     <p className="card-title h5">{car.fullname}</p>
                     <p className="card-text">{`VIN: ${car.vin}`}</p>

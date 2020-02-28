@@ -534,6 +534,7 @@ html, body, #root {
 
     @include media-breakpoint-down(sm) {
         text-align: center;
+        margin-right: 0px;
     }
 }
 

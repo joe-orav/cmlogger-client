@@ -46,14 +46,14 @@ const NavLayout = ({ user, children }) => {
     useEffect(() => {
         document.getElementById("cm-navbar-toggler").classList.remove("show");
     })
-    
+
     return (
         <div className="d-flex min-vh-100">
             <nav className="cm-navbar">
-                <Link to="/" className="navbar-logo mr-0"><img className="img-fluid" src={logo} alt="CMLogger Logo" /></Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#cm-navbar-toggler" aria-controls="cm-navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="cm-navbar-toggler-btn" type="button" data-toggle="collapse" data-target="#cm-navbar-toggler" aria-controls="cm-navbar-toggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
+                <Link to="/" className="navbar-logo mr-0"><img className="img-fluid d-block" src={logo} alt="CMLogger Logo" /></Link>
                 <div className="collapse navbar-collapse" id="cm-navbar-toggler">
                     <div className="cl-nav-items">
                         <Link to="/overview" className="nav-item nav-link"><i className="fas fa-home"></i> Overview</Link>

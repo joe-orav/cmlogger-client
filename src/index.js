@@ -11,7 +11,17 @@ let fetchUser = new Promise((resolve, reject) => {
     resolve(store.dispatch(FetchActions.fetchUserData()))
 })
 
-fetchUser.then(() => {
+fetchUser
+.then(() => store.getState().user.profile.id)
+.then((result) => {
+    if(result !== null) {
+        store.dispatch(FetchActions.fetchCarData())
+        store.dispatch(FetchActions.fetchLocationData())
+        store.dispatch(FetchActions.fetchServiceHistoryData())
+        store.dispatch(FetchActions.fetchServicesData())
+    }
+})
+.then(() => {
     ReactDOM.render(
         <Provider store={store}>
             <App />

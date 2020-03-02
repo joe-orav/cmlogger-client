@@ -8,6 +8,8 @@ import { modifyCarData } from "../store/actions/car-actions";
 import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
 import LoadingIcon from "../comps/loading";
 import imgImport from "./img-import";
+import AddServiceRecordModal from "./service-record-modal";
+import { modifyServiceHistory } from "../store/actions/service-history-actions";
 
 let siteImages = imgImport(require.context("../img", false));
 
@@ -24,7 +26,7 @@ const AddCar = (props) => {
     )
 }
 
-const CarCard = ({carIndex, car, readOnly, selectForEdit, selectForDeletion}) => {
+const CarCard = ({ carIndex, car, readOnly, selectForEdit, selectForDeletion, selectForRecordAddition }) => {
     return (
         <div className="col mt-3 mt-lg-3">
             <div className="car-card card h-100">
@@ -36,6 +38,8 @@ const CarCard = ({carIndex, car, readOnly, selectForEdit, selectForDeletion}) =>
                 {!readOnly && <div className="car-card-footer">
                     <a href="/#" data-toggle="modal" data-target="#car-form-modal" className="default-link"
                         onClick={() => selectForEdit(carIndex)}>Edit</a>
+                    <a href="/#" data-toggle="modal" data-target="#add-service-modal" className="default-link"
+                        onClick={() => selectForRecordAddition(carIndex)}>Add Record</a>
                     <a href="/#" className="default-link" data-toggle="modal" data-target="#delete-modal"
                         onClick={() => selectForDeletion(carIndex)}>Delete</a>
                 </div>}
@@ -47,37 +51,47 @@ const CarCard = ({carIndex, car, readOnly, selectForEdit, selectForDeletion}) =>
 const CarGrid = (props) => {
     const [editItemIndex, setEditItemIndex] = useState(-1);
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
-    
+    const [addRecordIndex, setAddRecordIndex] = useState(-1);
+
     return (
         props.carsDataLoading ? <LoadingIcon /> :
-        <div className="container-fluid">
-            <div className="car-grid-items">
-                {props.cars.map((c, i) =>
-                    <CarCard key={c.id} carIndex={i} car={c} readOnly={props.readOnly} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} />
-                )}
-                {!props.readOnly && <AddCar selectForEdit={() => setEditItemIndex(-1)} />}
+            <div className="container-fluid include-flatpickr">
+                <div className="car-grid-items">
+                    {props.cars.map((c, i) =>
+                        <CarCard key={c.id} carIndex={i} car={c} readOnly={props.readOnly} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} selectForRecordAddition={(index) => setAddRecordIndex(index)} />
+                    )}
+                    {!props.readOnly && <AddCar selectForEdit={() => setEditItemIndex(-1)} />}
+                </div>
+                {!props.readOnly &&
+                    <CarFormModal
+                        keyValue={editItemIndex === -1 ? Date.now() : props.cars[editItemIndex].id}
+                        formValues={editItemIndex === -1 ? { id: editItemIndex } : props.cars[editItemIndex]}
+                        user_id={props.user_id}
+                        title={editItemIndex === -1 ? "Add New Car" : ("Edit Car: " + props.cars[editItemIndex].fullname)}
+                        modifyCarData={(data) => props.modifyCarData(data)}
+                    />
+                }
+                {!props.readOnly &&
+                    <DeleteModal
+                        title={deleteItemIndex === -1 ? "Delete Car" : "Delete Car: " + props.cars[deleteItemIndex].fullname}
+                        message="Are you sure you want to delete this car? All records for this car will also be deleted!"
+                        deleteAction={() => {
+                            setDeleteItemIndex(-1);
+                            setEditItemIndex(-1);
+                            props.modifyCarData({ id: props.cars[deleteItemIndex].id });
+                        }}
+                    />
+                }
+                {!props.readOnly && 
+                    <AddServiceRecordModal 
+                        title={"Add Service Record"}
+                        keyValue={addRecordIndex}
+                        car={props.cars[addRecordIndex]}
+                        modifyServiceHistory={props.modifyServiceHistory}
+                        carSelectDisabled 
+                    />
+                }
             </div>
-            {!props.readOnly &&
-                <CarFormModal
-                    keyValue = {editItemIndex === -1 ? Date.now() : props.cars[editItemIndex].id}
-                    formValues={editItemIndex === -1 ? {id: editItemIndex} : props.cars[editItemIndex]}
-                    user_id={props.user_id}
-                    title={editItemIndex === -1 ? "Add New Car" : ("Edit Car: " + props.cars[editItemIndex].fullname)}
-                    modifyCarData={(data) => props.modifyCarData(data)}
-                />
-            }
-            {!props.readOnly &&
-                <DeleteModal
-                    title={deleteItemIndex === -1 ? "Delete Car" : "Delete Car: " + props.cars[deleteItemIndex].fullname}
-                    message="Are you sure you want to delete this car? All records for this car will also be deleted!"
-                    deleteAction={() => {
-                        setDeleteItemIndex(-1);
-                        setEditItemIndex(-1);
-                        props.modifyCarData({id: props.cars[deleteItemIndex].id});
-                    }}
-                />
-            }
-        </div>
     )
 }
 
@@ -89,6 +103,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = { modifyCarData }
+const mapDispatchToProps = { modifyCarData, modifyServiceHistory }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarGrid);

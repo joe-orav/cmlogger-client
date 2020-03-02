@@ -19,7 +19,7 @@ const DateField = ({ defaultValue }) => {
             altInput: true,
             altFormat: "M d, Y",
             dateFormat: "Y-m-d",
-            appendTo: document.querySelector("#service-history-pg")
+            appendTo: document.querySelector(".include-flatpickr")
         });
     })
 
@@ -36,8 +36,11 @@ const CarServicedField = (props) => {
         <div className="form-group col-6">
             <label htmlFor="car-select">Car Serviced</label>
             <select id="car-select" name="car_id" className="custom-select" defaultValue={props.id} required>
-                <option></option>
-                {props.availableCars.map(car => <option key={car.id} value={car.id}>{car.fullname}</option>)}
+                {!props.carSelectDisabled && <>
+                    <option></option>
+                    {props.availableCars.map(car => <option key={car.id} value={car.id}>{car.fullname}</option>)}
+                </>}
+                {props.carSelectDisabled && <option value={props.id}>{props.fullname}</option>}
             </select>
             <div className="invalid-feedback">Please select a car</div>
         </div>
@@ -110,7 +113,7 @@ const LocationsSection = (props) => {
         let matchedLocation = {};
 
         if (id !== -1) {
-            let filteredLocation = props.savedLocations.filter(loc => loc.id === id)[0];
+            let filteredLocation = props.savedLocations.filter(loc => loc.id === parseInt(id))[0];
 
             matchedLocation = {
                 name: filteredLocation.name,
@@ -284,7 +287,7 @@ const AddServiceRecordForm = (props) => {
         <form id="add-service-form" className={wasValidated ? "was-validated" : ""} onSubmit={handleFormSubmission} noValidate>
             <div className="form-row">
                 <DateField defaultValue={props.parsedDate} />
-                <CarServicedField {...props.car} availableCars={props.carsList} />
+                <CarServicedField {...props.car} availableCars={props.carsList} carSelectDisabled={props.carSelectDisabled} />
                 <LocationsSection {...props.location} savedLocations={props.locationsList} />
                 <ServicesFieldList defaultServices={props.services} availableServices={props.servicesList} />
                 <CostField defaultValue={props.cost} />

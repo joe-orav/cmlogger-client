@@ -1,6 +1,6 @@
 import DeleteModal from "../comps/delete-modal";
 import NoDataComponent from "../comps/no-data-comp";
-import AddServiceRecordForm from "../comps/add-service-form";
+import AddServiceRecordModal from "../comps/service-record-modal";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { getExpandedServiceHistory, getCars, getServiceHistoryDataLoading } from "../store/selectors";
@@ -43,34 +43,13 @@ const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion })
     )
 }
 
-const AddServiceRecordModal = ({ title, children }) => {
-    return (
-        <div id="add-service-modal" className="modal" tabIndex="-1" role="dialog">
-            <div className="modal-dialog modal-dialog-scrollable" role="document">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <p className="modal-title h5">{title}</p>
-                    </div>
-                    <div className="modal-body">
-                        {children}
-                    </div>
-                    <div className="modal-footer">
-                        <button type="submit" form="add-service-form" className="btn btn-primary">Save</button>
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHistoryDataLoading }) {
 
     const [editItemIndex, setEditItemIndex] = useState(-1);
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
 
     return (
-        <div id="service-history-pg" className="row mt-3 pb-4">
+        <div id="service-history-pg" className="row mt-3 pb-4 include-flatpickr">
             <div className="col-12 mb-4">
                 <div className="row">
                     <div className="col-sm-6">
@@ -100,9 +79,12 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHis
                     }
                 </div>
             </div>
-            <AddServiceRecordModal title={(editItemIndex === -1 ? "Add" : "Edit") + " Service Record"}>
-                <AddServiceRecordForm key={editItemIndex === -1 ? Date.now() : editItemIndex} {...serviceHistory[editItemIndex]} modifyServiceHistory={modifyServiceHistory} />
-            </AddServiceRecordModal>
+            <AddServiceRecordModal 
+                title={(editItemIndex === -1 ? "Add" : "Edit") + " Service Record"} 
+                keyValue={editItemIndex === -1 ? Date.now() : editItemIndex} 
+                {...serviceHistory[editItemIndex]} 
+                modifyServiceHistory={modifyServiceHistory} 
+            />
             <DeleteModal
                 title="Delete Service Record"
                 message="Are you sure you want to delete this service record?"

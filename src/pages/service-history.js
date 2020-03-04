@@ -1,11 +1,12 @@
 import DeleteModal from "../comps/delete-modal";
 import NoDataComponent from "../comps/no-data-comp";
 import AddServiceRecordModal from "../comps/service-record-modal";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getExpandedServiceHistory, getCars, getServiceHistoryDataLoading } from "../store/selectors";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
 import LoadingIcon from "../comps/loading";
+import setPageTitle from "./pagetitle";
 
 const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion }) => {
     return (
@@ -47,6 +48,10 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHis
 
     const [editItemIndex, setEditItemIndex] = useState(-1);
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
+
+    useEffect(() => {
+        setPageTitle("Service History");
+    })
 
     return (
         <div id="service-history-pg" className="row mt-3 pb-4">

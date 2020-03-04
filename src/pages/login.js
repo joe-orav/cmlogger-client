@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../img/logo.png";
 import googleLogo from "../img/google-logo.svg"
 import facebookLogo from "../img/facebook-logo.svg";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser } from "../store/selectors";
+import setPageTitle from "./pagetitle";
 
 function Login(props) {
+
+    useEffect(() => {
+        setPageTitle("Login");
+    })
+
     return props.user.id != null ? <Redirect to="/overview" /> :
         <div className="login-page">
             <div className="col d-flex justify-content-center">

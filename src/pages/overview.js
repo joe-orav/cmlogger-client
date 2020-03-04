@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CarGrid from "../comps/car-grid";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getExpandedServiceHistory, getCarCount, getCarsDataLoading, getServiceHistoryDataLoading } from "../store/selectors";
 import NoDataComponent from "../comps/no-data-comp";
 import LoadingIcon from "../comps/loading";
+import setPageTitle from "./pagetitle";
 
 const ServiceHistoryTable = ({ history }) => {
 
@@ -41,7 +42,9 @@ const ServiceHistoryTable = ({ history }) => {
 }
 
 function Overview({ carCount, serviceHistory, carsDataLoading, serviceHistoryDataLoading }) {
-    console.log(serviceHistory);
+    useEffect(() => {
+        setPageTitle("Overview");
+    })
 
     return (
         <div className="row mt-3 pb-4">

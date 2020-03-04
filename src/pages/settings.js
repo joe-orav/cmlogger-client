@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DeleteModal from "../comps/delete-modal";
 import connectCheck from "../img/connect-check.svg";
 import { connect } from "react-redux";
@@ -7,7 +7,8 @@ import { modifyServiceData } from "../store/actions/service-actions";
 import { modifyLocationData } from "../store/actions/locations-actions";
 import { disconnectAccount, deleteAccount } from "../store/actions/user-actions";
 import { useLocation } from "react-router-dom";
-import queryString from 'query-string'
+import queryString from 'query-string';
+import setPageTitle from "./pagetitle";
 
 const SettingsSectionHeader = (props) => {
     return (
@@ -163,6 +164,10 @@ const LinkedAccountsSection = (props) => {
 
 function Settings(props) {
     let queryValues = queryString.parse(useLocation().search);
+
+    useEffect(() => {
+        setPageTitle("Settings");
+    })
 
     return (
         <div className="row mt-3 pb-4 pl-2">

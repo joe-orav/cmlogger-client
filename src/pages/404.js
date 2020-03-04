@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import mapIcon from "../img/map.png";
+import setPageTitle from "./pagetitle";
 
 function NotFoundPage() {
+
+    useEffect(() => {
+        setPageTitle("Page Not Found");
+    })
+
     return (
         <div className="row h-100 align-items-center">
             <div className="col-12">

@@ -19,7 +19,7 @@ const DateField = ({ defaultValue }) => {
             altInput: true,
             altFormat: "M d, Y",
             dateFormat: "Y-m-d",
-            appendTo: document.querySelector(".include-flatpickr")
+            appendTo: document.querySelector("#add-service-modal")
         });
     })
 

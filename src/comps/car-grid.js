@@ -55,7 +55,7 @@ const CarGrid = (props) => {
 
     return (
         props.carsDataLoading ? <LoadingIcon /> :
-            <div className="container-fluid include-flatpickr">
+            <div className="container-fluid">
                 <div className="car-grid-items">
                     {props.cars.map((c, i) =>
                         <CarCard key={c.id} carIndex={i} car={c} readOnly={props.readOnly} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} selectForRecordAddition={(index) => setAddRecordIndex(index)} />

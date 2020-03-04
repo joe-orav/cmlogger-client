@@ -14,11 +14,21 @@ let fetchUser = new Promise((resolve, reject) => {
 fetchUser
 .then(() => store.getState().user.profile.id)
 .then((result) => {
+    function fetchIndepedentData() {
+        if(result !== null) {
+            store.dispatch(FetchActions.fetchCarData())
+            store.dispatch(FetchActions.fetchLocationData())
+            store.dispatch(FetchActions.fetchServicesData())
+        }
+
+        return result;
+    }
+
+    return fetchIndepedentData();
+})
+.then((result) => {
     if(result !== null) {
-        store.dispatch(FetchActions.fetchCarData())
-        store.dispatch(FetchActions.fetchLocationData())
         store.dispatch(FetchActions.fetchServiceHistoryData())
-        store.dispatch(FetchActions.fetchServicesData())
     }
 })
 .then(() => {

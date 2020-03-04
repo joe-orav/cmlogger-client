@@ -127,9 +127,6 @@ const LocationItems = ({ orphanedLocations, modifyLocationData }) => {
 }
 
 const LinkedAccountsSection = (props) => {
-
-    console.log(props.addSecondAccountStatus);
-
     let showDisconnectButton = props.googleConnected && props.facebookConnected;
 
     function handleAccountDisconnection(e, authProvider) {

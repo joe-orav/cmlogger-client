@@ -49,7 +49,7 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHis
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
 
     return (
-        <div id="service-history-pg" className="row mt-3 pb-4 include-flatpickr">
+        <div id="service-history-pg" className="row mt-3 pb-4">
             <div className="col-12 mb-4">
                 <div className="row">
                     <div className="col-sm-6">

@@ -41,6 +41,8 @@ const ServiceHistoryTable = ({ history }) => {
 }
 
 function Overview({ carCount, serviceHistory, carsDataLoading, serviceHistoryDataLoading }) {
+    console.log(serviceHistory);
+
     return (
         <div className="row mt-3 pb-4">
             <div className="col-12 mb-4">

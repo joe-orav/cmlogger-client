@@ -7,10 +7,11 @@ import store from "./store/store";
 import { fetchUserData } from "./store/actions/user-actions";
 import App from './app';
 
-store.dispatch(fetchUserData())
-
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>, 
-document.getElementById('root'));
+Promise.resolve(store.dispatch(fetchUserData()))
+.then(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('root'));
+})

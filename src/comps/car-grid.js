@@ -52,13 +52,14 @@ const CarGrid = (props) => {
     const [editItemIndex, setEditItemIndex] = useState(-1);
     const [deleteItemIndex, setDeleteItemIndex] = useState(-1);
     const [addRecordIndex, setAddRecordIndex] = useState(-1);
+    const [serviceFormKey, setServiceFormKey] = useState(Date.now());
 
     return (
         props.carsDataLoading ? <LoadingIcon /> :
             <div className="container-fluid">
                 <div className="car-grid-items">
                     {props.cars.map((c, i) =>
-                        <CarCard key={c.id} carIndex={i} car={c} readOnly={props.readOnly} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} selectForRecordAddition={(index) => setAddRecordIndex(index)} />
+                        <CarCard key={c.id} carIndex={i} car={c} readOnly={props.readOnly} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} selectForRecordAddition={(index) => { setAddRecordIndex(index); setServiceFormKey(Date.now()) }} />
                     )}
                     {!props.readOnly && <AddCar selectForEdit={() => setEditItemIndex(-1)} />}
                 </div>
@@ -85,7 +86,7 @@ const CarGrid = (props) => {
                 {!props.readOnly && 
                     <AddServiceRecordModal 
                         title={"Add Service Record"}
-                        keyValue={addRecordIndex}
+                        keyValue={serviceFormKey}
                         car={props.cars[addRecordIndex]}
                         modifyServiceHistory={props.modifyServiceHistory}
                         carSelectDisabled 

@@ -1,7 +1,7 @@
 $primary: #686868;
 $secondary: #dee2e6;
 $link-color: #fff;
-$nav-offset: 172px;
+$nav-offset: 172.63px;
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -603,4 +603,11 @@ html, body, #root {
     @extend .mb-3;
     height: 150px;
 }
-  
+
+.demo-link {
+    color: lighten($blue, 10%);
+
+    &:hover {
+        color: darken($blue, 10%);
+    }
+}

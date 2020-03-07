@@ -1,5 +1,6 @@
 import * as ActionTypes from "../action-types";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
+import { fetchLocationData } from "./locations-actions";
 
 function fetchServicesDataStart() {
     return {
@@ -32,6 +33,7 @@ export function fetchServicesData() {
             dispatch(fetchServicesDataFailure(data))
         } else {
             dispatch(fetchServicesDataSuccess(data))
+            dispatch(fetchLocationData())
         }
     }
 }

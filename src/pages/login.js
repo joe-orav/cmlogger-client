@@ -15,7 +15,7 @@ function Login(props) {
 
     return props.user.id != null ? <Redirect to="/overview" /> :
         <div className="login-page">
-            <div className="col d-flex justify-content-center">
+            <div className="col d-flex flex-column align-items-center justify-content-center">
                 <div className="login-card">
                     <img src={logo} className="login-card-img" alt="CMLogger - The Car Maintenance Log" />
                     <div className="card-body py-0">
@@ -28,6 +28,7 @@ function Login(props) {
                         </a>
                     </div>
                 </div>
+                <p className="text-white mt-2">Don't want to sign in? Try the <a className="demo-link" target="_blank" rel="noopener noreferrer" href="http://cmlogger-demo.now.sh/">demo</a></p>
             </div>
         </div>
 }

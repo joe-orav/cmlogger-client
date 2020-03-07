@@ -108,6 +108,7 @@ const LocationsSection = (props) => {
         useState({ name: props.name, address: props.address, city: props.city, state: props.state, zipCode: props.zip_code })
 
     function handleLocationChange(id) {
+        id = parseInt(id);
         setSelectedLocationId(id);
 
         let matchedLocation = {};
@@ -247,7 +248,7 @@ const AddServiceRecordForm = (props) => {
                 let fieldEntry = value;
 
                 if (key === "cost") {
-                    fieldEntry = parseFloat(fieldEntry);
+                    fieldEntry = parseFloat(fieldEntry).toFixed(2);
                 } else if (!isNaN(fieldEntry) && fieldEntry.length !== 0 && key !== "zip_code") {
                     fieldEntry = parseInt(fieldEntry);
                 }

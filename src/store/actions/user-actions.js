@@ -1,5 +1,6 @@
 import * as ActionTypes from "../action-types";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
+import { fetchCarData } from "./car-actions";
 
 function fetchUserDataStart() {
     return {
@@ -32,6 +33,7 @@ export function fetchUserData() {
             dispatch(fetchUserDataFailure(data))
         } else {
             dispatch(fetchUserDataSuccess(data))
+            dispatch(fetchCarData());
         }
     }
 }

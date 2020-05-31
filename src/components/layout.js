@@ -72,7 +72,7 @@ const SiteNav = styled(Nav)`
   }
 `;
 
-const SiteNavLink = styled(Link).attrs((props) => ({
+const SiteNavLink = styled(Link).attrs(() => ({
   className: "nav-item nav-link",
 }))`
   color: #fff;

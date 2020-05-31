@@ -7,11 +7,9 @@ import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
 import LoadingIcon from "../components/loading";
-import imgImport from "../utils/imgImport";
+import CarItem from "../components/carItem";
 import AddServiceRecordModal from "./service-record-modal";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
-
-let siteImages = imgImport(require.context("../img", false));
 
 const AddCar = (props) => {
     return (
@@ -21,28 +19,6 @@ const AddCar = (props) => {
                 <div className="plus-img-ctr mb-3">
                     <img className="img-fluid" src={plusSymbol} alt="Add New Car" />
                 </div>
-            </div>
-        </div>
-    )
-}
-
-const CarCard = ({ carIndex, car, readOnly, selectForEdit, selectForDeletion, selectForRecordAddition }) => {
-    return (
-        <div className="col mt-3 mt-lg-3">
-            <div className="car-card card h-100">
-                <img src={siteImages[car.type]} className="card-img-top" alt={car.type} />
-                <div className="card-body bg-primary text-light">
-                    <p className="card-title h5">{car.fullname}</p>
-                    <p className="card-text">{`VIN: ${car.vin}`}</p>
-                </div>
-                {!readOnly && <div className="car-card-footer">
-                    <a href="/#" data-toggle="modal" data-target="#car-form-modal" className="default-link"
-                        onClick={() => selectForEdit(carIndex)}>Edit</a>
-                    <a href="/#" data-toggle="modal" data-target="#add-service-modal" className="default-link"
-                        onClick={() => selectForRecordAddition(carIndex)}>Add Record</a>
-                    <a href="/#" className="default-link" data-toggle="modal" data-target="#delete-modal"
-                        onClick={() => selectForDeletion(carIndex)}>Delete</a>
-                </div>}
             </div>
         </div>
     )
@@ -59,7 +35,7 @@ const CarGrid = (props) => {
             <div className="container-fluid">
                 <div className="car-grid-items">
                     {props.cars.map((c, i) =>
-                        <CarCard key={c.id} carIndex={i} car={c} readOnly={props.readOnly} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} selectForRecordAddition={(index) => { setAddRecordIndex(index); setServiceFormKey(Date.now()) }} />
+                        <CarItem key={c.id} carIndex={i} car={c} />
                     )}
                     {!props.readOnly && <AddCar selectForEdit={() => setEditItemIndex(-1)} />}
                 </div>

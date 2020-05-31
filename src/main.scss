@@ -34,20 +34,13 @@ html, body, #root {
     @extend .row-cols-xl-4;
 }
 
-.car-card, .add-car-card {
+.add-car-card {
     max-width: 250px;
     
     @include media-breakpoint-down(sm) {
         max-width: none;
         width: 100%;
     }
-}
-
-.car-card-footer {
-    @extend .card-footer;
-    @extend .bg-white;
-    display: flex;
-    justify-content: space-around;
 }
 
 .add-car-card {

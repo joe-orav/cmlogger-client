@@ -82,7 +82,7 @@ const SiteLayout = ({ hideNavBar, user, children }) => {
   useEffect(() => {
     let toggleBtn = document.querySelector("#nav-toggle-btn");
 
-    if (!toggleBtn.classList.contains("collapsed")) {
+    if (toggleBtn && !toggleBtn.classList.contains("collapsed")) {
       toggleBtn.click();
     }
   });

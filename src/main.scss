@@ -26,77 +26,6 @@ html, body, #root {
     }
 }
 
-.login-page {
-    @extend .row;
-    @extend .h-100;
-    @extend .justify-content-center;
-    @extend .align-items-center;
-    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url("./img/login-bg.jpg") center no-repeat;
-}
-
-.login-card {
-    @extend .card;
-    @extend .rounded;
-    @extend .bg-primary;
-    @extend .text-center;
-    max-width: 400px;
-}
-
-.login-card-img {
-    @extend .card-img-top;
-    @extend .p-3;
-}
-
-.login-card-subtitle {
-    @extend .card-title;
-    color: #fff;
-    font-size: 1.5rem;
-
-    @include media-breakpoint-down(xs) {
-        font-size: 1.3rem;
-
-    }
-}
-
-.login-btn {
-    @extend .my-3;
-    @extend .py-2;
-    position: relative;
-    display: block;
-    text-align: left;
-    border-radius: 4px;
-    font-size: 17px;
-    opacity: 1;
-    padding-left: 60px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-    .logo-ctr {
-        position: absolute;
-        border-right: 1px solid rgba(0,0,0, 0.2);
-        left: 0px; top: 0px; bottom: 0px;
-        display: flex;
-        width: 45px;
-        padding: 0 10px;
-    }
-
-    &:hover {
-        text-decoration: none;
-        opacity: .90;
-    }
-}
-
-#google-login-btn {
-    background: #fff;
-    color: #444;
-}
-
-#fb-login-btn {
-    background: #4267B2;
-    color: #fff;
-}
-
 .car-grid-items {
     @extend .row;
     @extend .row-cols-1;
@@ -451,12 +380,4 @@ html, body, #root {
 .not-found-page-img-ctr {
     @extend .mb-3;
     height: 150px;
-}
-
-.demo-link {
-    color: lighten($blue, 10%);
-
-    &:hover {
-        color: darken($blue, 10%);
-    }
 }

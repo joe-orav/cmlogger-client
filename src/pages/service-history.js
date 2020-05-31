@@ -1,11 +1,11 @@
 import DeleteModal from "../comps/delete-modal";
-import NoDataComponent from "../comps/no-data-comp";
+import NotFound from "../components/notFound";
 import AddServiceRecordModal from "../comps/service-record-modal";
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getExpandedServiceHistory, getCars, getServiceHistoryDataLoading } from "../store/selectors";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
-import LoadingIcon from "../comps/loading";
+import LoadingIcon from "../components/loading";
 import setPageTitle from "./pagetitle";
 
 const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion }) => {
@@ -80,7 +80,7 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHis
                         (serviceHistory.length && serviceHistory.map((sItem, i) =>
                             <ServiceRecord key={sItem.id} index={i} historyItem={sItem} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} />)
                         ) ||
-                        <NoDataComponent title="No records found" noDivider noIcon>Click "Add Service Record" to add a new service record</NoDataComponent>
+                        <NotFound title="No records found" noDivider noIcon>Click "Add Service Record" to add a new service record</NotFound>
                     }
                 </div>
             </div>

@@ -15,7 +15,6 @@ function App() {
     <Router>
       <Switch>
         <Route path="/login" render={() => <SiteLayout hideNavBar><Login /></SiteLayout>} />
-        <PrivateRoute path="/overview" render={<SiteLayout><Overview /></SiteLayout>} />
         <PrivateRoute path="/cars" render={<SiteLayout><Cars /></SiteLayout>} />
         <PrivateRoute path="/service-history" render={<SiteLayout><ServiceHistory /></SiteLayout>} />
         <PrivateRoute path="/settings" render={<SiteLayout><Settings /></SiteLayout>} />

@@ -216,26 +216,11 @@ html, body, #root {
     @extend .mt-1;
 }
 
-.no-service-found-text {
-    @extend .text-center;
-    @extend .my-2;
-    color: rgba(0,0,0, 0.7);
-}
-
-.not-found-txt-ctr {
-    @extend .py-2;
-}
-
 .service-select {
     @extend .custom-select;
     @extend .w-auto;
     @extend .d-block;
     min-width: 200px;
-}
-
-.error-img-ctr {
-    width: 50px;
-    margin: auto;
 }
 
 .social-account-item {
@@ -328,52 +313,6 @@ html, body, #root {
     @include media-breakpoint-down(sm) {
         text-align: center;
         margin-right: 0px;
-    }
-}
-
-.loading-icon-ctr {
-    width: 100%;
-}
-
-.lds-ring {
-    display: block;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    margin: auto;
-}
-
-.lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    margin: 8px;
-    border: 5px solid $primary;
-    border-radius: 50%;
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: $primary transparent transparent transparent;
-}
-
-.lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
-}
-
-.lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
-}
-
-.lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
-}
-
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
     }
 }
 

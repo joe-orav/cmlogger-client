@@ -6,8 +6,8 @@ import plusSymbol from "../img/plus.svg";
 import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
-import LoadingIcon from "../comps/loading";
-import imgImport from "./img-import";
+import LoadingIcon from "../components/loading";
+import imgImport from "../utils/imgImport";
 import AddServiceRecordModal from "./service-record-modal";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
 

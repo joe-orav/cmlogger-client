@@ -3,9 +3,9 @@ import CarGrid from "../comps/car-grid";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getExpandedServiceHistory, getCarCount, getCarsDataLoading, getServiceHistoryDataLoading } from "../store/selectors";
-import NoDataComponent from "../comps/no-data-comp";
-import LoadingIcon from "../comps/loading";
 import setPageTitle from "./pagetitle";
+import NotFound from "../components/notFound";
+import LoadingIcon from "../components/loading";
 
 const ServiceHistoryTable = ({ history }) => {
 
@@ -56,9 +56,9 @@ function Overview({ carCount, serviceHistory, carsDataLoading, serviceHistoryDat
                 {
                     (carsDataLoading && <LoadingIcon />) ||
                     (carCount && <CarGrid readOnly />) ||
-                    <NoDataComponent title="No Cars Found" noIcon>
+                    <NotFound title="No Cars Found" noIcon>
                         Go to <Link to="/cars" className="default-link">My Cars</Link> to add a new car
-                    </NoDataComponent>
+                    </NotFound>
                 }
             </div>
             <div className="col-12">
@@ -66,9 +66,9 @@ function Overview({ carCount, serviceHistory, carsDataLoading, serviceHistoryDat
                 {
                     (serviceHistoryDataLoading && <LoadingIcon />) ||
                     (serviceHistory.length && <ServiceHistoryTable history={serviceHistory} />) ||
-                    <NoDataComponent title="No Service Records Found" noIcon>
+                    <NotFound title="No Service Records Found" noIcon>
                         Go to <Link to="/service-history" className="default-link">Service History</Link> to add a new record
-                    </NoDataComponent>
+                    </NotFound>
                 }
             </div>
         </div>

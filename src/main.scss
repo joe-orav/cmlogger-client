@@ -34,41 +34,6 @@ html, body, #root {
     @extend .row-cols-xl-4;
 }
 
-.add-car-card {
-    max-width: 250px;
-    
-    @include media-breakpoint-down(sm) {
-        max-width: none;
-        width: 100%;
-    }
-}
-
-.add-car-card {
-    @extend .w-100;
-    @extend .h-100;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-    border: 1px dashed lighten($primary, 30%);
-
-    &:hover {
-        color: white;
-    }
-}
-
-.plus-img-ctr {
-    @include media-breakpoint-up(md) {
-        width: 20%;
-    }
-
-    @include media-breakpoint-down(sm) {
-        width: 15%;
-    }
-}
-
 .table td {
     vertical-align: middle;
 }

@@ -2,27 +2,14 @@ import React from "react";
 import { useState } from "react";
 import DeleteModal from "./delete-modal";
 import CarFormModal from "./car-form-modal";
-import plusSymbol from "../img/plus.svg";
 import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
 import LoadingIcon from "../components/loading";
 import CarItem from "../components/carItem";
+import AddCarItem from "../components/addCarItem";
 import AddServiceRecordModal from "./service-record-modal";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
-
-const AddCar = (props) => {
-    return (
-        <div className="col mt-3 mt-lg-3">
-            <div className="add-car-card" data-toggle="modal" data-target="#car-form-modal" onClick={() => props.selectForEdit(-1)}>
-                <p className="h3 text-primary mt-3">Add New Car</p>
-                <div className="plus-img-ctr mb-3">
-                    <img className="img-fluid" src={plusSymbol} alt="Add New Car" />
-                </div>
-            </div>
-        </div>
-    )
-}
 
 const CarGrid = (props) => {
     const [editItemIndex, setEditItemIndex] = useState(-1);
@@ -37,7 +24,7 @@ const CarGrid = (props) => {
                     {props.cars.map((c, i) =>
                         <CarItem key={c.id} carIndex={i} car={c} />
                     )}
-                    {!props.readOnly && <AddCar selectForEdit={() => setEditItemIndex(-1)} />}
+                    <AddCarItem />
                 </div>
                 {!props.readOnly &&
                     <CarFormModal

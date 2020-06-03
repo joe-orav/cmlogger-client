@@ -35,7 +35,7 @@ const ProfileLink = styled.a`
 const DropdownToggle = styled(Dropdown.Toggle)`
   cursor: pointer;
   display: block;
-  margin-right: 15px;
+  margin-right: 10px;
   &.dropdown-toggle::after {
       content: none;
   }

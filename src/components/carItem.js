@@ -31,7 +31,7 @@ const CardLink = styled(Link)`
     }
 `;
 
-const CarItem = ({car, editOnClick, addOnClick, deleteOnClick}) => {
+const CarItem = ({car}) => {
     return (
         <Col className="mt-3">
             <CarCard>
@@ -42,8 +42,8 @@ const CarItem = ({car, editOnClick, addOnClick, deleteOnClick}) => {
                 </Card.Body>
                 <CarCardFooter>
                     <CardLink to="/add-car">Edit</CardLink>
-                    <CardLink onClick={addOnClick}>Add Record</CardLink>
-                    <CardLink onClick={deleteOnClick}>Delete</CardLink>
+                    <CardLink to="/add-record">Add Record</CardLink>
+                    <CardLink to="/">Delete</CardLink>
                 </CarCardFooter>
             </CarCard>
         </Col>

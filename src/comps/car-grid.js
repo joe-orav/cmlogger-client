@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import DeleteModal from "./delete-modal";
-import CarFormModal from "./car-form-modal";
 import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import { getCars, getUserId, getCarsDataLoading } from "../store/selectors";
@@ -26,15 +25,6 @@ const CarGrid = (props) => {
                     )}
                     <AddCarItem />
                 </div>
-                {!props.readOnly &&
-                    <CarFormModal
-                        keyValue={editItemIndex === -1 ? Date.now() : props.cars[editItemIndex].id}
-                        formValues={editItemIndex === -1 ? { id: editItemIndex } : props.cars[editItemIndex]}
-                        user_id={props.user_id}
-                        title={editItemIndex === -1 ? "Add New Car" : ("Edit Car: " + props.cars[editItemIndex].fullname)}
-                        modifyCarData={(data) => props.modifyCarData(data)}
-                    />
-                }
                 {!props.readOnly &&
                     <DeleteModal
                         title={deleteItemIndex === -1 ? "Delete Car" : "Delete Car: " + props.cars[deleteItemIndex].fullname}

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import imgImport from "../utils/imgImport";
+import { Link } from "react-router-dom";
 
 let siteImages = imgImport(require.context("../img", false));
 
@@ -22,9 +23,7 @@ const CarCardFooter = styled(Card.Footer)`
     justify-content: space-around;
 `;
 
-const CardLink = styled.a.attrs(() => ({
-    href: "/#"
-}))`
+const CardLink = styled(Link)`
     color: #007bff;
 
     &:hover {
@@ -42,7 +41,7 @@ const CarItem = ({car, editOnClick, addOnClick, deleteOnClick}) => {
                     <Card.Text>{`VIN: ${car.vin}`}</Card.Text>
                 </Card.Body>
                 <CarCardFooter>
-                    <CardLink onClick={editOnClick}>Edit</CardLink>
+                    <CardLink to="/add-car">Edit</CardLink>
                     <CardLink onClick={addOnClick}>Add Record</CardLink>
                     <CardLink onClick={deleteOnClick}>Delete</CardLink>
                 </CarCardFooter>

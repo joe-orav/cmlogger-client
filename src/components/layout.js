@@ -20,7 +20,7 @@ const SiteContent = styled.div`
   align-self: stretch;
 
   @media (min-width: 768px) {
-    padding-left: 173px;
+    padding-left: 175px;
   }
 
   @media (max-width: 767.98px) {
@@ -118,7 +118,7 @@ const SiteLayout = ({ hideNavBar, user, children }) => {
       </SiteContent>
     </LayoutWrapper>
   ) : (
-    <Container fluid className="h-100">
+    <Container fluid className="h-100 bg-light">
       {children}
     </Container>
   );

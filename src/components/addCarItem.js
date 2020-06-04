@@ -3,8 +3,9 @@ import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import plusSymbol from "../img/plus.svg";
+import { Link } from "react-router-dom";
 
-const Content = styled.div`
+const Content = styled(Link)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,6 +15,10 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   max-width: 250px;
+
+  &:hover {
+    text-decoration: none;
+  }
 
   @media (max-width: 767.98px) {
     max-width: none;
@@ -35,7 +40,7 @@ const ImageContainer = styled.div`
 const AddCarItem = () => {
   return (
     <Col className="mt-3">
-      <Content>
+      <Content to="/add-car">
         <p className="h3 text-primary mt-3">Add New Car</p>
         <ImageContainer>
             <Image src={plusSymbol} fluid alt="Add New Car" />

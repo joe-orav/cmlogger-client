@@ -8,46 +8,48 @@ import { Link } from "react-router-dom";
 let siteImages = imgImport(require.context("../img", false));
 
 const CarCard = styled(Card)`
-    height: 100%;
-    max-width: 250px;
+  height: 100%;
+  max-width: 250px;
 
-    @media (max-width: 767.98px) {
-        max-width: none;
-        width: 100%;
-    }
+  @media (max-width: 767.98px) {
+    max-width: none;
+    width: 100%;
+  }
 `;
 
 const CarCardFooter = styled(Card.Footer)`
-    background-color: #fff;
-    display: flex;
-    justify-content: space-around;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-around;
 `;
 
 const CardLink = styled(Link)`
-    color: #007bff;
+  color: #007bff;
 
-    &:hover {
-        color: #003e80;
-    }
+  &:hover {
+    color: #003e80;
+  }
 `;
 
-const CarItem = ({car}) => {
-    return (
-        <Col className="mt-3">
-            <CarCard>
-                <Card.Img variant="top" src={siteImages[car.type]} alt={car.type} />
-                <Card.Body className="bg-primary text-light">
-                    <Card.Title className="h5">{car.fullname}</Card.Title>
-                    <Card.Text>{`VIN: ${car.vin}`}</Card.Text>
-                </Card.Body>
-                <CarCardFooter>
-                    <CardLink to="/add-car">Edit</CardLink>
-                    <CardLink to="/add-record">Add Record</CardLink>
-                    <CardLink to="/">Delete</CardLink>
-                </CarCardFooter>
-            </CarCard>
-        </Col>
-    )
-}
+const CarItem = ({ car, hideControls }) => {
+  return (
+    <Col className="mt-3">
+      <CarCard>
+        <Card.Img variant="top" src={siteImages[car.type]} alt={car.type} />
+        <Card.Body className="bg-primary text-light">
+          <Card.Title className="h5">{car.fullname}</Card.Title>
+          <Card.Text>{`VIN: ${car.vin}`}</Card.Text>
+        </Card.Body>
+        {!hideControls && (
+          <CarCardFooter>
+            <CardLink to="/add-car">Edit</CardLink>
+            <CardLink to="/add-record">Add Record</CardLink>
+            <CardLink to="/">Delete</CardLink>
+          </CarCardFooter>
+        )}
+      </CarCard>
+    </Col>
+  );
+};
 
-export default CarItem
+export default CarItem;

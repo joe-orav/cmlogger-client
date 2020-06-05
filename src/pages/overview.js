@@ -1,87 +1,97 @@
 import React, { useEffect } from "react";
-import CarGrid from "../comps/car-grid";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getExpandedServiceHistory, getCarCount, getCarsDataLoading, getServiceHistoryDataLoading } from "../store/selectors";
+import { getCars } from "../store/selectors";
 import setPageTitle from "./pagetitle";
-import NotFound from "../components/notFound";
-import LoadingIcon from "../components/loading";
+import styled from "styled-components";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import PageWrapper from "../components/pageWrapper";
+import CarItem from "../components/carItem";
 
-const ServiceHistoryTable = ({ history }) => {
+const Block = styled.div`
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  padding-bottom: 20px;
+`;
 
-    function serviceHistoryList() {
-        let itemRows = [];
+const BlockHeader = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 5px 0px 5px 10px;
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 0;
+`;
 
-        let limit = history.length < 5 ? history.length : 5;
+const ContentBlock = ({ title, children, xs, sm, md, lg, xl }) => {
+  return (
+    <Col xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
+      <Block className="m-2">
+        <BlockHeader>{title}</BlockHeader>
+        {children}
+      </Block>
+    </Col>
+  );
+};
 
-        for (let i = 0; i < limit; i++) {
-            itemRows.push(
-                <tr key={history[i].id}>
-                    <td>{history[i].dateString}</td>
-                    <td>{history[i].car.fullname}</td>
-                    <td>{history[i].services.map(s => s.sname).join(", ")}</td>
-                </tr>
-            )
-        }
+const EBCContainer = styled.div`
+    text-align: center;
+    margin-top: 20px;
+    color: #707070;
+    padding: 0 20px;
+`
 
-        return itemRows
-    }
+const EBCTitle = styled.p`
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+`;
 
-    return (
-        <table className="table table-striped table-bordered mt-4 text-center">
-            <thead>
-                <tr>
-                    <th>Date of Service</th>
-                    <th>Car</th>
-                    <th>Services Provided</th>
-                </tr>
-            </thead>
-            <tbody>{serviceHistoryList()}</tbody>
-        </table>
-    )
-}
+const EBCText = styled.p`
+    font-size: 1.02rem;
+`
 
-function Overview({ carCount, serviceHistory, carsDataLoading, serviceHistoryDataLoading }) {
-    useEffect(() => {
-        setPageTitle("Overview");
-    })
+const EmptyBlockContent = ({ title, children }) => {
+  return (
+    <EBCContainer>
+      <EBCTitle>{title}</EBCTitle>
+      <EBCText>{children}</EBCText>
+    </EBCContainer>
+  );
+};
 
-    return (
-        <div className="row mt-3 pb-4">
-            <div className="col-12 mb-4">
-                <p className="h3">Overview</p>
-            </div>
-            <div className="col-12 mb-5">
-                <p className="h4">My Cars</p>
-                {
-                    (carsDataLoading && <LoadingIcon />) ||
-                    (carCount && <CarGrid readOnly />) ||
-                    <NotFound title="No Cars Found" noIcon>
-                        Go to <Link to="/cars" className="default-link">My Cars</Link> to add a new car
-                    </NotFound>
-                }
-            </div>
-            <div className="col-12">
-                <p className="h4">Service History</p>
-                {
-                    (serviceHistoryDataLoading && <LoadingIcon />) ||
-                    (serviceHistory.length && <ServiceHistoryTable history={serviceHistory} />) ||
-                    <NotFound title="No Service Records Found" noIcon>
-                        Go to <Link to="/service-history" className="default-link">Service History</Link> to add a new record
-                    </NotFound>
-                }
-            </div>
-        </div>
-    )
+function Overview({ cars }) {
+  useEffect(() => {
+    setPageTitle("Overview");
+  });
+  return (
+    <PageWrapper pageTitle="Overview">
+      <Col className="mt-3">
+        <Row>
+          <ContentBlock title="My Cars" xs="12" md="6" lg="7">
+            <Container>
+              <Row className="row-cols-1">
+                {cars.map((c, i) => (
+                  <CarItem key={i} car={c} hideControls />
+                ))}
+              </Row>
+            </Container>
+          </ContentBlock>
+          <ContentBlock title="Recent Service History" xs="12" md="6" lg="5">
+            <EmptyBlockContent title="No Service Records Found">
+              Any recent service records added will show up here
+            </EmptyBlockContent>
+          </ContentBlock>
+        </Row>
+      </Col>
+    </PageWrapper>
+  );
 }
 
 const mapStateToProps = (state) => {
-    return {
-        carCount: getCarCount(state),
-        serviceHistory: getExpandedServiceHistory(state),
-        carsDataLoading: getCarsDataLoading(state),
-        serviceHistoryDataLoading: getServiceHistoryDataLoading(state)
-    }
-}
+  return {
+    cars: getCars(state),
+  };
+};
 
 export default connect(mapStateToProps)(Overview);

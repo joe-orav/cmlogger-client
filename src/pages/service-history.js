@@ -7,42 +7,7 @@ import { getExpandedServiceHistory, getCars, getServiceHistoryDataLoading } from
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
 import LoadingIcon from "../components/loading";
 import setPageTitle from "./pagetitle";
-
-const ServiceRecord = ({ index, historyItem, selectForEdit, selectForDeletion }) => {
-    return (
-        <div className="row border-bottom">
-            <div className="col">
-                <div className="service-record-row" data-toggle="collapse" data-target={`#servicedata${index}`}>
-                    <div className="col-12 col-sm"><p><span className="sr-header-label-inline">Date: </span>{historyItem.dateString}</p></div>
-                    <div className="col-12 col-sm"><p><span className="sr-header-label-inline">Car: </span>{historyItem.car.fullname}</p></div>
-                    <div className="col-12 col-sm"><p><span className="sr-header-label-inline">Service(s): </span>{historyItem.services.map(s => s.sname).join(", ")}</p></div>
-                </div>
-                <div id={`servicedata${index}`} className="row collapse">
-                    <div className="col">
-                        <div className="service-record-data">
-                            <div className="col-md-4 text-center">
-                                <p><span className="font-weight-bold">Location: </span>{historyItem.location.name}</p>
-                            </div>
-                            <div className="col-md-4 text-center">
-                                <p><span className="font-weight-bold">Address: </span>{`${historyItem.location.address}, ${historyItem.location.city}, ${historyItem.location.state}, ${historyItem.location.zip_code}`}</p>
-                            </div>
-                            <div className="col-md-4 text-center">
-                                <p><span className="font-weight-bold">Total Cost of Service: </span>{"$" + historyItem.cost}</p>
-                            </div>
-                            <div className="col-md-12 text-center">
-                                <p><span className="font-weight-bold">Notes: </span>{historyItem.notes ? historyItem.notes : "N/A"}</p>
-                            </div>
-                            <div className="col-md-12 d-flex justify-content-center">
-                                <button type="button" className="edit-pen-icon" title="Edit" data-toggle="modal" data-target="#add-service-modal" onClick={() => selectForEdit(index)} />
-                                <button type="button" className="trash-icon" title="Delete" data-toggle="modal" data-target="#delete-modal" onClick={() => selectForDeletion(index)} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+import RecordItem from "../components/recordItem";
 
 function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHistoryDataLoading }) {
 
@@ -78,7 +43,7 @@ function ServiceHistory({ cars, serviceHistory, modifyServiceHistory, serviceHis
                     {
                         (serviceHistoryDataLoading && <LoadingIcon />) ||
                         (serviceHistory.length && serviceHistory.map((sItem, i) =>
-                            <ServiceRecord key={sItem.id} index={i} historyItem={sItem} selectForEdit={(index) => setEditItemIndex(index)} selectForDeletion={(index) => setDeleteItemIndex(index)} />)
+                            <RecordItem key={sItem.id} index={i} record={sItem} />)
                         ) ||
                         <NotFound title="No records found" noDivider noIcon>Click "Add Service Record" to add a new service record</NotFound>
                     }

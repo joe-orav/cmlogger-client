@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getCars } from "../store/selectors";
-import setPageTitle from "./pagetitle";
+import setPageTitle from "../utils/pageTitle";
 import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";

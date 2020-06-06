@@ -8,7 +8,7 @@ import { modifyLocationData } from "../store/actions/locations-actions";
 import { disconnectAccount, deleteAccount } from "../store/actions/user-actions";
 import { useLocation } from "react-router-dom";
 import queryString from 'query-string';
-import setPageTitle from "./pagetitle";
+import setPageTitle from "../utils/pageTitle";
 
 const SettingsSectionHeader = (props) => {
     return (

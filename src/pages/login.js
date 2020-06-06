@@ -5,7 +5,7 @@ import facebookLogo from "../img/facebook-logo.svg";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser } from "../store/selectors";
-import setPageTitle from "./pagetitle";
+import setPageTitle from "../utils/pageTitle";
 import styled, { css } from "styled-components";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";

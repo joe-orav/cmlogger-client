@@ -9,12 +9,6 @@ html, body, #root {
     height: 100%;
 }
 
-.center-xy {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 %btn-img {
     @extend .btn;
     background: no-repeat center center;
@@ -52,47 +46,6 @@ html, body, #root {
     @extend .justify-content-sm-end;
 }
 
-.add-service-btn {
-    @extend .btn;
-    @extend .btn-primary;
-
-    @include media-breakpoint-down(xs) {
-        display: block;
-        width: 100%;
-    }
-}
-
-.service-record-header {
-    @extend .row;
-    @extend .row-cols-3;
-    @extend .text-center;
-    @extend .border-bottom;
-    @extend .d-none;
-    @extend .d-sm-flex;
-    align-items: center;
-}
-
-// .service-record-row {
-//     @extend .row;
-//     @extend .row-cols-3;
-//     @extend .pt-3;
-//     text-align: center;
-//     align-items: center;
-//     cursor: pointer;
-//     transition: all 0.2s linear;
-
-//     &:hover {
-//         background: $gray-200;
-//     }
-// }
-
-// .service-record-data {
-//     @extend .row;
-//     @extend .py-3;
-//     align-items: center;
-//     background-color: $secondary;
-// }
-
 .sr-header-label-inline {
     @extend .d-sm-none;
     @extend .d-inline;
@@ -118,16 +71,6 @@ html, body, #root {
     @extend %btn-img;
     height: 30px;
 }
-
-// .trash-icon {
-//     @extend %service-btn-icon;
-//     background-image: url("./img/trash-icon.png");
-// }
-
-// .edit-pen-icon {
-//     @extend %service-btn-icon;
-//     background-image: url("./img/edit-pen-icon.png");
-// }
 
 .sec-head-ctr {
     @extend .col-12;

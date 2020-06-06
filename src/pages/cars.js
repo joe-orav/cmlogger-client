@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import setPageTitle from "./pagetitle";
+import setPageTitle from "../utils/pageTitle";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CarItem from "../components/carItem";

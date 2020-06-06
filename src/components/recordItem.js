@@ -6,6 +6,7 @@ import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
 import trashIcon from "../img/trash-icon.png";
 import editIcon from "../img/edit-pen-icon.png";
+import {Link} from "react-router-dom";
 
 const DetailItem = ({ label, text, width }) => {
   return (
@@ -46,12 +47,32 @@ const ControlBtn = styled(Button)`
   border: none;
   background-image: url(${(props) => props.$btnIcon});
 
-  &:focus, &:hover, &:active {
+  &:focus,
+  &:hover,
+  &:active {
     outline: none;
     box-shadow: none;
     background-color: transparent;
   }
 `;
+
+const InlineLabel = styled.span`
+  display: inline-block;
+  font-weight: bold;
+  @media (min-width: 576px) {
+    display: none;
+  }
+`;
+
+const SummaryItem = ({ label, value }) => {
+  return (
+    <Col xs="12" sm>
+      <p>
+        <InlineLabel>{`${label}:`}</InlineLabel> {value}
+      </p>
+    </Col>
+  );
+};
 
 const RecordItem = ({ index, record }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,15 +81,12 @@ const RecordItem = ({ index, record }) => {
     <Row className="border-bottom">
       <Col>
         <SummaryRow className="pt-3" onClick={() => setIsOpen(!isOpen)}>
-          <Col xs="12" sm>
-            <p>{record.dateString}</p>
-          </Col>
-          <Col xs="12" sm>
-            <p>{record.car.fullname}</p>
-          </Col>
-          <Col xs="12" sm>
-            <p>{record.services.map((s) => s.sname).join(", ")}</p>
-          </Col>
+          <SummaryItem label="Date" value={record.dateString} />
+          <SummaryItem label="Car" value={record.car.fullname} />
+          <SummaryItem
+            label="Service(s) Provided"
+            value={record.services.map((s) => s.sname).join(", ")}
+          />
         </SummaryRow>
         <Collapse in={isOpen}>
           <Row id={`record-item-${index}`}>
@@ -96,7 +114,7 @@ const RecordItem = ({ index, record }) => {
                   width="12"
                 />
                 <ItemControls>
-                  <ControlBtn $btnIcon={editIcon} />
+                  <ControlBtn forwardedAs={Link} $btnIcon={editIcon} to="/add-record" />
                   <ControlBtn $btnIcon={trashIcon} />
                 </ItemControls>
               </DetailsRow>

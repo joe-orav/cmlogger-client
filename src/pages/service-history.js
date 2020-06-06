@@ -15,6 +15,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import NotFound from "../components/notFound";
+import {Link} from "react-router-dom";
 
 const ButtonContainer = styled(Col)`
   display: flex;
@@ -54,7 +55,7 @@ function ServiceHistory({ cars, serviceHistory, serviceHistoryDataLoading }) {
   return (
     <PageWrapper pageTitle="Service History">
       <ButtonContainer xs="12">
-        <AddRecordButton variant="primary" className="mr-2">
+        <AddRecordButton forwardedAs={Link} variant="primary" className="mr-2" to="/add-record">
           Add New Record
         </AddRecordButton>
       </ButtonContainer>

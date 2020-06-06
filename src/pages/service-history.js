@@ -15,18 +15,48 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import NotFound from "../components/notFound";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+
+const DescriptionCol = styled(Col)`
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: center;
+
+  @media (min-width: 576px) {
+    justify-content: flex-start;
+    margin-bottom: 0px;
+  }
+`;
+
+const Description = styled.p`
+  margin-bottom: 0;
+
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    text-align: center;
+  }
+
+  @media (min-width: 576px) {
+    text-align: left;
+  }
+`;
 
 const ButtonContainer = styled(Col)`
   display: flex;
-  margin-top: 5px;
   justify-content: flex-end;
+  align-items: center;
 `;
 
 const AddRecordButton = styled(Button)`
-  @media (max-width: 575.98px) {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
+  align-items: center;
+  box-sizing: content-box;
+  max-height: 24px;
+
+  @media (min-width: 576px) {
+    display: flex;
+    width: auto;
   }
 `;
 
@@ -54,11 +84,24 @@ function ServiceHistory({ cars, serviceHistory, serviceHistoryDataLoading }) {
 
   return (
     <PageWrapper pageTitle="Service History">
-      <ButtonContainer xs="12">
-        <AddRecordButton forwardedAs={Link} variant="primary" className="mr-2" to="/add-record">
-          Add New Record
-        </AddRecordButton>
-      </ButtonContainer>
+      <Col className="mt-3 mt-md-2">
+        <Row>
+          <DescriptionCol xs="12" sm="6">
+            <Description>
+              Click a row to expand it and view more details
+            </Description>
+          </DescriptionCol>
+          <ButtonContainer xs="12" sm="6">
+            <AddRecordButton
+              forwardedAs={Link}
+              variant="primary"
+              to="/add-record"
+            >
+              Add New Record
+            </AddRecordButton>
+          </ButtonContainer>
+        </Row>
+      </Col>
       <Col xs="12" className="mt-4">
         <Container fluid>
           <TableHead className="row-cols-3 border-bottom">

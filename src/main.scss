@@ -20,36 +20,12 @@ html, body, #root {
     }
 }
 
-.table td {
-    vertical-align: middle;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(104, 104, 104, 0.8);
-    color: #fff;
-}
-
 .default-link {
     color: $blue;
 
     &:hover {
         color: darken($blue, 25%);
     }
-}
-
-.add-service-btn-ctr {
-    @extend .col-sm-6;
-    @extend .mt-4;
-    @extend .mt-sm-0;
-    display: flex;
-    justify-content: center;
-    @extend .justify-content-sm-end;
-}
-
-.sr-header-label-inline {
-    @extend .d-sm-none;
-    @extend .d-inline;
-    @extend .font-weight-bold;
 }
 
 %service-form-btn {
@@ -70,87 +46,6 @@ html, body, #root {
 %service-btn-icon {
     @extend %btn-img;
     height: 30px;
-}
-
-.sec-head-ctr {
-    @extend .col-12;
-
-    hr {
-        margin-top: 0px;
-    }
-}
-
-.stg-sec-header {
-    @extend .h5;
-}
-
-.section-items {
-    @extend .col-12;
-}
-
-.section-items-row {
-    @extend .row;
-    @extend .mb-lg-4;
-    @extend .mb-3;
-}
-
-.section-item-label {
-    @extend .col-12;
-    @extend .col-lg-3;
-    @extend .font-weight-bold;
-}
-
-.section-item-content {
-    @extend .col-auto;
-}
-
-.sec-content-desc {
-    @extend .font-italic;
-    @extend .mt-1;
-}
-
-.service-select {
-    @extend .custom-select;
-    @extend .w-auto;
-    @extend .d-block;
-    min-width: 200px;
-}
-
-.social-account-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.account-provider {
-    @extend .font-weight-bold;
-    margin-right: 5px;
-    margin-bottom: 0px;
-}
-
-.connect-link-ctr {
-    display: flex;
-    margin-left: 3px;
-    margin-bottom: 0px;
-}
-
-.connect-status {
-    display: flex;
-    align-items: center;
-
-    .icon-ctr {
-        display: flex;
-        width: 18px;
-    }
-}
-
-.connect-status-icon {
-    color: $green;
-    margin-right: 5px;
-}
-
-.connect-link {
-    @extend .default-link;
 }
 
 .was-validated .custom-select:valid, .was-validated .service-select:valid, 

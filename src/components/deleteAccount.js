@@ -9,6 +9,7 @@ const DeleteAccount = () => {
     <div>
       <Form.Check
         inline
+        id="delete-confirmation-checkbox"
         type="checkbox"
         label="I confirm that I want to delete my account"
         onClick={(e) => setDeletionConfirmation(e.target.checked)}

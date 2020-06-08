@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import imgImport from "../utils/imgImport";
-import { Link } from "react-router-dom";
+import { SDRouteLink } from "./defaultLink";
 
 let siteImages = imgImport(require.context("../img", false));
 
@@ -23,14 +23,6 @@ const CarCardFooter = styled(Card.Footer)`
   justify-content: space-around;
 `;
 
-const CardLink = styled(Link)`
-  color: #007bff;
-
-  &:hover {
-    color: #003e80;
-  }
-`;
-
 const CarItem = ({ car, hideControls }) => {
   return (
     <Col className="mt-3">
@@ -42,9 +34,9 @@ const CarItem = ({ car, hideControls }) => {
         </Card.Body>
         {!hideControls && (
           <CarCardFooter>
-            <CardLink to="/add-car">Edit</CardLink>
-            <CardLink to="/add-record">Add Record</CardLink>
-            <CardLink to="/">Delete</CardLink>
+            <SDRouteLink to="/add-car">Edit</SDRouteLink>
+            <SDRouteLink to="/add-record">Add Record</SDRouteLink>
+            <SDRouteLink to="/">Delete</SDRouteLink>
           </CarCardFooter>
         )}
       </CarCard>

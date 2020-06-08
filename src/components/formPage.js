@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+import { SDRouteLink } from "./defaultLink";
 
 const PageContent = styled.div`
   border: 1px solid #cfcfcf;
@@ -23,12 +23,8 @@ const LinkContainer = styled.div`
   text-align: center;
 `;
 
-const BackLink = styled(Link)`
-  color: #007bff;
+const BackLink = styled(SDRouteLink)`
   font-size: 1.1rem;
-  &:hover {
-    color: #003e80;
-  }
 `;
 
 export default ({ title, children, backTo, contentWidth }) => {

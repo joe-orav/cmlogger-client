@@ -20,14 +20,6 @@ html, body, #root {
     }
 }
 
-.default-link {
-    color: $blue;
-
-    &:hover {
-        color: darken($blue, 25%);
-    }
-}
-
 %service-form-btn {
     @extend %btn-img;
     @extend .mx-1;
@@ -102,9 +94,4 @@ html, body, #root {
         text-align: center;
         margin-right: 0px;
     }
-}
-
-.not-found-page-img-ctr {
-    @extend .mb-3;
-    height: 150px;
 }

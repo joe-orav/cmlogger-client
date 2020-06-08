@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Image from "react-bootstrap/Image";
 import checkIcon from "../img/connect-check.svg";
+import { SDLink } from "./defaultLink";
 
 const ItemContainer = styled.div`
   display: flex;
@@ -25,13 +26,6 @@ const CLinkContainer = styled.p`
   margin-bottom: 0;
 `;
 
-const CLink = styled.a`
-  color: #007bff;
-  &:hover {
-    color: #003e80;
-  }
-`;
-
 const ConnectionContainer = styled.div`
   display: flex;
 
@@ -52,12 +46,12 @@ const ConnectLink = ({ text, providerName, onClick }) => {
   return (
     <CLinkContainer>
       (
-      <CLink
+      <SDLink
         href={onClick ? "#/" : `/auth/${providerName.toLowerCase()}`}
         onClick={onClick}
       >
         {text}
-      </CLink>
+      </SDLink>
       )
     </CLinkContainer>
   );

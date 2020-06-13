@@ -27,7 +27,6 @@ const Car = styled.span`
 `;
 
 const RecordListItem = ({ recordItem }) => {
-  console.log(recordItem);
   return (
     <ContentContainer>
       <ServiceDate>{recordItem.dateString}</ServiceDate>

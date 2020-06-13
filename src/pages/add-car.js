@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FormPage from "../components/formPage";
+import queryString from "query-string";
+import { getCars, getCarsDataLoading } from "../store/selectors";
+import { connect } from "react-redux";
 
 const YEAR_MAX = new Date().getFullYear(),
   YEAR_MIN = YEAR_MAX - 85;
@@ -35,9 +38,38 @@ const FormButton = styled(Button)`
   margin-left: 20px;
 `;
 
-function AddCar() {
+function AddCar({ cars, carsDataLoading }) {
+  let urlQuery = queryString.parse(useLocation().search);
+  let queryID = 0;
+  let defaultValues = {};
+
+  if (!carsDataLoading) {
+    queryID = /^\d+$/.test(urlQuery.id) ? parseInt(urlQuery.id, 10) : 0;
+
+    if (queryID > 0) {
+      let carData = cars.filter((car) => car.id === queryID);
+      if (carData.length > 0) {
+        let { car_year, make, model, vin, fullname } = carData[0];
+        defaultValues = {
+          year: car_year,
+          make: make,
+          model: model,
+          vin: vin,
+          name: fullname,
+        };
+      } else {
+        queryID = 0;
+      }
+    }
+  }
+
   return (
-    <FormPage title="Add New Car" backTo="/cars">
+    <FormPage
+      title={
+        defaultValues.name ? `Edit Car: ${defaultValues.name}` : "Add New Car"
+      }
+      backTo="/cars"
+    >
       <AddCarForm>
         <Form.Group controlId="carType">
           <Form.Label>Type</Form.Label>
@@ -49,7 +81,7 @@ function AddCar() {
         </Form.Group>
         <Form.Group controlId="carYear">
           <Form.Label>Year</Form.Label>
-          <Form.Control as="select">
+          <Form.Control as="select" defaultValue={defaultValues.year}>
             {yearRange.map((y) => (
               <option key={y}>{y}</option>
             ))}
@@ -57,15 +89,15 @@ function AddCar() {
         </Form.Group>
         <Form.Group controlId="carMake">
           <Form.Label>Make</Form.Label>
-          <Form.Control type="text" />
+          <Form.Control type="text" defaultValue={defaultValues.make} />
         </Form.Group>
         <Form.Group controlId="carModel">
           <Form.Label>Model</Form.Label>
-          <Form.Control type="text" />
+          <Form.Control type="text" defaultValue={defaultValues.model} />
         </Form.Group>
         <Form.Group controlId="carVIN">
           <Form.Label>VIN #</Form.Label>
-          <Form.Control type="text" />
+          <Form.Control type="text" defaultValue={defaultValues.vin} />
         </Form.Group>
         <ButtonContainer>
           <FormButton type="submit">Save</FormButton>
@@ -78,4 +110,11 @@ function AddCar() {
   );
 }
 
-export default AddCar;
+const mapStateToProps = (state) => {
+  return {
+    cars: getCars(state),
+    carsDataLoading: getCarsDataLoading(state),
+  };
+};
+
+export default connect(mapStateToProps)(AddCar);

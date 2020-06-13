@@ -45,8 +45,6 @@ function AddRecord() {
           <Form.Group className="col-6" controlId="servicedCar">
             <Form.Label>Car Serviced</Form.Label>
             <Form.Control as="select">
-              <option>2019 Nissan Altima</option>
-              <option>2004 Ford Taurus</option>
             </Form.Control>
           </Form.Group>
           <Form.Group className="col-12" controlId="savedLocations">
@@ -72,11 +70,9 @@ function AddRecord() {
               <Form.Group className="col-3" controlId="state">
                 <Form.Label>State</Form.Label>
                 <Form.Control as="select">
-                  <option>AA</option>
-                  <option>AB</option>
                 </Form.Control>
               </Form.Group>
-              <Form.Group className="col-4" controlId="state">
+              <Form.Group className="col-4" controlId="zipCode">
                 <Form.Label>ZIP Code</Form.Label>
                 <Form.Control type="text" />
               </Form.Group>
@@ -84,19 +80,23 @@ function AddRecord() {
           </Form.Group>
           <Form.Group className="col-12" controlId="services">
             <Form.Label>Services</Form.Label>
-            <InputGroup>
-                <Form.Control type="text" />
-                <InputGroup.Append>
-                </InputGroup.Append>
-            </InputGroup>
+            <Form.Control as="select" multiple>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group className="col-12" controlId="addlServices">
+            <Form.Label>Additional Services</Form.Label>
+            <Form.Control type="text" />
+            <Form.Text muted>
+              Additional services must be separated by commas
+            </Form.Text>
           </Form.Group>
           <Form.Group className="col-12" controlId="cost">
             <Form.Label>Total Cost of Service</Form.Label>
             <InputGroup>
-                <InputGroup.Prepend>
-                    <InputGroup.Text>$</InputGroup.Text>
-                </InputGroup.Prepend>
-                <Form.Control type="text" placeholder="0.00" />
+              <InputGroup.Prepend>
+                <InputGroup.Text>$</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control type="text" placeholder="0.00" />
             </InputGroup>
           </Form.Group>
           <Form.Group className="col-12" controlId="notes">

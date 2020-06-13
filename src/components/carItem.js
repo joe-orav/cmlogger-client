@@ -39,7 +39,7 @@ const CarItem = ({ car, hideControls, cardWidth = "250" }) => {
         </Card.Body>
         {!hideControls && (
           <CarCardFooter>
-            <SDRouteLink to="/add-car">Edit</SDRouteLink>
+            <SDRouteLink to={`/add-car?id=${car.id}`}>Edit</SDRouteLink>
             <SDRouteLink to="/add-record">Add Record</SDRouteLink>
             <SDRouteLink to="/">Delete</SDRouteLink>
           </CarCardFooter>

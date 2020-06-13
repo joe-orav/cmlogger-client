@@ -9,7 +9,8 @@ let siteImages = imgImport(require.context("../img", false));
 
 const CarCard = styled(Card)`
   height: 100%;
-  max-width: 250px;
+  max-width: ${(props) =>
+    props.$cardWidth === "full" ? "100%" : `${props.$cardWidth}px`};
 
   @media (max-width: 767.98px) {
     max-width: none;
@@ -23,14 +24,18 @@ const CarCardFooter = styled(Card.Footer)`
   justify-content: space-around;
 `;
 
-const CarItem = ({ car, hideControls }) => {
+const CardVIN = styled(Card.Text)`
+  font-size: 0.88rem;
+`;
+
+const CarItem = ({ car, hideControls, cardWidth = "250" }) => {
   return (
     <Col className="mt-3">
-      <CarCard>
+      <CarCard $cardWidth={cardWidth}>
         <Card.Img variant="top" src={siteImages[car.type]} alt={car.type} />
         <Card.Body className="bg-primary text-light">
           <Card.Title className="h5">{car.fullname}</Card.Title>
-          <Card.Text>{`VIN: ${car.vin}`}</Card.Text>
+          <CardVIN>{`VIN: ${car.vin}`}</CardVIN>
         </Card.Body>
         {!hideControls && (
           <CarCardFooter>

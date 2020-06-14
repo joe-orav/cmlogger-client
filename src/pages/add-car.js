@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -38,42 +38,60 @@ const FormButton = styled(Button)`
   margin-left: 20px;
 `;
 
+function validateQuery(id, cars) {
+  let queryID = /^\d+$/.test(id) ? parseInt(id, 10) : 0;
+
+  if (queryID > 0) {
+    let carData = cars.filter((car) => car.id === queryID);
+    if (carData.length > 0) {
+      let { type, car_year, make, model, vin, fullname } = carData[0];
+      return {
+        id: queryID,
+        type: type,
+        year: car_year,
+        make: make,
+        model: model,
+        vin: vin,
+        name: fullname,
+      };
+    }
+  }
+
+  return { id: 0 };
+}
+
 function AddCar({ cars, carsDataLoading }) {
   let urlQuery = queryString.parse(useLocation().search);
-  let queryID = 0;
-  let defaultValues = {};
+  let formValues = { id: 0 };
 
   if (!carsDataLoading) {
-    queryID = /^\d+$/.test(urlQuery.id) ? parseInt(urlQuery.id, 10) : 0;
+    formValues = validateQuery(urlQuery.id, cars);
+  }
 
-    if (queryID > 0) {
-      let carData = cars.filter((car) => car.id === queryID);
-      if (carData.length > 0) {
-        let { car_year, make, model, vin, fullname } = carData[0];
-        defaultValues = {
-          year: car_year,
-          make: make,
-          model: model,
-          vin: vin,
-          name: fullname,
-        };
-      } else {
-        queryID = 0;
-      }
-    }
+  const [dataID] = useState(formValues.id);
+  const [typeVal, setTypeVal] = useState(carTypes[formValues.type] || carTypes["sedan"]);
+  const [yearVal, setYearVal] = useState(formValues.year || yearRange[0]);
+  const [makeVal, setMakeVal] = useState(formValues.make || "");
+  const [modelVal, setModelVal] = useState(formValues.model || "");
+  const [vinVal, setVinVal] = useState(formValues.vin || "");
+
+  function handleSubmission(ev) {
+    ev.preventDefault();
   }
 
   return (
     <FormPage
-      title={
-        defaultValues.name ? `Edit Car: ${defaultValues.name}` : "Add New Car"
-      }
+      title={dataID ? `Edit Car: ${formValues.name}` : "Add New Car"}
       backTo="/cars"
     >
-      <AddCarForm>
+      <AddCarForm onSubmit={handleSubmission}>
         <Form.Group controlId="carType">
           <Form.Label>Type</Form.Label>
-          <Form.Control as="select">
+          <Form.Control
+            as="select"
+            value={typeVal}
+            onChange={(e) => setTypeVal(e.target.value)}
+          >
             {Object.keys(carTypes).map((k) => (
               <option key={k}>{carTypes[k]}</option>
             ))}
@@ -81,23 +99,41 @@ function AddCar({ cars, carsDataLoading }) {
         </Form.Group>
         <Form.Group controlId="carYear">
           <Form.Label>Year</Form.Label>
-          <Form.Control as="select" defaultValue={defaultValues.year}>
+          <Form.Control
+            as="select"
+            value={yearVal}
+            onChange={(e) => setYearVal(e.target.value)}
+          >
             {yearRange.map((y) => (
-              <option key={y}>{y}</option>
+              <option key={y} value={y}>
+                {y}
+              </option>
             ))}
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="carMake">
           <Form.Label>Make</Form.Label>
-          <Form.Control type="text" defaultValue={defaultValues.make} />
+          <Form.Control
+            type="text"
+            value={makeVal}
+            onChange={(e) => setMakeVal(e.target.value)}
+          />
         </Form.Group>
         <Form.Group controlId="carModel">
           <Form.Label>Model</Form.Label>
-          <Form.Control type="text" defaultValue={defaultValues.model} />
+          <Form.Control
+            type="text"
+            value={modelVal}
+            onChange={(e) => setModelVal(e.target.value)}
+          />
         </Form.Group>
         <Form.Group controlId="carVIN">
           <Form.Label>VIN #</Form.Label>
-          <Form.Control type="text" defaultValue={defaultValues.vin} />
+          <Form.Control
+            type="text"
+            value={vinVal}
+            onChange={(e) => setVinVal(e.target.value)}
+          />
         </Form.Group>
         <ButtonContainer>
           <FormButton type="submit">Save</FormButton>

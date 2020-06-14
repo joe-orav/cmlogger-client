@@ -114,7 +114,7 @@ const RecordItem = ({ index, record }) => {
                   width="12"
                 />
                 <ItemControls>
-                  <ControlBtn forwardedAs={Link} $btnIcon={editIcon} to="/add-record" />
+                  <ControlBtn forwardedAs={Link} $btnIcon={editIcon} to={`/add-record?id=${record.id}`} />
                   <ControlBtn $btnIcon={trashIcon} />
                 </ItemControls>
               </DetailsRow>

@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import FormPage from "../components/formPage";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
-  getCars,
-  getLocations,
-  getServices,
-  getUserId,
+  getExpandedServiceHistory,
+  getServiceHistoryDataLoading,
 } from "../store/selectors";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
+import DateField from "../components/add-record-fields/dateField";
+import CarServicedField from "../components/add-record-fields/carServicedField";
+import LocationFieldsGroup from "../components/add-record-fields/locationFieldsGroup";
+import ServicesField from "../components/add-record-fields/servicesField";
+import TotalCostField from "../components/add-record-fields/costField";
+import AddlServicesField from "../components/add-record-fields/addlServicesField";
+import NotesField from "../components/add-record-fields/notesField";
 
 const AddRecordForm = styled(Form)`
   max-width: 90%;
@@ -29,80 +35,94 @@ const FormButton = styled(Button)`
   margin-left: 20px;
 `;
 
-function AddRecord() {
+function validateQuery(id, serviceHistory) {
+  let queryID = /^\d+$/.test(id) ? parseInt(id, 10) : 0;
+
+  if (queryID > 0) {
+    let recordItem = serviceHistory.filter((record) => record.id === queryID);
+    if (recordItem.length > 0) {
+      let { car, cost, parsedDate, location, notes, services } = recordItem[0];
+      return {
+        id: queryID,
+        carID: car.id,
+        cost: cost,
+        date: parsedDate,
+        savedLocID: location.id,
+        locName: location.name,
+        address: location.address,
+        city: location.city,
+        state: location.state,
+        zip: location.zip_code,
+        notes: notes,
+        services: services.map((service) => service.id),
+      };
+    }
+  }
+
+  return { id: 0 };
+}
+
+function AddRecord({ serviceHistory, serviceHistoryLoading }) {
+  let urlQuery = queryString.parse(useLocation().search);
+  let formValues = { id: 0 };
+
+  if (!serviceHistoryLoading) {
+    formValues = validateQuery(urlQuery.id, serviceHistory);
+  }
+
+  const [dataID] = useState(formValues.id);
+  const [dateValue, setDateValue] = useState(formValues.date || new Date());
+  const [carServicedValue, setCarServicedValue] = useState(formValues.carID || 0);
+  const [savedLocValue, setSavedLocValue] = useState(formValues.savedLocID || 0);
+  const [locName, setLocName] = useState(formValues.locName || "");
+  const [locAddress, setLocAddress] = useState(formValues.address || "");
+  const [locCity, setLocCity] = useState(formValues.city || "");
+  const [locState, setLocState] = useState(formValues.state || "");
+  const [locZIP, setLocZIP] = useState(formValues.zip || "");
+  const [servicesValues, setServicesValues] = useState(formValues.services || []);
+  const [addlServices, setAddlServices] = useState("");
+  const [totalCost, setTotalCost] = useState(formValues.cost || "");
+  const [notesValue, setNotesValues] = useState(formValues.notes || "");
+
+  function handleSubmission(e) {
+    e.preventDefault();
+  }
+
   return (
     <FormPage
-      title="Add Service Record"
+      title={`${dataID ? 'Edit' : 'Add'} Service Record`}
       backTo="/service-history"
       contentWidth="500"
     >
-      <AddRecordForm>
+      <AddRecordForm id="add-record-form" onSubmit={handleSubmission}>
         <Form.Row>
-          <Form.Group className="col-6" controlId="serviceDate">
-            <Form.Label>Date of Service</Form.Label>
-            <Form.Control type="text" />
-          </Form.Group>
-          <Form.Group className="col-6" controlId="servicedCar">
-            <Form.Label>Car Serviced</Form.Label>
-            <Form.Control as="select">
-            </Form.Control>
-          </Form.Group>
-          <Form.Group className="col-12" controlId="savedLocations">
-            <Form.Label>Saved Locations</Form.Label>
-            <Form.Control as="select">
-              <option>--- Enter a new location ---</option>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group className="col-12" controlId="location">
-            <Form.Label>Location Name</Form.Label>
-            <Form.Control type="text" />
-          </Form.Group>
-          <Form.Group className="col-12" controlId="fullAddress">
-            <Form.Row>
-              <Form.Group className="col-12" controlId="address">
-                <Form.Label>Address</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-              <Form.Group className="col-5" controlId="city">
-                <Form.Label>City</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-              <Form.Group className="col-3" controlId="state">
-                <Form.Label>State</Form.Label>
-                <Form.Control as="select">
-                </Form.Control>
-              </Form.Group>
-              <Form.Group className="col-4" controlId="zipCode">
-                <Form.Label>ZIP Code</Form.Label>
-                <Form.Control type="text" />
-              </Form.Group>
-            </Form.Row>
-          </Form.Group>
-          <Form.Group className="col-12" controlId="services">
-            <Form.Label>Services</Form.Label>
-            <Form.Control as="select" multiple>
-            </Form.Control>
-          </Form.Group>
-          <Form.Group className="col-12" controlId="addlServices">
-            <Form.Label>Additional Services</Form.Label>
-            <Form.Control type="text" />
-            <Form.Text muted>
-              Additional services must be separated by commas
-            </Form.Text>
-          </Form.Group>
-          <Form.Group className="col-12" controlId="cost">
-            <Form.Label>Total Cost of Service</Form.Label>
-            <InputGroup>
-              <InputGroup.Prepend>
-                <InputGroup.Text>$</InputGroup.Text>
-              </InputGroup.Prepend>
-              <Form.Control type="text" placeholder="0.00" />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group className="col-12" controlId="notes">
-            <Form.Label>Notes</Form.Label>
-            <Form.Control as="textarea" rows="3" />
-          </Form.Group>
+          <DateField value={dateValue} setValue={setDateValue} />
+          <CarServicedField
+            value={carServicedValue}
+            setValue={setCarServicedValue}
+          />
+          <LocationFieldsGroup
+            values={{
+              savedLocValue,
+              locName,
+              locAddress,
+              locCity,
+              locState,
+              locZIP,
+            }}
+            setValues={{
+              setSavedLocValue,
+              setLocName,
+              setLocAddress,
+              setLocCity,
+              setLocState,
+              setLocZIP,
+            }}
+          />
+          <ServicesField value={servicesValues} setValue={setServicesValues} />
+          <AddlServicesField value={addlServices} setValue={setAddlServices} />
+          <TotalCostField value={totalCost} setValue={setTotalCost} />
+          <NotesField value={notesValue} setValue={setNotesValues} />
         </Form.Row>
         <ButtonContainer>
           <FormButton type="submit">Save</FormButton>
@@ -117,10 +137,8 @@ function AddRecord() {
 
 const mapStateToProps = (state) => {
   return {
-    carsList: getCars(state),
-    locationsList: getLocations(state),
-    servicesList: getServices(state),
-    user_id_from_state: getUserId(state),
+    serviceHistory: getExpandedServiceHistory(state),
+    serviceHistoryLoading: getServiceHistoryDataLoading(state),
   };
 };
 

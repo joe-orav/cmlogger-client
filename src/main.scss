@@ -9,37 +9,6 @@ html, body, #root {
     height: 100%;
 }
 
-%btn-img {
-    @extend .btn;
-    background: no-repeat center center;
-    background-size: 100% auto;
-
-    &:focus {
-        outline: none;
-        box-shadow: none;
-    }
-}
-
-%service-form-btn {
-    @extend %btn-img;
-    @extend .mx-1;
-}
-
-.service-plus-btn {
-    @extend %service-form-btn;
-    background-image: url("./img/plus.svg");
-}
-
-.service-minus-btn {
-    @extend %service-form-btn;
-    background-image: url("./img/minus.svg");
-}
-
-%service-btn-icon {
-    @extend %btn-img;
-    height: 30px;
-}
-
 .was-validated .custom-select:valid, .was-validated .service-select:valid, 
 .custom-select.is-valid, .is-valid.service-select {
     @extend .custom-select;

@@ -337,11 +337,21 @@ function alertsReducer(state = [], action) {
     }
 }
 
+function fetchReducer(state = false, action) {
+    switch(action.type) {
+        case ActionTypes.FETCH_SH_DATA_SUCCESS:
+            return true
+        default:
+            return state
+    }
+}
+
 export const rootReducer = combineReducers({
     user: userReducer,
     cars: carsReducer,
     serviceHistory: serviceHistoryReducer,
     services: servicesReducer,
     locations: locationsReducer,
-    alerts: alertsReducer
+    alerts: alertsReducer,
+    fetchComplete: fetchReducer
 })

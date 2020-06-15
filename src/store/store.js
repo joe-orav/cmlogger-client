@@ -37,7 +37,8 @@ let initialState = {
         loading: false,
         error: null
     },
-    alerts: []
+    alerts: [],
+    fetchComplete: false
 }
 
 export default createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(thunk))) 

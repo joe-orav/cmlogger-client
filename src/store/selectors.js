@@ -14,12 +14,23 @@ export const getLocationsError = (state) => state.locations.error;
 
 export const getCarsDataLoading = (state) => state.cars.loading;
 export const getServiceHistoryDataLoading = (state) => state.serviceHistory.loading;
+export const getDataLoaded = (state) => state.fetchComplete
 
 export const getCarCount = (state) => state.cars.items.length;
 
 export const getCars = createSelector(
     [(state) => state.cars.items],
     (cars) => cars.map(c => Object.assign({}, c, { fullname: `${c.car_year} ${c.make} ${c.model}` }))
+)
+
+export const getAccounts = createSelector(
+    getUser,
+    (user) => {
+        return [
+            {providerName: "Google", connected: user.googleConnected},
+            {providerName: "Facebook", connected: user.facebookConnected},
+        ]
+    }
 )
 
 export const getExpandedServiceHistory = createSelector(
@@ -96,7 +107,6 @@ export const getOrphanedLocations = createSelector(
         })
     }
 )
-
 
 export const getErrors = createSelector(
     getCarsError, getServiceHistoryError, getServicesError, getLocationsError,

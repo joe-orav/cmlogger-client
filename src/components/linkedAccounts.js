@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Image from "react-bootstrap/Image";
 import checkIcon from "../img/connect-check.svg";
 import { SDLink } from "./defaultLink";
+import { getAccounts } from "../store/selectors";
+import { connect } from "react-redux";
 
 const ItemContainer = styled.div`
   display: flex;
@@ -62,7 +64,11 @@ const ConnectionStatus = ({ connected, enableDisconnect, providerName }) => {
     <ConnectionContainer>
       {connected && <ConnectedIcon />}
       {connected && enableDisconnect && (
-        <ConnectLink text="Disconnect" providerName={providerName} onClick={() => {}} />
+        <ConnectLink
+          text="Disconnect"
+          providerName={providerName}
+          onClick={() => {}}
+        />
       )}
       {!connected && <ConnectLink text="Connect" providerName={providerName} />}
     </ConnectionContainer>
@@ -99,4 +105,10 @@ const LinkedAccounts = ({ accountList }) => {
   );
 };
 
-export default LinkedAccounts;
+const mapStateToProps = (state) => {
+  return {
+    accountList: getAccounts(state)
+  };
+};
+
+export default connect(mapStateToProps)(LinkedAccounts);

@@ -6,7 +6,8 @@ import Collapse from "react-bootstrap/Collapse";
 import Button from "react-bootstrap/Button";
 import trashIcon from "../img/trash-icon.png";
 import editIcon from "../img/edit-pen-icon.png";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import DeleteOverlay from "./deleteItem";
 
 const DetailItem = ({ label, text, width }) => {
   return (
@@ -18,6 +19,10 @@ const DetailItem = ({ label, text, width }) => {
     </Col>
   );
 };
+
+const ContainerCol = styled(Col)`
+  position: relative;
+`;
 
 const SummaryRow = styled(Row)`
   text-align: center;
@@ -76,10 +81,11 @@ const SummaryItem = ({ label, value }) => {
 
 const RecordItem = ({ index, record }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
 
   return (
     <Row className="border-bottom">
-      <Col>
+      <ContainerCol>
         <SummaryRow className="pt-3" onClick={() => setIsOpen(!isOpen)}>
           <SummaryItem label="Date" value={record.dateString} />
           <SummaryItem label="Car" value={record.car.fullname} />
@@ -114,14 +120,25 @@ const RecordItem = ({ index, record }) => {
                   width="12"
                 />
                 <ItemControls>
-                  <ControlBtn forwardedAs={Link} $btnIcon={editIcon} to={`/add-record?id=${record.id}`} />
-                  <ControlBtn $btnIcon={trashIcon} />
+                  <ControlBtn
+                    forwardedAs={Link}
+                    $btnIcon={editIcon}
+                    to={`/add-record?id=${record.id}`}
+                  />
+                  <ControlBtn
+                    $btnIcon={trashIcon}
+                    onClick={() => setShowDeleteOverlay(true)}
+                  />
                 </ItemControls>
               </DetailsRow>
             </Col>
           </Row>
         </Collapse>
-      </Col>
+        <DeleteOverlay
+          show={showDeleteOverlay}
+          setShow={setShowDeleteOverlay}
+        />
+      </ContainerCol>
     </Row>
   );
 };

@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import imgImport from "../utils/imgImport";
-import { SDRouteLink } from "./defaultLink";
+import { SDRouteLink, SDLink } from "./defaultLink";
+import DeleteOverlay from "./deleteItem";
 
 let siteImages = imgImport(require.context("../img", false));
 
 const CarCard = styled(Card)`
   height: 100%;
+  position: relative;
   max-width: ${(props) =>
     props.$cardWidth === "full" ? "100%" : `${props.$cardWidth}px`};
 
@@ -29,6 +31,7 @@ const CardVIN = styled(Card.Text)`
 `;
 
 const CarItem = ({ car, hideControls, cardWidth = "250" }) => {
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
   return (
     <Col className="mt-3">
       <CarCard $cardWidth={cardWidth}>
@@ -38,11 +41,19 @@ const CarItem = ({ car, hideControls, cardWidth = "250" }) => {
           <CardVIN>{`VIN: ${car.vin}`}</CardVIN>
         </Card.Body>
         {!hideControls && (
-          <CarCardFooter>
-            <SDRouteLink to={`/add-car?id=${car.id}`}>Edit</SDRouteLink>
-            <SDRouteLink to="/add-record">Add Record</SDRouteLink>
-            <SDRouteLink to="/">Delete</SDRouteLink>
-          </CarCardFooter>
+          <>
+            <CarCardFooter>
+              <SDRouteLink to={`/add-car?id=${car.id}`}>Edit</SDRouteLink>
+              <SDRouteLink to="/add-record">Add Record</SDRouteLink>
+              <SDLink href="#/" onClick={() => setShowDeleteOverlay(true)}>
+                Delete
+              </SDLink>
+            </CarCardFooter>
+            <DeleteOverlay
+              show={showDeleteOverlay}
+              setShow={setShowDeleteOverlay}
+            />
+          </>
         )}
       </CarCard>
     </Col>

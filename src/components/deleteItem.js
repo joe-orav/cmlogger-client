@@ -32,14 +32,12 @@ const OverlayButton = styled(Button)`
   margin: 0 10px;
 `;
 
-export default ({ show, setShow }) => {
+export default ({ show, setShow, text, action }) => {
   return (
     <OverlayContainer show={show}>
-      <ConfirmationText>
-        Are you sure you want to delete this car?
-      </ConfirmationText>
+      <ConfirmationText>{text}</ConfirmationText>
       <OverlayButtonContainer>
-        <OverlayButton variant="danger">Delete</OverlayButton>
+        <OverlayButton variant="danger" onClick={action}>Delete</OverlayButton>
         <OverlayButton variant="dark" onClick={() => setShow(false)}>
           Cancel
         </OverlayButton>

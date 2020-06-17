@@ -137,6 +137,7 @@ const RecordItem = ({ index, record }) => {
         <DeleteOverlay
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
+          text={"Are you sure you want to delete this record?"}
         />
       </ContainerCol>
     </Row>

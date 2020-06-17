@@ -5,7 +5,8 @@ import Button from "react-bootstrap/Button";
 import { Link, useLocation } from "react-router-dom";
 import FormPage from "../components/formPage";
 import queryString from "query-string";
-import { getCars, getCarsDataLoading } from "../store/selectors";
+import { getCars, getCarsDataLoading, getUserId } from "../store/selectors";
+import { modifyCarData } from "../store/actions/car-actions";
 import { connect } from "react-redux";
 
 const YEAR_MAX = new Date().getFullYear(),
@@ -60,7 +61,7 @@ function validateQuery(id, cars) {
   return { id: 0 };
 }
 
-function AddCar({ cars, carsDataLoading }) {
+function AddCar({ cars, carsDataLoading, userId, modifyCarData }) {
   let urlQuery = queryString.parse(useLocation().search);
   let formValues = { id: 0 };
 
@@ -69,7 +70,7 @@ function AddCar({ cars, carsDataLoading }) {
   }
 
   const [dataID] = useState(formValues.id);
-  const [typeVal, setTypeVal] = useState(carTypes[formValues.type] || carTypes["sedan"]);
+  const [typeVal, setTypeVal] = useState(formValues.type || "sedan");
   const [yearVal, setYearVal] = useState(formValues.year || yearRange[0]);
   const [makeVal, setMakeVal] = useState(formValues.make || "");
   const [modelVal, setModelVal] = useState(formValues.model || "");
@@ -77,6 +78,17 @@ function AddCar({ cars, carsDataLoading }) {
 
   function handleSubmission(ev) {
     ev.preventDefault();
+    let formData = {
+      user_id: userId,
+      id: dataID,
+      type: typeVal,
+      car_year: yearVal,
+      make: makeVal,
+      model: modelVal,
+      vin: vinVal
+    }
+    let request = dataID === 0 ? "post" : "put";
+    modifyCarData(formData, request);
   }
 
   return (
@@ -93,7 +105,7 @@ function AddCar({ cars, carsDataLoading }) {
             onChange={(e) => setTypeVal(e.target.value)}
           >
             {Object.keys(carTypes).map((k) => (
-              <option key={k}>{carTypes[k]}</option>
+              <option key={k} value={k}>{carTypes[k]}</option>
             ))}
           </Form.Control>
         </Form.Group>
@@ -150,7 +162,10 @@ const mapStateToProps = (state) => {
   return {
     cars: getCars(state),
     carsDataLoading: getCarsDataLoading(state),
+    userId: getUserId(state)
   };
 };
 
-export default connect(mapStateToProps)(AddCar);
+const mapDispatchToProps = { modifyCarData }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCar);

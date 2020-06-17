@@ -4,6 +4,8 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import imgImport from "../utils/imgImport";
 import { SDRouteLink, SDLink } from "./defaultLink";
+import { connect } from "react-redux";
+import { modifyCarData } from "../store/actions/car-actions";
 import DeleteOverlay from "./deleteItem";
 
 let siteImages = imgImport(require.context("../img", false));
@@ -29,7 +31,7 @@ const CardVIN = styled(Card.Text)`
   font-size: 0.88rem;
 `;
 
-const CarItem = ({ car }) => {
+const CarItem = ({ car, modifyCarData }) => {
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
   return (
     <Col className="mt-3">
@@ -49,10 +51,14 @@ const CarItem = ({ car }) => {
         <DeleteOverlay
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
+          text={"Are you sure you want to delete this car?"}
+          action={() => modifyCarData({id: car.id}, "delete")}
         />
       </CarCard>
     </Col>
   );
 };
 
-export default CarItem;
+const mapDispatchToProps = { modifyCarData }
+
+export default connect(null, mapDispatchToProps)(CarItem);

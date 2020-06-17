@@ -12,6 +12,7 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import loginBg from "../img/login-bg.jpg";
+import { Link } from "react-router-dom";
 
 const PageRow = styled(Row)`
   height: 100%;
@@ -83,7 +84,7 @@ const LoginBtn = styled.a.attrs((props) => ({
           }
         `;
       default:
-        return css``
+        return css``;
     }
   }}
 `;
@@ -99,21 +100,16 @@ const LoginBtnLogoCtr = styled.span`
   padding: 0 10px;
 `;
 
-const DemoInfoText = styled.p`
+const InfoText = styled.p`
   color: #fff;
   margin-top: 10px;
 `;
 
-const DemoLink = styled.a`
-  color: #3395ff;
-
-  &:hover {
-    color: #0062cc;
-  }
-`;
+const InfoLink = styled.a`
+  text-decoration: underline;
+`; 
 
 function Login(props) {
-    
   useEffect(() => {
     setPageTitle("Login");
   });
@@ -146,16 +142,11 @@ function Login(props) {
             </LoginBtn>
           </Card.Body>
         </LoginCard>
-        <DemoInfoText>
-          Don't want to sign in? Try the{" "}
-          <DemoLink
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://cmlogger-demo.now.sh/"
-          >
-            demo
-          </DemoLink>
-        </DemoInfoText>
+        <InfoText>
+          <InfoLink as={Link} target="_blank" to="/privacy-policy">Privacy Policy</InfoLink> |
+          Made by { " " } 
+          <InfoLink target="_blank" href="http://josephoravbiere.com/">Joseph Oravbiere</InfoLink>
+        </InfoText>
       </PageCol>
     </PageRow>
   );

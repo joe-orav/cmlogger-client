@@ -8,6 +8,7 @@ import Settings from "./pages/settings";
 import AddCar from "./pages/add-car";
 import AddRecord from "./pages/add-record";
 import NotFoundPage from "./pages/404";
+import PrivacyPolicy from "./pages/privacy-policy";
 import AlertContainer from "./comps/alerts";
 import PrivateRoute from "./components/privateRoute";
 import SiteLayout from "./components/layout";
@@ -22,6 +23,7 @@ function App() {
         <PrivateRoute path="/settings" render={<SiteLayout><Settings /></SiteLayout>} />
         <PrivateRoute path="/overview" render={<SiteLayout><Overview /></SiteLayout>} />
         <PrivateRoute path="/add-car" render={<SiteLayout hideNavBar><AddCar /></SiteLayout>} />
+        <Route path="/privacy-policy" render={() => <SiteLayout hideNavBar><PrivacyPolicy /></SiteLayout>} />
         <PrivateRoute path="/add-record" render={<SiteLayout hideNavBar><AddRecord /></SiteLayout>} />
         <PrivateRoute exact path="/" render={<Redirect to="/overview" />} />
         <PrivateRoute path="*" render={<SiteLayout hideNavBar><NotFoundPage /></SiteLayout>} />

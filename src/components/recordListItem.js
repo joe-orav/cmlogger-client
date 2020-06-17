@@ -4,7 +4,7 @@ import styled from "styled-components";
 const ContentContainer = styled.div`
   padding: 10px 10px 10px;
   &:nth-child(even) {
-    background-color: #E0E0E0;
+    background-color: #F0F0F0;
   }
 `;
 

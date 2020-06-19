@@ -9,7 +9,7 @@ const ItemSelect = styled(Form.Control)`
   min-width: 200px;
 `;
 
-const ItemListManager = ({ dataList, dataLoaded }) => {
+const ItemListManager = ({ dataList, dataLoaded, removeAction }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [removeDisabled, setRemoveDisabled] = useState(true);
 
@@ -26,7 +26,8 @@ const ItemListManager = ({ dataList, dataLoaded }) => {
   }
 
   function handleItemRemoval() {
-    
+    removeAction(selectedItems);
+    setRemoveDisabled(true);
   }
 
   return (

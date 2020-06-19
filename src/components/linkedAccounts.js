@@ -3,7 +3,8 @@ import styled from "styled-components";
 import Image from "react-bootstrap/Image";
 import checkIcon from "../img/connect-check.svg";
 import { SDLink } from "./defaultLink";
-import { getAccounts } from "../store/selectors";
+import { getAccounts, getUserId } from "../store/selectors";
+import { disconnectAccount } from "../store/actions/user-actions";
 import { connect } from "react-redux";
 
 const ItemContainer = styled.div`
@@ -59,7 +60,7 @@ const ConnectLink = ({ text, providerName, onClick }) => {
   );
 };
 
-const ConnectionStatus = ({ connected, enableDisconnect, providerName }) => {
+const ConnectionStatus = ({ connected, enableDisconnect, providerName, disconnectAction }) => {
   return (
     <ConnectionContainer>
       {connected && <ConnectedIcon />}
@@ -67,7 +68,7 @@ const ConnectionStatus = ({ connected, enableDisconnect, providerName }) => {
         <ConnectLink
           text="Disconnect"
           providerName={providerName}
-          onClick={() => {}}
+          onClick={disconnectAction}
         />
       )}
       {!connected && <ConnectLink text="Connect" providerName={providerName} />}
@@ -75,7 +76,7 @@ const ConnectionStatus = ({ connected, enableDisconnect, providerName }) => {
   );
 };
 
-const AccountProviderItem = ({ account, enableDisconnect }) => {
+const AccountProviderItem = ({ account, enableDisconnect, disconnectAction }) => {
   return (
     <ItemContainer>
       <ProviderName>{account.providerName}</ProviderName>
@@ -83,12 +84,13 @@ const AccountProviderItem = ({ account, enableDisconnect }) => {
         connected={account.connected}
         enableDisconnect={enableDisconnect}
         providerName={account.providerName}
+        disconnectAction={disconnectAction}
       />
     </ItemContainer>
   );
 };
 
-const LinkedAccounts = ({ accountList }) => {
+const LinkedAccounts = ({ accountList, userId, disconnectAccount }) => {
   let hasMultipleAccounts =
     accountList.filter((acc) => acc.connected).length > 1;
 
@@ -99,6 +101,12 @@ const LinkedAccounts = ({ accountList }) => {
           key={i}
           account={acc}
           enableDisconnect={hasMultipleAccounts}
+          disconnectAction={() =>
+            disconnectAccount({
+              userId: userId,
+              providerName: acc.providerName.toLowerCase(),
+            })
+          }
         />
       ))}
     </div>
@@ -107,8 +115,11 @@ const LinkedAccounts = ({ accountList }) => {
 
 const mapStateToProps = (state) => {
   return {
-    accountList: getAccounts(state)
+    accountList: getAccounts(state),
+    userId: getUserId(state),
   };
 };
 
-export default connect(mapStateToProps)(LinkedAccounts);
+const mapDispatchToProps = { disconnectAccount };
+
+export default connect(mapStateToProps, mapDispatchToProps)(LinkedAccounts);

@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { getUserId } from "../store/selectors";
+import { deleteAccount } from "../store/actions/user-actions";
 
 const DeleteCheck = styled(Form.Check)`
   @media (max-width: 500px) {
@@ -9,7 +12,7 @@ const DeleteCheck = styled(Form.Check)`
   }
 `;
 
-const DeleteAccount = () => {
+const DeleteAccount = ({userId, deleteAccount}) => {
   const [deletionConfirmed, setDeletionConfirmation] = useState(false);
 
   return (
@@ -21,11 +24,23 @@ const DeleteAccount = () => {
         label="I confirm that I want to delete my account"
         onClick={(e) => setDeletionConfirmation(e.target.checked)}
       />
-      <Button variant="danger" disabled={!deletionConfirmed}>
+      <Button
+        variant="danger"
+        disabled={!deletionConfirmed}
+        onClick={() => deleteAccount({userId: userId})}
+      >
         Delete Account
       </Button>
     </div>
   );
 };
 
-export default DeleteAccount;
+const mapStateToProps = (state) => {
+  return {
+    userId: getUserId(state),
+  };
+};
+
+const mapDispatchToProps = { deleteAccount };
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeleteAccount);

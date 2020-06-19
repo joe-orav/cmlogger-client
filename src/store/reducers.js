@@ -73,6 +73,9 @@ function userReducer(state = {}, action) {
           default_pic: null,
         },
       };
+    case ActionTypes.DISCONNECT_ACCOUNT_FAILURE:
+    case ActionTypes.DELETE_ACCOUNT_FAILURE:
+      return Object.assign({}, state, { error: action.payload.error });
     default:
       return state;
   }

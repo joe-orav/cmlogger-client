@@ -100,8 +100,8 @@ const SiteLayout = ({ hideNavBar, user, children }) => {
         <ProfileNav.NavCondensed name={user.name} icon={user.default_pic} />
         <SiteNavBar.Collapse id="cm-navbar-nav" className="w-100">
           <SiteNav className="flex-column w-100">
-            <SiteNavLink to="/overview">
-              <i className="fas fa-home"></i> Overview
+            <SiteNavLink to="/dashboard">
+              <i className="fas fa-home"></i> Dashboard
             </SiteNavLink>
             <SiteNavLink to="/cars">
               <i className="fas fa-car"></i> My Cars

@@ -65,17 +65,17 @@ const EmptyBlockContent = ({ title, children }) => {
   );
 };
 
-function Overview({
+function Dashboard({
   cars,
   carDataLoading,
   serviceHistory,
   serviceDataLoading,
 }) {
   useEffect(() => {
-    setPageTitle("Overview");
+    setPageTitle("Dashboard");
   });
   return (
-    <PageWrapper pageTitle="Overview">
+    <PageWrapper pageTitle="Dashboard">
       <Col className="mt-3">
         <Row>
           <ContentBlock
@@ -125,4 +125,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Overview);
+export default connect(mapStateToProps)(Dashboard);

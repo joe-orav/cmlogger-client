@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./pages/login";
-import Overview from "./pages/overview";
+import Dashboard from "./pages/dashboard";
 import Cars from "./pages/cars";
 import ServiceHistory from "./pages/service-history";
 import Settings from "./pages/settings";
@@ -21,11 +21,11 @@ function App() {
         <PrivateRoute path="/cars" render={<SiteLayout><Cars /></SiteLayout>} />
         <PrivateRoute path="/service-history" render={<SiteLayout><ServiceHistory /></SiteLayout>} />
         <PrivateRoute path="/settings" render={<SiteLayout><Settings /></SiteLayout>} />
-        <PrivateRoute path="/overview" render={<SiteLayout><Overview /></SiteLayout>} />
+        <PrivateRoute path="/dashboard" render={<SiteLayout><Dashboard /></SiteLayout>} />
         <PrivateRoute path="/add-car" render={<SiteLayout hideNavBar><AddCar /></SiteLayout>} />
         <Route path="/privacy-policy" render={() => <SiteLayout hideNavBar><PrivacyPolicy /></SiteLayout>} />
         <PrivateRoute path="/add-record" render={<SiteLayout hideNavBar><AddRecord /></SiteLayout>} />
-        <PrivateRoute exact path="/" render={<Redirect to="/overview" />} />
+        <PrivateRoute exact path="/" render={<Redirect to="/dashboard" />} />
         <PrivateRoute path="*" render={<SiteLayout hideNavBar><NotFoundPage /></SiteLayout>} />
       </Switch>
       <AlertContainer />

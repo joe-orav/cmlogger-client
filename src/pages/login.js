@@ -115,7 +115,7 @@ function Login(props) {
   });
 
   return props.user.id != null ? (
-    <Redirect to="/overview" />
+    <Redirect to="/dashboard" />
   ) : (
     <PageRow $bg={loginBg}>
       <PageCol>

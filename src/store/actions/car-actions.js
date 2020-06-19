@@ -83,15 +83,8 @@ export function modifyCarData(carData, requestMethod) {
       requestMethod !== "put" &&
       requestMethod !== "delete"
     ) {
-      dispatch(
-        modifyCarDataFailure("There was an error processing your request")
-      );
-      dispatch(
-        createAlert(
-          "There was an error processing this request",
-          ALERT_TYPES.DANGER
-        )
-      );
+      dispatch(modifyCarDataFailure("Invalid Request"));
+      dispatch(createAlert("Invalid Request", ALERT_TYPES.DANGER));
     } else {
       const res = await fetch("/api/cars", {
         method: requestMethod,

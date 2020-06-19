@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import {
   getExpandedServiceHistory,
   getServiceHistoryDataLoading,
+  getUserId,
 } from "../store/selectors";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -18,6 +19,7 @@ import ServicesField from "../components/add-record-fields/servicesField";
 import TotalCostField from "../components/add-record-fields/costField";
 import AddlServicesField from "../components/add-record-fields/addlServicesField";
 import NotesField from "../components/add-record-fields/notesField";
+import { modifyServiceHistory } from "../store/actions/service-history-actions";
 
 const AddRecordForm = styled(Form)`
   max-width: 90%;
@@ -62,7 +64,12 @@ function validateQuery(id, serviceHistory) {
   return { id: 0 };
 }
 
-function AddRecord({ serviceHistory, serviceHistoryLoading }) {
+function AddRecord({
+  serviceHistory,
+  serviceHistoryLoading,
+  userId,
+  modifyServiceHistory,
+}) {
   let urlQuery = queryString.parse(useLocation().search);
   let formValues = { id: 0 };
 
@@ -70,27 +77,52 @@ function AddRecord({ serviceHistory, serviceHistoryLoading }) {
     formValues = validateQuery(urlQuery.id, serviceHistory);
   }
 
-  const [dataID] = useState(formValues.id);
+  const [dataId] = useState(formValues.id);
   const [dateValue, setDateValue] = useState(formValues.date || new Date());
-  const [carServicedValue, setCarServicedValue] = useState(formValues.carID || 0);
-  const [savedLocValue, setSavedLocValue] = useState(formValues.savedLocID || 0);
+  const [carServicedValue, setCarServicedValue] = useState(
+    formValues.carID || 0
+  );
+  const [savedLocValue, setSavedLocValue] = useState(
+    formValues.savedLocID || 0
+  );
   const [locName, setLocName] = useState(formValues.locName || "");
   const [locAddress, setLocAddress] = useState(formValues.address || "");
   const [locCity, setLocCity] = useState(formValues.city || "");
   const [locState, setLocState] = useState(formValues.state || "");
   const [locZIP, setLocZIP] = useState(formValues.zip || "");
-  const [servicesValues, setServicesValues] = useState(formValues.services || []);
+  const [servicesValues, setServicesValues] = useState(
+    formValues.services || []
+  );
   const [addlServices, setAddlServices] = useState("");
   const [totalCost, setTotalCost] = useState(formValues.cost || "");
   const [notesValue, setNotesValues] = useState(formValues.notes || "");
 
   function handleSubmission(e) {
     e.preventDefault();
+    let formData = {
+      id: dataId,
+      user_id: userId,
+      date: dateValue,
+      car_id: carServicedValue,
+      location_id: savedLocValue,
+      location_name: locName,
+      address: locAddress,
+      city: locCity,
+      state: locState,
+      zip_code: locZIP,
+      new_services: addlServices.length > 0 ? addlServices.split(",") : [],
+      services: servicesValues,
+      cost: totalCost,
+      notes: notesValue,
+    };
+
+    let request = dataId === 0 ? "post" : "put";
+    modifyServiceHistory(formData, request);
   }
 
   return (
     <FormPage
-      title={`${dataID ? 'Edit' : 'Add'} Service Record`}
+      title={`${dataId ? "Edit" : "Add"} Service Record`}
       backTo="/service-history"
       contentWidth="500"
     >
@@ -139,7 +171,10 @@ const mapStateToProps = (state) => {
   return {
     serviceHistory: getExpandedServiceHistory(state),
     serviceHistoryLoading: getServiceHistoryDataLoading(state),
+    userId: getUserId(state),
   };
 };
 
-export default connect(mapStateToProps)(AddRecord);
+const mapDispatchToProps = { modifyServiceHistory };
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddRecord);

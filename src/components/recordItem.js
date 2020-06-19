@@ -8,6 +8,8 @@ import trashIcon from "../img/trash-icon.png";
 import editIcon from "../img/edit-pen-icon.png";
 import { Link } from "react-router-dom";
 import DeleteOverlay from "./deleteItem";
+import { connect } from "react-redux";
+import { modifyServiceHistory } from "../store/actions/service-history-actions";
 
 const DetailItem = ({ label, text, width }) => {
   return (
@@ -79,7 +81,7 @@ const SummaryItem = ({ label, value }) => {
   );
 };
 
-const RecordItem = ({ index, record }) => {
+const RecordItem = ({ index, record, modifyServiceHistory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
 
@@ -138,10 +140,13 @@ const RecordItem = ({ index, record }) => {
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
           text={"Are you sure you want to delete this record?"}
+          action={() => modifyServiceHistory({id: record.id}, "delete")}
         />
       </ContainerCol>
     </Row>
   );
 };
 
-export default RecordItem;
+const mapDispatchToProps = { modifyServiceHistory };
+
+export default connect(null, mapDispatchToProps)(RecordItem);

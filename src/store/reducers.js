@@ -132,8 +132,6 @@ function carsReducer(state = {}, action) {
 }
 
 function serviceHistoryReducer(state = {}, action) {
-    let provided_services_ids = [];
-
     switch (action.type) {
         case ActionTypes.FETCH_SH_DATA_START:
             return {
@@ -160,53 +158,15 @@ function serviceHistoryReducer(state = {}, action) {
                 })
             })
         case ActionTypes.EDIT_SERVICE_RECORD_SUCCESS:
-            if (action.payload.service) {
-                provided_services_ids.push(...action.payload.service.map(s => s.id));
-            }
-
-            if (action.payload.new_service) {
-                provided_services_ids.push(...action.payload.new_service.map(s => s.id));
-            }
-
-            return Object.assign({}, state, {
-                items: state.items.map(item => {
-                    if (item.id === action.payload.id) {
-                        return {
-                            id: action.payload.id,
-                            user_id: action.payload.user_id,
-                            service_date: action.payload.date,
-                            cost: action.payload.cost,
-                            notes: action.payload.notes,
-                            car_id: action.payload.car_id,
-                            location_id: action.payload.location_id,
-                            provided_services_ids: provided_services_ids
-                        }
-                    } else {
-                        return item
-                    }
-                })
-            })
+            return Object.assign({}, state, { items: state.items.map((item) => {
+                if(item.id === action.payload.record.id) {
+                    return action.payload.record;
+                } else {
+                    return item;
+                }
+            })})
         case ActionTypes.ADD_SERVICE_RECORD_SUCCESS:
-            if (action.payload.service) {
-                provided_services_ids.push(...action.payload.service.map(s => s.id));
-            }
-
-            if (action.payload.new_service) {
-                provided_services_ids.push(...action.payload.new_service.map(s => s.id));
-            }
-
-            return Object.assign({}, state, {
-                items: [...state.items, {
-                    id: action.payload.id,
-                    user_id: action.payload.user_id,
-                    service_date: action.payload.date,
-                    cost: action.payload.cost,
-                    notes: action.payload.notes,
-                    car_id: action.payload.car_id,
-                    location_id: action.payload.location_id,
-                    provided_services_ids: provided_services_ids
-                }]
-            })
+            return Object.assign({}, state, { items: [...state.items, action.payload.record]})
         case ActionTypes.DELETE_SERVICE_RECORD_SUCCESS:
             return Object.assign({}, state, {
                 items: state.items.filter(item => item.id !== action.payload.id)
@@ -251,7 +211,7 @@ function servicesReducer(state = {}, action) {
         case ActionTypes.EDIT_SERVICE_RECORD_SUCCESS:
         case ActionTypes.ADD_SERVICE_RECORD_SUCCESS:
             return Object.assign({}, state, {
-                items: [...state.items, ...action.payload.new_service]
+                items: [...state.items, ...action.payload.services]
             })
         case ActionTypes.DELETE_SERVICE_DATA_SUCCESS:
             return Object.assign({}, state, {
@@ -292,19 +252,9 @@ function locationsReducer(state = {}, action) {
             }
         case ActionTypes.EDIT_SERVICE_RECORD_SUCCESS:
         case ActionTypes.ADD_SERVICE_RECORD_SUCCESS:
-            let filteredLocations = state.items.filter((loc) => loc.id === action.payload.location_id);
-
-            if (filteredLocations.length === 0) {
+            if(action.payload.location) {
                 return Object.assign({}, state, {
-                    items: [...state.items, {
-                        id: action.payload.location_id,
-                        user_id: action.payload.user_id,
-                        name: action.payload.location_name,
-                        address: action.payload.address,
-                        city: action.payload.city,
-                        state: action.payload.state,
-                        zip_code: action.payload.zip_code
-                    }]
+                    items: [...state.items, action.payload.location] 
                 })
             } else {
                 return state

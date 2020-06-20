@@ -9,6 +9,7 @@ import {
   getExpandedServiceHistory,
   getServiceHistoryDataLoading,
   getUserId,
+  getDataLoaded,
 } from "../store/selectors";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -37,8 +38,9 @@ const FormButton = styled(Button)`
   margin-left: 20px;
 `;
 
-function validateQuery(id, serviceHistory) {
-  let queryID = /^\d+$/.test(id) ? parseInt(id, 10) : 0;
+function validateQuery(query, serviceHistory) {
+  let queryID = /^\d+$/.test(query.id) ? parseInt(query.id, 10) : 0;
+  let carID = /^\d+$/.test(query.carid) ? parseInt(query.carid, 10) : 0;
 
   if (queryID > 0) {
     let recordItem = serviceHistory.filter((record) => record.id === queryID);
@@ -61,27 +63,34 @@ function validateQuery(id, serviceHistory) {
     }
   }
 
-  return { id: 0 };
+  return { id: 0, carID: carID, carFieldDisabled: carID > 0 };
 }
 
 function AddRecord({
   serviceHistory,
-  serviceHistoryLoading,
   userId,
+  dataLoaded,
   modifyServiceHistory,
 }) {
   let urlQuery = queryString.parse(useLocation().search);
-  let formValues = { id: 0 };
+  let currentDate = new Date();
+  let formValues = {};
 
-  if (!serviceHistoryLoading) {
-    formValues = validateQuery(urlQuery.id, serviceHistory);
+  if (dataLoaded) {
+    formValues = validateQuery(urlQuery, serviceHistory);
   }
 
-  const [dataId] = useState(formValues.id);
-  const [dateValue, setDateValue] = useState(formValues.date || new Date());
+  const [dataId] = useState(formValues.id || 0);
+  const [dateValue, setDateValue] = useState(
+    formValues.date ||
+      `${currentDate.getFullYear()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getDate()}`
+  );
   const [carServicedValue, setCarServicedValue] = useState(
     formValues.carID || 0
   );
+  const [carFieldDisabled] = useState(formValues.carFieldDisabled || false)
   const [savedLocValue, setSavedLocValue] = useState(
     formValues.savedLocID || 0
   );
@@ -132,6 +141,7 @@ function AddRecord({
           <CarServicedField
             value={carServicedValue}
             setValue={setCarServicedValue}
+            disabled={carFieldDisabled}
           />
           <LocationFieldsGroup
             values={{
@@ -170,8 +180,8 @@ function AddRecord({
 const mapStateToProps = (state) => {
   return {
     serviceHistory: getExpandedServiceHistory(state),
-    serviceHistoryLoading: getServiceHistoryDataLoading(state),
     userId: getUserId(state),
+    dataLoaded: getDataLoaded(state),
   };
 };
 

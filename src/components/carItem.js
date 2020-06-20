@@ -43,7 +43,7 @@ const CarItem = ({ car, modifyCarData }) => {
         </Card.Body>
         <CarCardFooter>
           <SDRouteLink to={`/add-car?id=${car.id}`}>Edit</SDRouteLink>
-          <SDRouteLink to="/add-record">Add Record</SDRouteLink>
+          <SDRouteLink to={`/add-record?carid=${car.id}`}>Add Record</SDRouteLink>
           <SDLink href="#/" onClick={() => setShowDeleteOverlay(true)}>
             Delete
           </SDLink>

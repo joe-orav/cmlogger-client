@@ -10,7 +10,6 @@ export default ({ value, setValue }) => {
       altFormat: "M d, Y",
       dateFormat: "Y-m-d",
       appendTo: document.querySelector("#add-record-form"),
-      onReady: (selectedDates, dateStr, instance) => setValue(dateStr),
       onChange: (selectedDates, dateStr, instance) => setValue(dateStr),
     });
   });

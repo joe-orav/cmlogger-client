@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   getExpandedServiceHistory,
-  getServiceHistoryDataLoading,
   getUserId,
   getDataLoaded,
 } from "../store/selectors";
@@ -46,20 +45,29 @@ function validateQuery(query, serviceHistory) {
     let recordItem = serviceHistory.filter((record) => record.id === queryID);
     if (recordItem.length > 0) {
       let { car, cost, parsedDate, location, notes, services } = recordItem[0];
-      return {
+
+      let locationData =
+        location === null
+          ? { savedLocID: -1 }
+          : {
+              savedLocID: location.id,
+              locName: location.name,
+              address: location.address,
+              city: location.city,
+              state: location.state,
+              zip: location.zip_code,
+            };
+
+      return Object.assign(locationData, {
         id: queryID,
         carID: car.id,
         cost: cost,
-        date: parsedDate,
-        savedLocID: location.id,
-        locName: location.name,
-        address: location.address,
-        city: location.city,
-        state: location.state,
-        zip: location.zip_code,
+        date: `${parsedDate.getFullYear()}-${
+          parsedDate.getMonth() + 1
+        }-${parsedDate.getDate()}`,
         notes: notes,
         services: services.map((service) => service.id),
-      };
+      });
     }
   }
 
@@ -90,9 +98,9 @@ function AddRecord({
   const [carServicedValue, setCarServicedValue] = useState(
     formValues.carID || 0
   );
-  const [carFieldDisabled] = useState(formValues.carFieldDisabled || false)
+  const [carFieldDisabled] = useState(formValues.carFieldDisabled || false);
   const [savedLocValue, setSavedLocValue] = useState(
-    formValues.savedLocID || 0
+    formValues.savedLocID || -1
   );
   const [locName, setLocName] = useState(formValues.locName || "");
   const [locAddress, setLocAddress] = useState(formValues.address || "");
@@ -121,7 +129,7 @@ function AddRecord({
       zip_code: locZIP,
       new_services: addlServices.length > 0 ? addlServices.split(",") : [],
       services: servicesValues,
-      cost: totalCost,
+      cost: totalCost.length === 0 ? "0.00" : totalCost,
       notes: notesValue,
     };
 

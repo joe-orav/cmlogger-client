@@ -18,7 +18,7 @@ export default connect(mapStateToProps)(
       let locationID = parseInt(e.target.value);
       let location;
 
-      if (locationID !== 0) {
+      if (locationID > 0) {
         location = locationsList.filter((loc) => loc.id === locationID)[0];
 
         setValues.setLocName(location.name);
@@ -46,6 +46,7 @@ export default connect(mapStateToProps)(
             value={values.savedLocValue}
             onChange={handleLocationSelection}
           >
+            <option value={-1}>--- Don't include location ---</option>
             <option value={0}>--- Enter a new location ---</option>
             {locationsList.map((loc) => (
               <option key={loc.id} value={loc.id}>

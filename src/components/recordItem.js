@@ -85,6 +85,17 @@ const RecordItem = ({ index, record, modifyServiceHistory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
 
+  let locationValues = record.location
+    ? {
+        name: record.location.name,
+        address: `${record.location.address}, ${record.location.city}, 
+    ${record.location.state}, ${record.location.zip_code}`,
+      }
+    : {
+        name: "Not Provided",
+        address: "Not Provided",
+      };
+
   return (
     <Row className="border-bottom">
       <ContainerCol>
@@ -102,13 +113,12 @@ const RecordItem = ({ index, record, modifyServiceHistory }) => {
               <DetailsRow className="py-3">
                 <DetailItem
                   label="Location"
-                  text={record.location.name}
+                  text={locationValues.name}
                   width="4"
                 />
                 <DetailItem
                   label="Address"
-                  text={`${record.location.address}, ${record.location.city}, 
-                  ${record.location.state}, ${record.location.zip_code}`}
+                  text={locationValues.address}
                   width="4"
                 />
                 <DetailItem
@@ -140,7 +150,7 @@ const RecordItem = ({ index, record, modifyServiceHistory }) => {
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
           text={"Are you sure you want to delete this record?"}
-          action={() => modifyServiceHistory({id: record.id}, "delete")}
+          action={() => modifyServiceHistory({ id: record.id }, "delete")}
         />
       </ContainerCol>
     </Row>

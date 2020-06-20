@@ -9,7 +9,7 @@ import AddCar from "./pages/add-car";
 import AddRecord from "./pages/add-record";
 import NotFoundPage from "./pages/404";
 import PrivacyPolicy from "./pages/privacy-policy";
-import AlertContainer from "./comps/alerts";
+import AlertContainer from "./components/alerts";
 import PrivateRoute from "./components/privateRoute";
 import SiteLayout from "./components/layout";
 

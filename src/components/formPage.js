@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { SDRouteLink } from "./defaultLink";
+import { SDLink } from "./defaultLink";
+import { useHistory } from "react-router-dom";
 
 const PageContent = styled.div`
   border: 1px solid #cfcfcf;
@@ -23,11 +24,13 @@ const LinkContainer = styled.div`
   text-align: center;
 `;
 
-const BackLink = styled(SDRouteLink)`
+const BackLink = styled(SDLink)`
   font-size: 1.1rem;
 `;
 
-export default ({ title, children, backTo, contentWidth }) => {
+export default ({ title, children, contentWidth }) => {
+  let history = useHistory();
+
   return (
     <Row className="bg-light">
       <Col xs="12" className="pt-4">
@@ -36,7 +39,7 @@ export default ({ title, children, backTo, contentWidth }) => {
           {children}
         </PageContent>
         <LinkContainer>
-          <BackLink to={backTo}>
+          <BackLink href="#/" onClick={() => history.goBack()}>
             <i className="fas fa-arrow-left"></i> Go back
           </BackLink>
         </LinkContainer>

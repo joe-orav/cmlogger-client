@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(({ servicesList, value, setValue }) => {
+export default connect(mapStateToProps)(({ servicesList, value, setValue, required }) => {
   function handleItemSelection(e) {
     let optionsList = Object.assign({}, e.target.options);
     let selectedValues = [];
@@ -31,6 +31,7 @@ export default connect(mapStateToProps)(({ servicesList, value, setValue }) => {
         value={value}
         onChange={handleItemSelection}
         multiple
+        required={required}
       >
         {servicesList.map((service) => (
           <option key={service.id} value={service.id}>

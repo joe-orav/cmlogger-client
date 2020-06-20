@@ -39,7 +39,7 @@ const CarItem = ({ car, modifyCarData }) => {
         <Card.Img variant="top" src={siteImages[car.type]} alt={car.type} />
         <Card.Body className="bg-primary text-light">
           <Card.Title className="h5">{car.fullname}</Card.Title>
-          <CardVIN>{`VIN: ${car.vin}`}</CardVIN>
+          <CardVIN>{`VIN: ${car.vin ? car.vin : "Not Provided"}`}</CardVIN>
         </Card.Body>
         <CarCardFooter>
           <SDRouteLink to={`/add-car?id=${car.id}`}>Edit</SDRouteLink>

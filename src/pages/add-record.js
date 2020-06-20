@@ -20,6 +20,7 @@ import TotalCostField from "../components/add-record-fields/costField";
 import AddlServicesField from "../components/add-record-fields/addlServicesField";
 import NotesField from "../components/add-record-fields/notesField";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
+import { useHistory } from "react-router-dom";
 
 const AddRecordForm = styled(Form)`
   max-width: 90%;
@@ -81,6 +82,7 @@ function AddRecord({
   modifyServiceHistory,
 }) {
   let urlQuery = queryString.parse(useLocation().search);
+  let history = useHistory();
   let currentDate = new Date();
   let formValues = {};
 
@@ -113,37 +115,49 @@ function AddRecord({
   const [addlServices, setAddlServices] = useState("");
   const [totalCost, setTotalCost] = useState(formValues.cost || "");
   const [notesValue, setNotesValues] = useState(formValues.notes || "");
+  const [validated, setValidated] = useState(false);
 
-  function handleSubmission(e) {
-    e.preventDefault();
-    let formData = {
-      id: dataId,
-      user_id: userId,
-      date: dateValue,
-      car_id: carServicedValue,
-      location_id: savedLocValue,
-      location_name: locName,
-      address: locAddress,
-      city: locCity,
-      state: locState,
-      zip_code: locZIP,
-      new_services: addlServices.length > 0 ? addlServices.split(",") : [],
-      services: servicesValues,
-      cost: totalCost.length === 0 ? "0.00" : totalCost,
-      notes: notesValue,
-    };
+  function handleSubmission(ev) {
+    ev.preventDefault();
+    const form = ev.target;
 
-    let request = dataId === 0 ? "post" : "put";
-    modifyServiceHistory(formData, request);
+    if (form.checkValidity()) {
+      let formData = {
+        id: dataId,
+        user_id: userId,
+        date: dateValue,
+        car_id: carServicedValue,
+        location_id: savedLocValue,
+        location_name: locName,
+        address: locAddress,
+        city: locCity,
+        state: locState,
+        zip_code: locZIP,
+        new_services: addlServices.length > 0 ? addlServices.split(",") : [],
+        services: servicesValues,
+        cost: totalCost.length === 0 ? "0.00" : totalCost,
+        notes: notesValue,
+      };
+
+      let request = dataId === 0 ? "post" : "put";
+      modifyServiceHistory(formData, request);
+      history.goBack();
+    }
+
+    setValidated(true);
   }
 
   return (
     <FormPage
       title={`${dataId ? "Edit" : "Add"} Service Record`}
-      backTo="/service-history"
       contentWidth="500"
     >
-      <AddRecordForm id="add-record-form" onSubmit={handleSubmission}>
+      <AddRecordForm
+        id="add-record-form"
+        noValidate
+        validated={validated}
+        onSubmit={handleSubmission}
+      >
         <Form.Row>
           <DateField value={dateValue} setValue={setDateValue} />
           <CarServicedField
@@ -169,8 +183,16 @@ function AddRecord({
               setLocZIP,
             }}
           />
-          <ServicesField value={servicesValues} setValue={setServicesValues} />
-          <AddlServicesField value={addlServices} setValue={setAddlServices} />
+          <ServicesField
+            value={servicesValues}
+            setValue={setServicesValues}
+            required={addlServices.length === 0}
+          />
+          <AddlServicesField
+            value={addlServices}
+            setValue={setAddlServices}
+            required={servicesValues.length === 0}
+          />
           <TotalCostField value={totalCost} setValue={setTotalCost} />
           <NotesField value={notesValue} setValue={setNotesValues} />
         </Form.Row>

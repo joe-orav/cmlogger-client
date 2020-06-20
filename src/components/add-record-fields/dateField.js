@@ -17,7 +17,7 @@ export default ({ value, setValue }) => {
   return (
     <Form.Group className="col-6" controlId="serviceDate">
       <Form.Label>Date of Service</Form.Label>
-      <Form.Control type="text" />
+      <Form.Control type="text" required />
     </Form.Group>
   );
 };

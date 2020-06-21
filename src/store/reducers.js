@@ -199,13 +199,7 @@ function servicesReducer(state = {}, action) {
       };
     case ActionTypes.FETCH_SERVICE_DATA_SUCCESS:
       return {
-        items: action.payload.map((service) => {
-          return {
-            id: service.id,
-            user_id: service.user_id,
-            sname: service.sname,
-          };
-        }),
+        items: action.payload,
         loading: false,
         error: null,
       };

@@ -122,6 +122,66 @@ export const getOrphanedLocations = createSelector(
   }
 );
 
+export const getSavedServices = createSelector(
+  getExpandedServiceHistory,
+  (serviceHistory) => {
+    let savedServices = {};
+
+    serviceHistory.forEach((record) => {
+      record.services.forEach((service) => {
+        if (savedServices[service.id]) {
+          savedServices[service.id].count++;
+        } else {
+          savedServices[service.id] = {
+            name: service.sname,
+            date: record.dateString,
+            count: 1,
+          };
+        }
+      });
+    });
+
+    return savedServices;
+  }
+);
+
+export const getSavedLocations = createSelector(
+  getExpandedServiceHistory,
+  (serviceHistory) => {
+    let savedLocations = {};
+
+    serviceHistory.forEach((record) => {
+      const { id, name } = record.location;
+      if (savedLocations[id]) {
+        savedLocations[id].count++;
+      } else {
+        savedLocations[id] = {
+          name: name,
+          date: record.dateString,
+          count: 1,
+        };
+      }
+    });
+
+    return savedLocations;
+  }
+);
+
+export const getTotalCost = createSelector(
+  getServiceHistory,
+  (serviceHistory) => {
+    let totalCost = serviceHistory.reduce(
+      (acc, current) => acc + parseFloat(current.cost), 0
+    );
+
+    if(totalCost > 999999) {
+      return `${(totalCost / 1000000).toFixed(2)}m`
+    }
+
+    return totalCost;
+  }
+);
+
 export const getErrors = createSelector(
   getCarsError,
   getServiceHistoryError,

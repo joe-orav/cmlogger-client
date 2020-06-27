@@ -18,7 +18,7 @@ export default connect(mapStateToProps)(
           as="select"
           value={value}
           disabled={disabled}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setValue(parseInt(e.target.value))}
           required
         >
           <option></option>

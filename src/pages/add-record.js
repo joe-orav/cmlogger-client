@@ -9,6 +9,7 @@ import {
   getExpandedServiceHistory,
   getUserId,
   getDataLoaded,
+  getDemoModeState,
 } from "../store/selectors";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
@@ -72,7 +73,7 @@ function validateQuery(query, serviceHistory) {
     }
   }
 
-  return { id: 0, carID: carID, carFieldDisabled: carID > 0 };
+  return { id: -1, carID: carID, carFieldDisabled: carID > 0 };
 }
 
 function AddRecord({
@@ -80,6 +81,7 @@ function AddRecord({
   userId,
   dataLoaded,
   modifyServiceHistory,
+  demoModeEnabled,
 }) {
   let urlQuery = queryString.parse(useLocation().search);
   let history = useHistory();
@@ -90,7 +92,7 @@ function AddRecord({
     formValues = validateQuery(urlQuery, serviceHistory);
   }
 
-  const [dataId] = useState(formValues.id || 0);
+  const [dataId] = useState(formValues.id || -1);
   const [dateValue, setDateValue] = useState(
     formValues.date ||
       `${currentDate.getFullYear()}-${
@@ -139,8 +141,8 @@ function AddRecord({
         notes: notesValue,
       };
 
-      let request = dataId === 0 ? "post" : "put";
-      modifyServiceHistory(formData, request);
+      let request = dataId === -1 ? "post" : "put";
+      modifyServiceHistory(formData, request, demoModeEnabled);
       history.goBack();
     }
 
@@ -149,7 +151,7 @@ function AddRecord({
 
   return (
     <FormPage
-      title={`${dataId ? "Edit" : "Add"} Service Record`}
+      title={`${dataId === -1 ? "Add" : "Edit"} Service Record`}
       contentWidth="500"
     >
       <AddRecordForm
@@ -212,6 +214,7 @@ const mapStateToProps = (state) => {
     serviceHistory: getExpandedServiceHistory(state),
     userId: getUserId(state),
     dataLoaded: getDataLoaded(state),
+    demoModeEnabled: getDemoModeState(state),
   };
 };
 

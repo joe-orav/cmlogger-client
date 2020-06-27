@@ -58,24 +58,29 @@ function modifyLocationDataFailure(error) {
   };
 }
 
-export function modifyLocationData(locationIDs) {
+export function modifyLocationData(locationIDs, demoModeEnabled) {
   return async (dispatch) => {
     dispatch(modifyLocationDataStart());
 
-    const res = await fetch("/api/locations", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ locationIDs }),
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-      dispatch(modifyLocationDataFailure(data.error));
-      dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
-    } else {
-      dispatch(deleteLocationSuccess(data));
+    if (demoModeEnabled) {
+      dispatch(deleteLocationSuccess({ locationIDs }));
       dispatch(createAlert("Locations removed", ALERT_TYPES.SUCCESS));
+    } else {
+      const res = await fetch("/api/locations", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locationIDs }),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        dispatch(modifyLocationDataFailure(data.error));
+        dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
+      } else {
+        dispatch(deleteLocationSuccess(data));
+        dispatch(createAlert("Locations removed", ALERT_TYPES.SUCCESS));
+      }
     }
   };
 }

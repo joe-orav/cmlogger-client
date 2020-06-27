@@ -152,15 +152,17 @@ export const getSavedLocations = createSelector(
     let savedLocations = {};
 
     serviceHistory.forEach((record) => {
-      const { id, name } = record.location;
-      if (savedLocations[id]) {
-        savedLocations[id].count++;
-      } else {
-        savedLocations[id] = {
-          name: name,
-          date: record.dateString,
-          count: 1,
-        };
+      if (record.location) {
+        const { id, name } = record.location;
+        if (savedLocations[id]) {
+          savedLocations[id].count++;
+        } else {
+          savedLocations[id] = {
+            name: name,
+            date: record.dateString,
+            count: 1,
+          };
+        }
       }
     });
 
@@ -172,14 +174,15 @@ export const getTotalCost = createSelector(
   getServiceHistory,
   (serviceHistory) => {
     let totalCost = serviceHistory.reduce(
-      (acc, current) => acc + parseFloat(current.cost), 0
+      (acc, current) => acc + parseFloat(current.cost),
+      0
     );
 
-    if(totalCost > 999999) {
-      return `${(totalCost / 1000000).toFixed(2)}m`
+    if (totalCost > 999999) {
+      return `${(totalCost / 1000000).toFixed(2)}m`;
     }
 
-    return totalCost;
+    return totalCost.toFixed(2);
   }
 );
 

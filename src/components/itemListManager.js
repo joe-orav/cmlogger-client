@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { getDemoModeState } from "../store/selectors";
 
 const ItemSelect = styled(Form.Control)`
   width: auto;
@@ -9,7 +11,12 @@ const ItemSelect = styled(Form.Control)`
   min-width: 200px;
 `;
 
-const ItemListManager = ({ dataList, dataLoaded, removeAction }) => {
+const ItemListManager = ({
+  dataList,
+  dataLoaded,
+  removeAction,
+  demoModeEnabled,
+}) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [removeDisabled, setRemoveDisabled] = useState(true);
 
@@ -26,7 +33,7 @@ const ItemListManager = ({ dataList, dataLoaded, removeAction }) => {
   }
 
   function handleItemRemoval() {
-    removeAction(selectedItems);
+    removeAction(selectedItems, demoModeEnabled);
     setRemoveDisabled(true);
   }
 
@@ -59,4 +66,10 @@ const ItemListManager = ({ dataList, dataLoaded, removeAction }) => {
   );
 };
 
-export default ItemListManager;
+const mapStateToProps = (state) => {
+  return {
+    demoModeEnabled: getDemoModeState(state),
+  };
+};
+
+export default connect(mapStateToProps)(ItemListManager);

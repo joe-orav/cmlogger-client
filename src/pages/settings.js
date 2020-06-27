@@ -5,6 +5,7 @@ import {
   getOrphanedServices,
   getOrphanedLocations,
   getDataLoaded,
+  getDemoModeState,
 } from "../store/selectors";
 import ItemListManager from "../components/itemListManager";
 import LinkedAccounts from "../components/linkedAccounts";
@@ -18,8 +19,9 @@ function Settings({
   orphanedLocations,
   orphanedServices,
   dataLoaded,
-  modifyServiceData, 
-  modifyLocationData 
+  modifyServiceData,
+  modifyLocationData,
+  demoModeEnabled,
 }) {
   useEffect(() => {
     setPageTitle("Settings");
@@ -53,17 +55,19 @@ function Settings({
           />
         </SectionItem>
       </SettingsSection>
-      <SettingsSection label="Account Settings">
-        <SectionItem label="Linked Accounts">
-          <LinkedAccounts />
-        </SectionItem>
-        <SectionItem
-          label="Delete Account"
-          description="Removes your account and all your service history"
-        >
-          <DeleteAccount />
-        </SectionItem>
-      </SettingsSection>
+      {!demoModeEnabled && (
+        <SettingsSection label="Account Settings">
+          <SectionItem label="Linked Accounts">
+            <LinkedAccounts />
+          </SectionItem>
+          <SectionItem
+            label="Delete Account"
+            description="Removes your account and all your service history"
+          >
+            <DeleteAccount />
+          </SectionItem>
+        </SettingsSection>
+      )}
     </PageWrapper>
   );
 }
@@ -72,10 +76,11 @@ const mapStateToProps = (state) => {
   return {
     orphanedServices: getOrphanedServices(state),
     orphanedLocations: getOrphanedLocations(state),
-    dataLoaded: getDataLoaded(state)
+    dataLoaded: getDataLoaded(state),
+    demoModeEnabled: getDemoModeState(state),
   };
 };
 
-const mapDispatchToProps = { modifyServiceData, modifyLocationData }
+const mapDispatchToProps = { modifyServiceData, modifyLocationData };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

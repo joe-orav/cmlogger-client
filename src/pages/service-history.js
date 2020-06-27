@@ -8,7 +8,7 @@ import {
 import LoadingIcon from "../components/loading";
 import setPageTitle from "../utils/pageTitle";
 import RecordItem from "../components/recordItem";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PageWrapper from "../components/pageWrapper";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -58,6 +58,15 @@ const AddRecordButton = styled(Button)`
     display: flex;
     width: auto;
   }
+
+  ${props => props.$linkDisabled ? css`
+    opacity: 0.65;
+
+    &:hover {
+      background-color: #686868;
+      cursor: default;
+    }
+  ` : ""}
 `;
 
 const TableHead = styled(Row)`
@@ -77,7 +86,7 @@ const TableHeader = ({ label }) => {
   );
 };
 
-function ServiceHistory({ cars, serviceHistory, serviceHistoryDataLoading }) {
+function ServiceHistory({ carsCount, serviceHistory, serviceHistoryDataLoading }) {
   useEffect(() => {
     setPageTitle("Service History");
   });
@@ -95,7 +104,8 @@ function ServiceHistory({ cars, serviceHistory, serviceHistoryDataLoading }) {
             <AddRecordButton
               forwardedAs={Link}
               variant="primary"
-              to="/add-record"
+              to={`${carsCount === 0 ? "#/" : "/add-record"}`}
+              $linkDisabled={carsCount === 0}
             >
               Add New Record
             </AddRecordButton>
@@ -127,7 +137,7 @@ function ServiceHistory({ cars, serviceHistory, serviceHistoryDataLoading }) {
 
 const mapStateToProps = (state) => {
   return {
-    cars: getCars(state),
+    carsCount: getCars(state).length,
     serviceHistory: getExpandedServiceHistory(state),
     serviceHistoryDataLoading: getServiceHistoryDataLoading(state),
   };

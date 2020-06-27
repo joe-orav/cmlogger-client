@@ -54,8 +54,8 @@ function userReducer(state = {}, action) {
           facebookConnected: null,
           google_pic: "",
           facebook_pic: "",
-          default_pic: demoDefaultPic
-        }
+          default_pic: demoDefaultPic,
+        },
       };
     case ActionTypes.FETCH_USER_DATA_FAILURE:
       return {
@@ -317,6 +317,7 @@ function alertsReducer(state = [], action) {
 function fetchReducer(state = false, action) {
   switch (action.type) {
     case ActionTypes.FETCH_SH_DATA_SUCCESS:
+    case ActionTypes.ENABLE_DEMO_MODE:
       return true;
     default:
       return state;

@@ -58,24 +58,29 @@ function modifyServiceDataFailure(error) {
   };
 }
 
-export function modifyServiceData(serviceIDs) {
+export function modifyServiceData(serviceIDs, demoModeEnabled) {
   return async (dispatch) => {
     dispatch(modifyServiceDataStart());
 
-    const res = await fetch("/api/services", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ serviceIDs }),
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-      dispatch(modifyServiceDataFailure(data.error));
-      dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
-    } else {
-      dispatch(deleteServiceSuccess(data));
+    if (demoModeEnabled) {
+      dispatch(deleteServiceSuccess({serviceIDs}));
       dispatch(createAlert("Services removed", ALERT_TYPES.SUCCESS));
+    } else {
+      const res = await fetch("/api/services", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ serviceIDs }),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        dispatch(modifyServiceDataFailure(data.error));
+        dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
+      } else {
+        dispatch(deleteServiceSuccess(data));
+        dispatch(createAlert("Services removed", ALERT_TYPES.SUCCESS));
+      }
     }
   };
 }

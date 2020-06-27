@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import DeleteOverlay from "./deleteItem";
 import { connect } from "react-redux";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
+import { getDemoModeState } from "../store/selectors";
 
 const DetailItem = ({ label, text, width }) => {
   return (
@@ -81,7 +82,7 @@ const SummaryItem = ({ label, value }) => {
   );
 };
 
-const RecordItem = ({ index, record, modifyServiceHistory }) => {
+const RecordItem = ({ index, record, demoModeEnabled, modifyServiceHistory }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
 
@@ -150,13 +151,19 @@ const RecordItem = ({ index, record, modifyServiceHistory }) => {
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
           text={"Are you sure you want to delete this record?"}
-          action={() => modifyServiceHistory({ id: record.id }, "delete")}
+          action={() => modifyServiceHistory({ id: record.id }, "delete", demoModeEnabled)}
         />
       </ContainerCol>
     </Row>
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    demoModeEnabled: getDemoModeState(state),
+  };
+};
+
 const mapDispatchToProps = { modifyServiceHistory };
 
-export default connect(null, mapDispatchToProps)(RecordItem);
+export default connect(mapStateToProps, mapDispatchToProps)(RecordItem);

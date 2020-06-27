@@ -4,6 +4,7 @@ import { rootReducer } from "./reducers";
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 let initialState = {
+    demoMode: false,
     user: {
         loading: false,
         error: null,

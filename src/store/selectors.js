@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
 
+export const getDemoModeState = (state) => state.demoMode;
 export const getUser = (state) => state.user.profile;
 export const getUserId = (state) => state.user.profile.id;
 export const getServiceHistory = (state) => state.serviceHistory.items;

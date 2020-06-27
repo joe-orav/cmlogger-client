@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/login";
+import LandingPage from "./pages/landing";
 import Dashboard from "./pages/dashboard";
 import Cars from "./pages/cars";
 import ServiceHistory from "./pages/service-history";
@@ -25,7 +26,7 @@ function App() {
         <PrivateRoute path="/add-car" render={<SiteLayout hideNavBar><AddCar /></SiteLayout>} />
         <Route path="/privacy-policy" render={() => <SiteLayout hideNavBar><PrivacyPolicy /></SiteLayout>} />
         <PrivateRoute path="/add-record" render={<SiteLayout hideNavBar><AddRecord /></SiteLayout>} />
-        <PrivateRoute exact path="/" render={<Redirect to="/dashboard" />} />
+        <Route path="/" render={() => <SiteLayout hideNavBar><LandingPage /></SiteLayout>} />
         <PrivateRoute path="*" render={<SiteLayout hideNavBar><NotFoundPage /></SiteLayout>} />
       </Switch>
       <AlertContainer />

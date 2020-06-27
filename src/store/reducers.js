@@ -1,5 +1,17 @@
 import * as ActionTypes from "./action-types";
 import { combineReducers } from "redux";
+import demoDefaultPic from "../img/default_pic.png";
+
+function demoReducer(state = false, action) {
+  switch (action.type) {
+    case ActionTypes.ENABLE_DEMO_MODE:
+      return true;
+    case ActionTypes.DISABLE_DEMO_MODE:
+      return false;
+    default:
+      return state;
+  }
+}
 
 function userReducer(state = {}, action) {
   switch (action.type) {
@@ -30,6 +42,20 @@ function userReducer(state = {}, action) {
           facebook_pic: action.payload.fb_profile_pic,
           default_pic: action.payload.default_pic,
         },
+      };
+    case ActionTypes.ENABLE_DEMO_MODE:
+      return {
+        loading: false,
+        error: null,
+        profile: {
+          id: 0,
+          name: "Demo User",
+          googleConnected: null,
+          facebookConnected: null,
+          google_pic: "",
+          facebook_pic: "",
+          default_pic: demoDefaultPic
+        }
       };
     case ActionTypes.FETCH_USER_DATA_FAILURE:
       return {
@@ -298,6 +324,7 @@ function fetchReducer(state = false, action) {
 }
 
 export const rootReducer = combineReducers({
+  demoMode: demoReducer,
   user: userReducer,
   cars: carsReducer,
   serviceHistory: serviceHistoryReducer,

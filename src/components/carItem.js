@@ -7,6 +7,7 @@ import { SDRouteLink, SDLink } from "./defaultLink";
 import { connect } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import DeleteOverlay from "./deleteItem";
+import { getDemoModeState } from "../store/selectors";
 
 let siteImages = imgImport(require.context("../img", false));
 
@@ -31,7 +32,7 @@ const CardVIN = styled(Card.Text)`
   font-size: 0.88rem;
 `;
 
-const CarItem = ({ car, modifyCarData }) => {
+const CarItem = ({ car, modifyCarData, demoModeEnabled }) => {
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
   return (
     <Col className="mt-3">
@@ -52,13 +53,19 @@ const CarItem = ({ car, modifyCarData }) => {
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
           text={"Are you sure you want to delete this car?"}
-          action={() => modifyCarData({id: car.id}, "delete")}
+          action={() => modifyCarData({id: car.id}, "delete", demoModeEnabled)}
         />
       </CarCard>
     </Col>
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    demoModeEnabled: getDemoModeState(state),
+  };
+};
+
 const mapDispatchToProps = { modifyCarData }
 
-export default connect(null, mapDispatchToProps)(CarItem);
+export default connect(mapStateToProps, mapDispatchToProps)(CarItem);

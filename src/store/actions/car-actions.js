@@ -72,7 +72,7 @@ function modifyCarDataFailure(error) {
   };
 }
 
-export function modifyCarData(carData, requestMethod) {
+export function modifyCarData(carData, requestMethod, demoModeEnabled) {
   return async (dispatch) => {
     dispatch(modifyCarDataStart());
 
@@ -85,6 +85,26 @@ export function modifyCarData(carData, requestMethod) {
     ) {
       dispatch(modifyCarDataFailure("Invalid Request"));
       dispatch(createAlert("Invalid Request", ALERT_TYPES.DANGER));
+    } else if (demoModeEnabled) {
+      switch (requestMethod) {
+        case "put":
+          dispatch(editCarSuccess(carData));
+          dispatch(
+            createAlert("Car details successfully changed", ALERT_TYPES.SUCCESS)
+          );
+          break;
+        case "post":
+          dispatch(
+            addCarSuccess(Object.assign({}, carData, { id: Date.now() }))
+          );
+          dispatch(createAlert("New car added", ALERT_TYPES.SUCCESS));
+          break;
+        case "delete":
+          dispatch(deleteCarSuccess(carData));
+          dispatch(createAlert("Car has been removed", ALERT_TYPES.SUCCESS));
+          break;
+        default:
+      }
     } else {
       const res = await fetch("/api/cars", {
         method: requestMethod,
@@ -97,17 +117,27 @@ export function modifyCarData(carData, requestMethod) {
       if (data.error) {
         dispatch(modifyCarDataFailure(data.error));
         dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
-      } else if (requestMethod === "put") {
-        dispatch(editCarSuccess(data));
-        dispatch(
-          createAlert("Car details successfully changed", ALERT_TYPES.SUCCESS)
-        );
-      } else if (requestMethod === "post") {
-        dispatch(addCarSuccess(data));
-        dispatch(createAlert("New car added", ALERT_TYPES.SUCCESS));
-      } else if (requestMethod === "delete") {
-        dispatch(deleteCarSuccess(data));
-        dispatch(createAlert("Car has been removed", ALERT_TYPES.SUCCESS));
+      } else {
+        switch (requestMethod) {
+          case "put":
+            dispatch(editCarSuccess(data));
+            dispatch(
+              createAlert(
+                "Car details successfully changed",
+                ALERT_TYPES.SUCCESS
+              )
+            );
+            break;
+          case "post":
+            dispatch(addCarSuccess(data));
+            dispatch(createAlert("New car added", ALERT_TYPES.SUCCESS));
+            break;
+          case "delete":
+            dispatch(deleteCarSuccess(data));
+            dispatch(createAlert("Car has been removed", ALERT_TYPES.SUCCESS));
+            break;
+          default:
+        }
       }
     }
   };

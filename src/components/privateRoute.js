@@ -5,7 +5,7 @@ import { getUser } from "../store/selectors";
 
 function PrivateRoute1({ user, path, render, ...rest }) {
     return (
-        <Route {...rest} path={path} render={() => user.id ? render : <Redirect to="/login" />} />
+        <Route {...rest} path={path} render={() => user.id != null ? render : <Redirect to="/login" />} />
     )
 }
 

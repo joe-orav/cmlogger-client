@@ -102,7 +102,7 @@ export function deleteAccount(userData) {
       dispatch(deleteAccountFailure(userDataResponse.error));
       dispatch(createAlert(userDataResponse.error, ALERT_TYPES.DANGER));
     } else if (userDataResponse.accountDeleted) {
-      window.location.href = "/login";
+      window.location.href = "/";
       dispatch(deleteAccountSuccess());
     }
   };

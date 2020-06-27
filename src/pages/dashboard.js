@@ -37,6 +37,11 @@ const StatContainer = styled.div`
   text-align: center;
   border-bottom: 1px solid #cfcfcf;
   padding: 0 10px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
   @media (min-width: 1200px) {
     border-bottom: none;
   }
@@ -47,7 +52,7 @@ const StatLabel = styled.p`
 `;
 
 const StatValue = styled.p`
-  font-size: 3.2rem;
+  font-size: 3rem;
   font-weight: 500;
   margin: 0;
   margin-bottom: 10px;
@@ -98,20 +103,23 @@ const DashCard = ({ title, children, full }) => {
   );
 };
 
-function Dashboard({carsCount, recordCount, totalCost}) {
+function Dashboard({ carsCount, recordCount, totalCost }) {
   useEffect(() => {
     setPageTitle("Dashboard");
   });
   return (
     <PageWrapper pageTitle="Dashboard">
-      <Col className="mx-lg-5">
-        <Container fluid>
+      <Col>
+        <Container className="mx-auto">
           <DashRow>
             <Col xs="12">
               <StatOverviewBlock>
                 <StatOverview label="Total # of Cars" value={carsCount} />
                 <StatOverview label="Services Recorded" value={recordCount} />
-                <StatOverview label="Total Spent on Services" value={`$${totalCost}`} />
+                <StatOverview
+                  label="Total Spent on Services"
+                  value={`$${totalCost}`}
+                />
               </StatOverviewBlock>
             </Col>
           </DashRow>
@@ -146,7 +154,7 @@ const mapStateToProps = (state) => {
   return {
     carsCount: getCars(state).length,
     recordCount: getServiceHistory(state).length,
-    totalCost: getTotalCost(state)
+    totalCost: getTotalCost(state),
   };
 };
 

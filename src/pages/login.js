@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import logo from "../img/logo.png";
 import googleLogo from "../img/google-logo.svg";
 import facebookLogo from "../img/facebook-logo.svg";
+import demoPerson from "../img/demo-person.svg";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser } from "../store/selectors";
@@ -13,6 +14,7 @@ import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import loginBg from "../img/login-bg.jpg";
 import { Link } from "react-router-dom";
+import { setDemoModeStateTo } from "../store/actions/demo-actions";
 
 const PageRow = styled(Row)`
   height: 100%;
@@ -43,7 +45,7 @@ const SubTitle = styled(Card.Title)`
   }
 `;
 
-const LoginBtn = styled.a.attrs((props) => ({
+const LoginBtn = styled.a.attrs(() => ({
   className: "my-3 py-2",
 }))`
   position: relative;
@@ -83,6 +85,15 @@ const LoginBtn = styled.a.attrs((props) => ({
             color: rgba(255, 255, 255, 0.9);
           }
         `;
+      case "demo":
+        return css`
+          background: #323232;
+
+          &:hover {
+            background: rgba(50,50,50, 0.9);
+            color: rgba(255, 255, 255, 0.9);
+          }
+        `;
       default:
         return css``;
     }
@@ -103,18 +114,19 @@ const LoginBtnLogoCtr = styled.span`
 const InfoText = styled.p`
   color: #fff;
   margin-top: 10px;
+  text-align: center;
 `;
 
 const InfoLink = styled.a`
   text-decoration: underline;
 `; 
 
-function Login(props) {
+function Login({user, setDemoModeStateTo}) {
   useEffect(() => {
     setPageTitle("Login");
   });
 
-  return props.user.id != null ? (
+  return user.id != null ? (
     <Redirect to="/dashboard" />
   ) : (
     <PageRow $bg={loginBg}>
@@ -140,6 +152,12 @@ function Login(props) {
               </LoginBtnLogoCtr>
               Continue with Facebook
             </LoginBtn>
+            <LoginBtn onClick={() => setDemoModeStateTo(true)} href="#/" service="demo">
+              <LoginBtnLogoCtr>
+                <Image src={demoPerson} fluid />
+              </LoginBtnLogoCtr>
+              Continue as Demo User
+            </LoginBtn>
           </Card.Body>
         </LoginCard>
         <InfoText>
@@ -158,4 +176,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Login);
+const mapDispatchToProps = { setDemoModeStateTo };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

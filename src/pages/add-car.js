@@ -5,7 +5,12 @@ import Button from "react-bootstrap/Button";
 import { Link, useLocation } from "react-router-dom";
 import FormPage from "../components/formPage";
 import queryString from "query-string";
-import { getCars, getCarsDataLoading, getUserId } from "../store/selectors";
+import {
+  getDemoModeState,
+  getCars,
+  getCarsDataLoading,
+  getUserId,
+} from "../store/selectors";
 import { modifyCarData } from "../store/actions/car-actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -59,13 +64,19 @@ function validateQuery(id, cars) {
     }
   }
 
-  return { id: 0 };
+  return { id: -1 };
 }
 
-function AddCar({ cars, carsDataLoading, userId, modifyCarData }) {
+function AddCar({
+  demoModeEnabled,
+  cars,
+  carsDataLoading,
+  userId,
+  modifyCarData,
+}) {
   let urlQuery = queryString.parse(useLocation().search);
   let history = useHistory();
-  let formValues = { id: 0 };
+  let formValues = { id: -1 };
 
   if (!carsDataLoading) {
     formValues = validateQuery(urlQuery.id, cars);
@@ -93,8 +104,8 @@ function AddCar({ cars, carsDataLoading, userId, modifyCarData }) {
         model: modelVal,
         vin: vinVal,
       };
-      let request = dataID === 0 ? "post" : "put";
-      modifyCarData(formData, request);
+      let request = dataID === -1 ? "post" : "put";
+      modifyCarData(formData, request, demoModeEnabled);
       history.goBack();
     }
 
@@ -102,7 +113,7 @@ function AddCar({ cars, carsDataLoading, userId, modifyCarData }) {
   }
 
   return (
-    <FormPage title={dataID ? `Edit Car: ${formValues.name}` : "Add New Car"}>
+    <FormPage title={dataID === -1 ? "Add Car" : `Edit Car: ${formValues.name}`}>
       <AddCarForm noValidate validated={validated} onSubmit={handleSubmission}>
         <Form.Group controlId="carType">
           <Form.Label>Type</Form.Label>
@@ -179,6 +190,7 @@ function AddCar({ cars, carsDataLoading, userId, modifyCarData }) {
 
 const mapStateToProps = (state) => {
   return {
+    demoModeEnabled: getDemoModeState(state),
     cars: getCars(state),
     carsDataLoading: getCarsDataLoading(state),
     userId: getUserId(state),

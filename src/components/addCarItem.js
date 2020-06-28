@@ -7,34 +7,25 @@ import { Link } from "react-router-dom";
 
 const Content = styled(Link)`
   display: flex;
+  border: 1px dashed #b5b5b5;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border: 1px dashed #b5b5b5;
-  width: 100%;
   height: 100%;
-  max-width: 250px;
 
   &:hover {
     text-decoration: none;
   }
 
-  @media (max-width: 767.98px) {
-    max-width: none;
+  @media (min-width: 576px) {
+    max-width: 250px;
   }
 `;
 
 const ImageContainer = styled.div`
-    margin-bottom: 20px;
-
-    @media (min-width: 768px) {
-        width: 20%;
-    }
-
-    @media (max-width: 767.98px) {
-        width: 15%;
-    }
+  margin-bottom: 20px;
+  width: 40px;
 `;
 
 const AddCarItem = () => {
@@ -43,7 +34,7 @@ const AddCarItem = () => {
       <Content to="/add-car">
         <p className="h3 text-primary mt-3">Add New Car</p>
         <ImageContainer>
-            <Image src={plusSymbol} fluid alt="Add New Car" />
+          <Image src={plusSymbol} fluid alt="Add New Car" />
         </ImageContainer>
       </Content>
     </Col>

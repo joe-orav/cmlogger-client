@@ -19,7 +19,7 @@ function Cars({ cars, carsDataLoading }) {
       {carsDataLoading ? (
         <LoadingIcon />
       ) : (
-        <Col className="mt-4 pl-4" xs>
+        <Col className="mt-4 px-4" xs>
           <Row className="row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
             {cars.map((c, i) => (
               <CarItem key={i} car={c} />

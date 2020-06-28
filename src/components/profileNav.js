@@ -10,10 +10,9 @@ const IconContainer = styled.div`
   border-radius: 50%;
   overflow: hidden;
   width: 35px;
-  margin-bottom: 10px;
 
-  @media (max-width: 767.98px) {
-    margin-bottom: 0;
+  @media (min-width: 768px) {
+    margin-bottom: 10px;
   }
 `;
 

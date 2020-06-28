@@ -20,16 +20,15 @@ const DashRow = styled(Row)`
 `;
 
 const StatOverviewBlock = styled.div`
-  border: 2px solid #cfcfcf;
-  background: #fff;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: auto;
+  flex-direction: column;
+  background: #fff;
+  border: 2px solid #cfcfcf;
 
-  @media (max-width: 1199.98px) {
-    flex-direction: column;
-    align-items: stretch;
+  @media (min-width: 992px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
   }
 `;
 
@@ -42,7 +41,7 @@ const StatContainer = styled.div`
     border-bottom: none;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 992px) {
     border-bottom: none;
   }
 `;

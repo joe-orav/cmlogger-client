@@ -10,7 +10,8 @@ import appMockup from "../../img/app-mockup.png";
 import { Link } from "react-router-dom";
 
 const HeroRow = styled(Row)`
-  background: no-repeat linear-gradient(rgba(104,104,104,0.8), rgba(0,0,0,0.8)),
+  background: no-repeat
+      linear-gradient(rgba(104, 104, 104, 0.8), rgba(0, 0, 0, 0.8)),
     url(${landingImg}) center / cover;
   justify-content: center;
 `;
@@ -18,10 +19,10 @@ const HeroRow = styled(Row)`
 const HeroCol = styled(Col)`
   display: flex;
   flex-direction: column;
-  padding: 0 4rem;
+  padding: 0 1.3rem;
 
-  @media (max-width: 575.98px) {
-    padding: 0 1.3rem;
+  @media (min-width: 768px) {
+    padding: 0 4rem;
   }
 `;
 
@@ -36,57 +37,51 @@ const NavHeader = styled.div`
 const Summary = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px 0 40px;
+  flex-direction: column;
+  padding: 10px 0 40px;
 
-  @media (max-width: 991.98px) {
-    flex-direction: column;
-  }
-
-  @media (max-width: 575.98px) {
-    padding-top: 10px;
+  @media (min-width: 992px) {
+    flex-direction: row;
+    padding-top: 20px;
   }
 `;
 
 const HeaderImgContainer = styled.div`
-  width: 200px;
+  width: 150px;
 
-  @media (max-width: 991.98px) {
-    width: 150px;
+  @media (min-width: 992px) {
+    width: 200px;
   }
 `;
 
 const DashPageContainer = styled.div`
   max-width: 600px;
-  min-width: 500px;
-
-  @media (max-width: 991.98px) {
-    min-width: 0;
-  }
 `;
 
 const TextContent = styled.div`
   color: #fff;
+  margin-right: 0px;
+  text-align: center;
+  margin-bottom: 30px;
   max-width: 600px;
-  margin-right: 30px;
 
-  @media (max-width: 991.98px) {
-    margin-right: 0px;
-    text-align: center;
-    margin-bottom: 30px;
+  @media (min-width: 992px) {
+    margin-right: 30px;
+    text-align: left;
   }
 `;
 
 const TextContentHeader = styled.h1`
-  @media (max-width: 575.98px) {
-    font-size: 2rem;
+  font-size: 2rem;
+
+  @media (min-width: 576px) {
+    font-size: 2.5rem;
   }
 `;
 
 const TextContentSubText = styled.p`
-  font-size: 1.3rem;
-
-  @media (max-width: 575.98px) {
-    font-size: 1rem;
+  @media (min-width: 576px) {
+    font-size: 1.3rem;
   }
 `;
 
@@ -95,23 +90,18 @@ const ButtonContainer = styled.div`
 `;
 
 const HeroBtn = styled(Button)`
-  margin-right: 20px;
-  font-size: 1.3rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  border-radius: 0.3rem;
+  margin: 0 10px;
 
-  @media (max-width: 991.98px) {
-    margin: 0 10px;
+  @media (min-width: 576px) {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
   }
 
-  @media (max-width: 575.98px) {
-    font-size: 2rem;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.25rem;
+  @media (min-width: 992px) {
+    margin: 0;
+    margin-right: 20px;
   }
 `;
 

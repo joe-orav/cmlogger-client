@@ -18,29 +18,23 @@ const LayoutWrapper = styled.div`
 
 const SiteContent = styled.div`
   align-self: stretch;
+  padding-top: 75px;
 
   @media (min-width: 768px) {
     padding-left: 175px;
-  }
-
-  @media (max-width: 767.98px) {
-    padding-top: 75px;
+    padding-top: 0;
   }
 `;
 
 const SiteNavBar = styled(Navbar)`
   position: fixed;
-  justify-content: flex-start;
+  width: 100%;
   z-index: 1;
 
   @media (min-width: 768px) {
     flex-direction: column;
     width: 175px;
     height: 100%;
-  }
-
-  @media (max-width: 767.98px) {
-    width: 100%;
   }
 `;
 
@@ -53,15 +47,12 @@ const ToggleIcon = styled.span`
 `;
 
 const SiteBrand = styled(Link)`
-  margin-right: 0;
   width: 140px;
+  padding-left: 5px;
 
   @media (min-width: 768px) {
     padding-top: 15px;
-  }
-
-  @media (max-width: 767.98px) {
-    padding-left: 5px;
+    margin-right: 0;
   }
 `;
 

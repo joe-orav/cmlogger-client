@@ -5,28 +5,27 @@ import styled from "styled-components";
 import Alert from "react-bootstrap/Alert";
 
 const Content = styled.div`
-  display: flex;
   position: fixed;
   bottom: 10px;
-  right: 0;
+  display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  width: 100%;
 
-  @media (max-width: 767.98px) {
-    width: 100%;
-    align-items: center;
+  @media (min-width: 768px) {
+    right: 0;
+    align-items: flex-end;
   }
 `;
 
 const AppAlert = styled(Alert)`
-  width: 275px;
   font-size: 0.85rem;
-  margin-right: 20px;
   opacity: 1;
   transition: opacity 1s linear;
+  width: 275px;
 
-  @media (max-width: 767.98px) {
-    margin-right: 0;
+  @media (min-width: 768px) {
+    margin-right: 20px;
   }
 `;
 

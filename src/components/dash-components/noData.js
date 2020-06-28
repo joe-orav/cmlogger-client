@@ -8,9 +8,9 @@ const Content = styled.div`
 `;
 
 const Text = styled.p`
-    margin: 10px 0;
-    color: #707070;
-    font-size: 1.1rem;
+  margin: 10px 0;
+  color: #707070;
+  font-size: 1.1rem;
 `;
 
 export default () => {

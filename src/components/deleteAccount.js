@@ -7,12 +7,14 @@ import { getUserId } from "../store/selectors";
 import { deleteAccount } from "../store/actions/user-actions";
 
 const DeleteCheck = styled(Form.Check)`
-  @media (max-width: 500px) {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+  
+  @media (min-width: 576px) {
+    margin-bottom: 0px;
   }
 `;
 
-const DeleteAccount = ({userId, deleteAccount}) => {
+const DeleteAccount = ({ userId, deleteAccount }) => {
   const [deletionConfirmed, setDeletionConfirmation] = useState(false);
 
   return (
@@ -27,7 +29,7 @@ const DeleteAccount = ({userId, deleteAccount}) => {
       <Button
         variant="danger"
         disabled={!deletionConfirmed}
-        onClick={() => deleteAccount({userId: userId})}
+        onClick={() => deleteAccount({ userId: userId })}
       >
         Delete Account
       </Button>

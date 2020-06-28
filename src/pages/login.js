@@ -38,10 +38,10 @@ const LoginCard = styled(Card)`
 
 const SubTitle = styled(Card.Title)`
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 
-  @media (max-width: 575.98px) {
-    font-size: 1.3rem;
+  @media (min-width: 576px) {
+    font-size: 1.5rem;
   }
 `;
 

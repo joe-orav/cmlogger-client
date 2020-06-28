@@ -12,13 +12,12 @@ import { getDemoModeState } from "../store/selectors";
 let siteImages = imgImport(require.context("../img", false));
 
 const CarCard = styled(Card)`
-  height: 100%;
   position: relative;
-  max-width: 250px;
+  height: 100%;
+  max-width: 100%;
 
-  @media (max-width: 767.98px) {
-    max-width: none;
-    width: 100%;
+  @media (min-width: 576px) {
+    max-width: 250px;
   }
 `;
 

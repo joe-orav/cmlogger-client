@@ -31,14 +31,6 @@ const DescriptionCol = styled(Col)`
 
 const Description = styled.p`
   margin-bottom: 0;
-
-  @media (min-width: 576px) and (max-width: 767.98px) {
-    text-align: center;
-  }
-
-  @media (min-width: 576px) {
-    text-align: left;
-  }
 `;
 
 const ButtonContainer = styled(Col)`

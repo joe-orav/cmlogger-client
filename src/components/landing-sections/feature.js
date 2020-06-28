@@ -74,7 +74,7 @@ const Feature = ({ iconClass, title, description }) => {
 
 export default () => {
   return (
-    <FeatureRow className="bg-light">
+    <FeatureRow id="features" className="bg-light">
       <Col xs="12">
         <SectionHeader>
           <HeaderText className="bg-light">Features</HeaderText>

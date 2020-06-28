@@ -6,7 +6,7 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import logo from "../../img/logo.png";
 import landingImg from "../../img/landing-img.jpg";
-import dashPage from "../../img/dash-page.png";
+import appMockup from "../../img/app-mockup.png";
 import { Link } from "react-router-dom";
 
 const HeroRow = styled(Row)`
@@ -141,13 +141,13 @@ export default () => {
               <HeroBtn forwardedAs="a" variant="light" href="/login">
                 Try it now
               </HeroBtn>
-              <HeroBtn forwardedAs="a" href="/#" variant="outline-light">
+              <HeroBtn forwardedAs="a" href="#features" variant="outline-light">
                 Features
               </HeroBtn>
             </ButtonContainer>
           </TextContent>
           <DashPageContainer>
-            <Image src={dashPage} fluid />
+            <Image src={appMockup} fluid />
           </DashPageContainer>
         </Summary>
       </HeroCol>

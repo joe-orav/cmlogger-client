@@ -65,10 +65,10 @@ function deleteCarSuccess(data) {
   };
 }
 
-function modifyCarDataFailure(error) {
+function modifyCarDataFailure(data) {
   return {
     type: ActionTypes.MODIFY_CAR_DATA_FAILURE,
-    error: error,
+    payload: data,
   };
 }
 
@@ -115,7 +115,7 @@ export function modifyCarData(carData, requestMethod, demoModeEnabled) {
       const data = await res.json();
 
       if (data.error) {
-        dispatch(modifyCarDataFailure(data.error));
+        dispatch(modifyCarDataFailure(data));
         dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
       } else {
         switch (requestMethod) {

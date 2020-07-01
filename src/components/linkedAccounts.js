@@ -60,7 +60,12 @@ const ConnectLink = ({ text, providerName, onClick }) => {
   );
 };
 
-const ConnectionStatus = ({ connected, enableDisconnect, providerName, disconnectAction }) => {
+const ConnectionStatus = ({
+  connected,
+  enableDisconnect,
+  providerName,
+  disconnectAction,
+}) => {
   return (
     <ConnectionContainer>
       {connected && <ConnectedIcon />}
@@ -76,7 +81,11 @@ const ConnectionStatus = ({ connected, enableDisconnect, providerName, disconnec
   );
 };
 
-const AccountProviderItem = ({ account, enableDisconnect, disconnectAction }) => {
+const AccountProviderItem = ({
+  account,
+  enableDisconnect,
+  disconnectAction,
+}) => {
   return (
     <ItemContainer>
       <ProviderName>{account.providerName}</ProviderName>
@@ -90,7 +99,12 @@ const AccountProviderItem = ({ account, enableDisconnect, disconnectAction }) =>
   );
 };
 
-const LinkedAccounts = ({ accountList, userId, disconnectAccount }) => {
+const LinkedAccounts = ({
+  accountList,
+  userId,
+  disconnectAccount,
+  connectionAttempt,
+}) => {
   let hasMultipleAccounts =
     accountList.filter((acc) => acc.connected).length > 1;
 
@@ -109,6 +123,12 @@ const LinkedAccounts = ({ accountList, userId, disconnectAccount }) => {
           }
         />
       ))}
+      {connectionAttempt === "error" && (
+        <p className="text-danger">
+          Error: There is already a profile associated with the account you want
+          to connect
+        </p>
+      )}
     </div>
   );
 };

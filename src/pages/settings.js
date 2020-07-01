@@ -7,6 +7,8 @@ import {
   getDataLoaded,
   getDemoModeState,
 } from "../store/selectors";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import ItemListManager from "../components/itemListManager";
 import LinkedAccounts from "../components/linkedAccounts";
 import DeleteAccount from "../components/deleteAccount";
@@ -26,6 +28,9 @@ function Settings({
   useEffect(() => {
     setPageTitle("Settings");
   });
+
+  let urlQuery = queryString.parse(useLocation().search);
+  let connectionAttempt = urlQuery.addaccount;
 
   return (
     <PageWrapper pageTitle="Settings" spacing="4">
@@ -58,7 +63,7 @@ function Settings({
       {!demoModeEnabled && (
         <SettingsSection label="Account Settings">
           <SectionItem label="Linked Accounts">
-            <LinkedAccounts />
+            <LinkedAccounts connectionAttempt={connectionAttempt} />
           </SectionItem>
           <SectionItem
             label="Delete Account"

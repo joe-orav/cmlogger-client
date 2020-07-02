@@ -68,6 +68,11 @@ const SiteNavLink = styled(Link).attrs(() => ({
   className: "nav-item nav-link",
 }))`
   color: #fff;
+
+  @media (min-width: 768px) {
+    padding-left: 0.3rem !important;
+    padding-right: 0.3rem !important;
+  }
 `;
 
 const SiteLayout = ({ hideNavBar, user, children }) => {

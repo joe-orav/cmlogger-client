@@ -26,6 +26,13 @@ const LinkContainer = styled.div`
 
 const BackLink = styled(SDLink)`
   font-size: 1.1rem;
+  background: none;
+  border: none;
+  outline: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default ({ title, children, contentWidth }) => {
@@ -39,7 +46,7 @@ export default ({ title, children, contentWidth }) => {
           {children}
         </PageContent>
         <LinkContainer>
-          <BackLink href="#/" onClick={() => history.goBack()}>
+          <BackLink as="button" href="#/" onClick={() => history.goBack()}>
             <i className="fas fa-arrow-left"></i> Go back
           </BackLink>
         </LinkContainer>

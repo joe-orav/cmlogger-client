@@ -33,7 +33,7 @@ export const getAccounts = createSelector(getUser, (user) => {
   ];
 });
 
-export const getExpandedServiceHistory = createSelector(
+export const getMergedServiceRecords = createSelector(
   getCars,
   getServices,
   getLocations,
@@ -55,22 +55,22 @@ export const getExpandedServiceHistory = createSelector(
       return { parsedDate: parsedDate, dateString: formatDate(parsedDate) };
     }
 
-    let expandedServiceHistory = serviceHistory.map((serviceHistoryItem) => {
+    let mergedServiceRecords = serviceHistory.map((serviceRecord) => {
       let newSHObj = Object.assign(
         {},
-        serviceHistoryItem,
+        serviceRecord,
         {
-          car: cars.filter((c) => c.id === serviceHistoryItem.car_id)[0],
+          car: cars.filter((c) => c.id === serviceRecord.car_id)[0],
           services: services.filter(
-            (s) => serviceHistoryItem.provided_services_ids.indexOf(s.id) !== -1
+            (s) => serviceRecord.provided_services_ids.indexOf(s.id) !== -1
           ),
-          location: serviceHistoryItem.location_id
+          location: serviceRecord.location_id
             ? locations.filter(
-                (l) => l.id === serviceHistoryItem.location_id
+                (l) => l.id === serviceRecord.location_id
               )[0]
             : null,
         },
-        parseDateString(serviceHistoryItem.service_date)
+        parseDateString(serviceRecord.service_date)
       );
 
       delete newSHObj["car_id"];
@@ -80,14 +80,14 @@ export const getExpandedServiceHistory = createSelector(
       return newSHObj;
     });
 
-    expandedServiceHistory.sort((record1, record2) => {
+    mergedServiceRecords.sort((record1, record2) => {
       let date1 = new Date(record1.service_date).getTime();
       let date2 = new Date(record2.service_date).getTime();
 
       return date2 - date1;
     });
 
-    return expandedServiceHistory;
+    return mergedServiceRecords;
   }
 );
 
@@ -124,7 +124,7 @@ export const getOrphanedLocations = createSelector(
 );
 
 export const getSavedServices = createSelector(
-  getExpandedServiceHistory,
+  getMergedServiceRecords,
   (serviceHistory) => {
     let savedServices = {};
 
@@ -147,7 +147,7 @@ export const getSavedServices = createSelector(
 );
 
 export const getSavedLocations = createSelector(
-  getExpandedServiceHistory,
+  getMergedServiceRecords,
   (serviceHistory) => {
     let savedLocations = {};
 
@@ -183,20 +183,5 @@ export const getTotalCost = createSelector(
     }
 
     return totalCost.toFixed(2);
-  }
-);
-
-export const getErrors = createSelector(
-  getCarsError,
-  getServiceHistoryError,
-  getServicesError,
-  getLocationsError,
-  (carsError, shError, sError, lError) => {
-    return {
-      cars: carsError,
-      serviceHistory: shError,
-      services: sError,
-      locations: lError,
-    };
   }
 );

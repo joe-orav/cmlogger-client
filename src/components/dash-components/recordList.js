@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import {
-  getExpandedServiceHistory,
+  getMergedServiceRecords,
   getServiceHistoryDataLoading,
 } from "../../store/selectors";
 import NoData from "./noData";
@@ -83,7 +83,7 @@ const RecordList = ({ serviceHistory, serviceHistoryDataLoading }) => {
 
 const mapStateToProps = (state) => {
   return {
-    serviceHistory: getExpandedServiceHistory(state),
+    serviceHistory: getMergedServiceRecords(state),
     serviceHistoryDataLoading: getServiceHistoryDataLoading(state),
   };
 };

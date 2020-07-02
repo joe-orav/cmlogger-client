@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {
-  getExpandedServiceHistory,
+  getMergedServiceRecords,
   getUserId,
   getDataLoaded,
   getDemoModeState,
@@ -211,7 +211,7 @@ function AddRecord({
 
 const mapStateToProps = (state) => {
   return {
-    serviceHistory: getExpandedServiceHistory(state),
+    serviceHistory: getMergedServiceRecords(state),
     userId: getUserId(state),
     dataLoaded: getDataLoaded(state),
     demoModeEnabled: getDemoModeState(state),

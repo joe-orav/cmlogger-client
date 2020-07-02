@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
-  getExpandedServiceHistory,
+  getMergedServiceRecords,
   getCars,
   getServiceHistoryDataLoading,
 } from "../store/selectors";
@@ -130,7 +130,7 @@ function ServiceHistory({ carsCount, serviceHistory, serviceHistoryDataLoading }
 const mapStateToProps = (state) => {
   return {
     carsCount: getCars(state).length,
-    serviceHistory: getExpandedServiceHistory(state),
+    serviceHistory: getMergedServiceRecords(state),
     serviceHistoryDataLoading: getServiceHistoryDataLoading(state),
   };
 };

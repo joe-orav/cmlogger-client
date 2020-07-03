@@ -61,13 +61,9 @@ export function disconnectAccount(userData) {
     let userDataResponse = await res.json();
 
     if (userDataResponse.error) {
-      dispatch(disconnectAccountFailure(userDataResponse.error));
-      dispatch(createAlert(userDataResponse.error, ALERT_TYPES.DANGER));
+      return dispatch(disconnectAccountFailure(userDataResponse));
     } else {
-      dispatch(disconnectAccountSuccess(userDataResponse));
-      dispatch(
-        createAlert("Account has been disconnected", ALERT_TYPES.SUCCESS)
-      );
+      return dispatch(disconnectAccountSuccess(userDataResponse));
     }
   };
 }
@@ -97,8 +93,7 @@ export function deleteAccount(userData) {
     let userDataResponse = await res.json();
 
     if (userDataResponse.error) {
-      dispatch(deleteAccountFailure(userDataResponse.error));
-      dispatch(createAlert(userDataResponse.error, ALERT_TYPES.DANGER));
+      return dispatch(deleteAccountFailure(userDataResponse));
     } else if (userDataResponse.accountDeleted) {
       window.location.href = "/";
       dispatch(deleteAccountSuccess());

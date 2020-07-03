@@ -1,5 +1,4 @@
 import * as ActionTypes from "../action-types";
-import { createAlert, ALERT_TYPES } from "./alert-actions";
 
 function fetchServicesDataStart() {
   return {
@@ -52,7 +51,7 @@ function deleteServiceSuccess(data) {
 function modifyServiceDataFailure(error) {
   return {
     type: ActionTypes.MODIFY_SERVICE_DATA_FAILURE,
-    error: error,
+    payload: error,
   };
 }
 
@@ -61,8 +60,7 @@ export function modifyServiceData(serviceIDs, demoModeEnabled) {
     dispatch(modifyServiceDataStart());
 
     if (demoModeEnabled) {
-      dispatch(deleteServiceSuccess({serviceIDs}));
-      dispatch(createAlert("Services removed", ALERT_TYPES.SUCCESS));
+      return dispatch(deleteServiceSuccess({serviceIDs}));
     } else {
       const res = await fetch("/api/services", {
         method: "DELETE",
@@ -73,11 +71,9 @@ export function modifyServiceData(serviceIDs, demoModeEnabled) {
       const data = await res.json();
 
       if (data.error) {
-        dispatch(modifyServiceDataFailure(data.error));
-        dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
+        return dispatch(modifyServiceDataFailure(data));
       } else {
-        dispatch(deleteServiceSuccess(data));
-        dispatch(createAlert("Services removed", ALERT_TYPES.SUCCESS));
+        return dispatch(deleteServiceSuccess(data));
       }
     }
   };

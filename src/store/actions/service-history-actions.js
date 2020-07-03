@@ -1,5 +1,4 @@
 import * as ActionTypes from "../action-types";
-import { createAlert, ALERT_TYPES } from "./alert-actions";
 
 function fetchServiceHistoryDataStart() {
   return {
@@ -66,11 +65,11 @@ function deleteServiceRecordSuccess(data) {
 function modifyServiceHistoryFailure(error) {
   return {
     type: ActionTypes.MODIFY_SERVICE_HISTORY_FAILURE,
-    error: error,
+    payload: error,
   };
 }
 
-function processRecordData(serviceHistoryData) {
+export function processRecordData(serviceHistoryData) {
   let newLocation =
     serviceHistoryData.location_id !== 0
       ? null
@@ -127,37 +126,18 @@ export function modifyServiceHistory(
       requestMethod !== "delete"
     ) {
       dispatch(modifyServiceHistoryFailure("Invalid Request"));
-      dispatch(createAlert("Invalid Request", ALERT_TYPES.DANGER));
     } else if (demoModeEnabled) {
       switch (requestMethod) {
         case "put":
-          dispatch(
+          return dispatch(
             editServiceRecordSuccess(processRecordData(serviceHistoryData))
           );
-          dispatch(
-            createAlert(
-              "Service record has been successfully changed",
-              ALERT_TYPES.SUCCESS
-            )
-          );
-          break;
         case "post":
-          dispatch(
+          return dispatch(
             addServiceRecordSuccess(processRecordData(serviceHistoryData))
           );
-          dispatch(
-            createAlert(
-              "New service record has been added",
-              ALERT_TYPES.SUCCESS
-            )
-          );
-          break;
         case "delete":
-          dispatch(deleteServiceRecordSuccess(serviceHistoryData));
-          dispatch(
-            createAlert("Service record has been removed", ALERT_TYPES.SUCCESS)
-          );
-          break;
+          return dispatch(deleteServiceRecordSuccess(serviceHistoryData));
         default:
       }
     } else {
@@ -170,37 +150,15 @@ export function modifyServiceHistory(
       const data = await res.json();
 
       if (data.error) {
-        dispatch(modifyServiceHistoryFailure(data.error));
-        dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
+        return dispatch(modifyServiceHistoryFailure(data));
       } else {
         switch (requestMethod) {
           case "put":
-            dispatch(editServiceRecordSuccess(data));
-            dispatch(
-              createAlert(
-                "Service record has been successfully changed",
-                ALERT_TYPES.SUCCESS
-              )
-            );
-            break;
+            return dispatch(editServiceRecordSuccess(data));
           case "post":
-            dispatch(addServiceRecordSuccess(data));
-            dispatch(
-              createAlert(
-                "New service record has been added",
-                ALERT_TYPES.SUCCESS
-              )
-            );
-            break;
+            return dispatch(addServiceRecordSuccess(data));
           case "delete":
-            dispatch(deleteServiceRecordSuccess(data));
-            dispatch(
-              createAlert(
-                "Service record has been removed",
-                ALERT_TYPES.SUCCESS
-              )
-            );
-            break;
+            return dispatch(deleteServiceRecordSuccess(data));
           default:
         }
       }

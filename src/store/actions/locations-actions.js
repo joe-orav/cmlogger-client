@@ -1,5 +1,4 @@
 import * as ActionTypes from "../action-types";
-import { createAlert, ALERT_TYPES } from "./alert-actions";
 
 function fetchLocationDataStart() {
   return {
@@ -52,7 +51,7 @@ function deleteLocationSuccess(data) {
 function modifyLocationDataFailure(error) {
   return {
     type: ActionTypes.MODIFY_LOCATION_DATA_FAILURE,
-    error: error,
+    payload: error,
   };
 }
 
@@ -61,8 +60,7 @@ export function modifyLocationData(locationIDs, demoModeEnabled) {
     dispatch(modifyLocationDataStart());
 
     if (demoModeEnabled) {
-      dispatch(deleteLocationSuccess({ locationIDs }));
-      dispatch(createAlert("Locations removed", ALERT_TYPES.SUCCESS));
+      return dispatch(deleteLocationSuccess({ locationIDs }));
     } else {
       const res = await fetch("/api/locations", {
         method: "DELETE",
@@ -73,11 +71,9 @@ export function modifyLocationData(locationIDs, demoModeEnabled) {
       const data = await res.json();
 
       if (data.error) {
-        dispatch(modifyLocationDataFailure(data.error));
-        dispatch(createAlert(data.error, ALERT_TYPES.DANGER));
+        return dispatch(modifyLocationDataFailure(data));
       } else {
-        dispatch(deleteLocationSuccess(data));
-        dispatch(createAlert("Locations removed", ALERT_TYPES.SUCCESS));
+        return dispatch(deleteLocationSuccess(data));
       }
     }
   };

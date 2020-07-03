@@ -29,9 +29,9 @@ export function fetchServiceHistoryData() {
     let data = await res.json();
 
     if (data.error) {
-      dispatch(fetchServiceHistoryDataFailure(data));
+      return dispatch(fetchServiceHistoryDataFailure(data));
     } else {
-      dispatch(fetchServiceHistoryDataSuccess(data));
+      return dispatch(fetchServiceHistoryDataSuccess(data));
     }
   };
 }

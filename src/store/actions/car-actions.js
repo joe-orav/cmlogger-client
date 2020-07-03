@@ -1,6 +1,5 @@
 import * as ActionTypes from "../action-types";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
-import { fetchServicesData } from "./service-actions";
 
 function fetchCarDataStart() {
   return {
@@ -30,10 +29,9 @@ export function fetchCarData() {
     let data = await res.json();
 
     if (data.error) {
-      dispatch(fetchCarDataFailure(data));
+      return dispatch(fetchCarDataFailure(data));
     } else {
-      dispatch(fetchCarDataSuccess(data));
-      dispatch(fetchServicesData());
+      return dispatch(fetchCarDataSuccess(data));
     }
   };
 }

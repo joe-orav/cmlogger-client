@@ -6,6 +6,7 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
+    "cross-fetch": "^3.0.5",
     "flatpickr": "^4.6.3",
     "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
@@ -42,6 +43,8 @@
     ]
   },
   "devDependencies": {
-    "http-proxy-middleware": "^1.0.0"
+    "fetch-mock": "^9.10.3",
+    "http-proxy-middleware": "^1.0.0",
+    "redux-mock-store": "^1.5.4"
   }
 }

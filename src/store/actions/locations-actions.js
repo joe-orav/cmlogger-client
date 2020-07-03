@@ -1,6 +1,5 @@
 import * as ActionTypes from "../action-types";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
-import { fetchServiceHistoryData } from "./service-history-actions";
 
 function fetchLocationDataStart() {
   return {
@@ -30,10 +29,9 @@ export function fetchLocationData() {
     let data = await res.json();
 
     if (data.error) {
-      dispatch(fetchLocationDataFailure(data));
+      return dispatch(fetchLocationDataFailure(data));
     } else {
-      dispatch(fetchLocationDataSuccess(data));
-      dispatch(fetchServiceHistoryData());
+      return dispatch(fetchLocationDataSuccess(data));
     }
   };
 }

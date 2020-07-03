@@ -1,6 +1,5 @@
 import * as ActionTypes from "../action-types";
 import { createAlert, ALERT_TYPES } from "./alert-actions";
-import { fetchLocationData } from "./locations-actions";
 
 function fetchServicesDataStart() {
   return {
@@ -30,10 +29,9 @@ export function fetchServicesData() {
     let data = await res.json();
 
     if (data.error) {
-      dispatch(fetchServicesDataFailure(data));
+      return dispatch(fetchServicesDataFailure(data));
     } else {
-      dispatch(fetchServicesDataSuccess(data));
-      dispatch(fetchLocationData());
+      return dispatch(fetchServicesDataSuccess(data));
     }
   };
 }

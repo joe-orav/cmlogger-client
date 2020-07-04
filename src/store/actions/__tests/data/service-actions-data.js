@@ -10,6 +10,10 @@ export const deleteActions = [
     type: ActionTypes.DELETE_SERVICE_DATA_SUCCESS,
     payload: deletePayload,
   },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {message: "Services successfully deleted", type: "success"},
+  },
 ];
 
 export const modifyErrorData = deleteData;
@@ -23,5 +27,9 @@ export const modifyErrorActions = [
   {
     type: ActionTypes.MODIFY_SERVICE_DATA_FAILURE,
     payload: { error: "Unable to modify services data" },
+  },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {message: "Error: Unable to modify services data", type: "danger"},
   },
 ];

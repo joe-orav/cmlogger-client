@@ -1,5 +1,5 @@
 import * as ActionTypes from "../action-types";
-import { createAlert, ALERT_TYPES } from "./alert-actions";
+import createAlert from "./alert-actions";
 
 function fetchUserDataStart() {
   return {
@@ -43,10 +43,10 @@ function disconnectAccountSuccess(userDataResponse) {
   };
 }
 
-function disconnectAccountFailure(userDataResponse) {
+function disconnectAccountFailure(data) {
   return {
     type: ActionTypes.DISCONNECT_ACCOUNT_FAILURE,
-    payload: userDataResponse,
+    payload: data,
   };
 }
 
@@ -58,12 +58,14 @@ export function disconnectAccount(userData) {
       body: JSON.stringify(userData),
     });
 
-    let userDataResponse = await res.json();
+    let data = await res.json();
 
-    if (userDataResponse.error) {
-      return dispatch(disconnectAccountFailure(userDataResponse));
+    if (data.error) {
+      dispatch(disconnectAccountFailure(data));
+      dispatch(createAlert("Unable to disconnect account", 2));
     } else {
-      return dispatch(disconnectAccountSuccess(userDataResponse));
+      dispatch(disconnectAccountSuccess(data));
+      dispatch(createAlert("Account has been disconnected", 2));
     }
   };
 }
@@ -77,7 +79,7 @@ function deleteAccountSuccess() {
 function deleteAccountFailure(userDataResponse) {
   return {
     type: ActionTypes.DELETE_ACCOUNT_FAILURE,
-    payload: userDataResponse
+    payload: userDataResponse,
   };
 }
 
@@ -90,11 +92,12 @@ export function deleteAccount(userData) {
       body: JSON.stringify(userData),
     });
 
-    let userDataResponse = await res.json();
+    let data = await res.json();
 
-    if (userDataResponse.error) {
-      return dispatch(deleteAccountFailure(userDataResponse));
-    } else if (userDataResponse.accountDeleted) {
+    if (data.error) {
+      dispatch(deleteAccountFailure(data));
+      dispatch(createAlert(`Error: ${data.error}`, 2));
+    } else if (data.accountDeleted) {
       window.location.href = "/";
       dispatch(deleteAccountSuccess());
     }

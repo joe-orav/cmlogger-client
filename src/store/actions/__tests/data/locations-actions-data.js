@@ -10,6 +10,10 @@ export const deleteActions = [
     type: ActionTypes.DELETE_LOCATION_DATA_SUCCESS,
     payload: deletePayload,
   },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {message: "Locations successfully deleted", type: "success"},
+  },
 ];
 
 export const modifyErrorData = deleteData;
@@ -21,5 +25,9 @@ export const modifyErrorActions = [
   {
     type: ActionTypes.MODIFY_LOCATION_DATA_FAILURE,
     payload: { error: "Unable to modify locations data" },
+  },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {message: "Error: Unable to modify locations data", type: "danger"},
   },
 ];

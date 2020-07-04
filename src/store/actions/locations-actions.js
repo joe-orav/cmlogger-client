@@ -1,4 +1,5 @@
 import * as ActionTypes from "../action-types";
+import createAlert from "./alert-actions";
 
 function fetchLocationDataStart() {
   return {
@@ -60,7 +61,8 @@ export function modifyLocationData(locationIDs, demoModeEnabled) {
     dispatch(modifyLocationDataStart());
 
     if (demoModeEnabled) {
-      return dispatch(deleteLocationSuccess({ locationIDs }));
+      dispatch(deleteLocationSuccess({ locationIDs }));
+      dispatch(createAlert("Locations successfully deleted"));
     } else {
       const res = await fetch("/api/locations", {
         method: "DELETE",
@@ -71,9 +73,11 @@ export function modifyLocationData(locationIDs, demoModeEnabled) {
       const data = await res.json();
 
       if (data.error) {
-        return dispatch(modifyLocationDataFailure(data));
+        dispatch(modifyLocationDataFailure(data));
+        dispatch(createAlert(`Error: ${data.error}`, 2));
       } else {
-        return dispatch(deleteLocationSuccess(data));
+        dispatch(deleteLocationSuccess(data));
+        dispatch(createAlert("Locations successfully deleted"));
       }
     }
   };

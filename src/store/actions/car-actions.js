@@ -1,5 +1,5 @@
 import * as ActionTypes from "../action-types";
-import { createAlert, ALERT_TYPES } from "./alert-actions";
+import createAlert from "./alert-actions";
 
 function fetchCarDataStart() {
   return {
@@ -81,17 +81,23 @@ export function modifyCarData(carData, requestMethod, demoModeEnabled) {
       requestMethod !== "put" &&
       requestMethod !== "delete"
     ) {
-      return dispatch(modifyCarDataFailure("Invalid Request"));
+      dispatch(modifyCarDataFailure("Invalid Request"));
+      dispatch(createAlert("Invalid Request", 2))
     } else if (demoModeEnabled) {
       switch (requestMethod) {
         case "put":
-          return dispatch(editCarSuccess(carData));
+          dispatch(editCarSuccess(carData));
+          dispatch(createAlert("Car details successfully changed"))
+          break;
         case "post":
-          return dispatch(
-            addCarSuccess(Object.assign({}, carData, { id: Date.now() }))
-          );
+          dispatch(
+            addCarSuccess(Object.assign({}, carData, { id: Date.now() })));
+            dispatch(createAlert("New car added"))
+            break;
         case "delete":
-          return dispatch(deleteCarSuccess(carData));
+          dispatch(deleteCarSuccess(carData));
+          dispatch(createAlert("Car has been deleted"))
+          break;
         default:
       }
     } else {
@@ -104,15 +110,22 @@ export function modifyCarData(carData, requestMethod, demoModeEnabled) {
       const data = await res.json();
 
       if (data.error) {
-        return dispatch(modifyCarDataFailure(data));
+        dispatch(modifyCarDataFailure(data));
+        dispatch(createAlert(`Error: ${data.error}`, 2))
       } else {
         switch (requestMethod) {
           case "put":
-            return dispatch(editCarSuccess(data));
+            dispatch(editCarSuccess(data));
+            dispatch(createAlert("Car details successfully changed"))
+            break;
           case "post":
-            return dispatch(addCarSuccess(data));
+            dispatch(addCarSuccess(data));
+            dispatch(createAlert("New car added"))
+            break;
           case "delete":
-            return dispatch(deleteCarSuccess(data));
+            dispatch(deleteCarSuccess(data));
+            dispatch(createAlert("Car has been deleted"))
+            break;
           default:
         }
       }

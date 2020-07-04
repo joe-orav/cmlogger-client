@@ -112,6 +112,10 @@ describe("Dispatching actions for disconnecting a linked account", () => {
         type: ActionTypes.DISCONNECT_ACCOUNT,
         payload: userDataPayload,
       },
+      {
+        type: ActionTypes.DISPLAY_ALERT,
+        payload: {message: "Account has been disconnected", type: "danger"},
+      },
     ];
 
     return store.dispatch(disconnectAccount(userData)).then(() => {
@@ -137,6 +141,10 @@ describe("Dispatching actions for disconnecting a linked account", () => {
       {
         type: ActionTypes.DISCONNECT_ACCOUNT_FAILURE,
         payload: userDataErrorPayload,
+      },
+      {
+        type: ActionTypes.DISPLAY_ALERT,
+        payload: {message: "Unable to disconnect account", type: "danger"},
       },
     ];
 
@@ -201,6 +209,10 @@ describe("Dispatching actions for deleting user data", () => {
       {
         type: ActionTypes.DELETE_ACCOUNT_FAILURE,
         payload: userDataErrorPayload,
+      },
+      {
+        type: ActionTypes.DISPLAY_ALERT,
+        payload: {message: "Error: Unable to delete account", type: "danger"},
       },
     ];
 

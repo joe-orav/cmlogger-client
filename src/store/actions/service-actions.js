@@ -1,4 +1,5 @@
 import * as ActionTypes from "../action-types";
+import createAlert from "./alert-actions";
 
 function fetchServicesDataStart() {
   return {
@@ -60,7 +61,8 @@ export function modifyServiceData(serviceIDs, demoModeEnabled) {
     dispatch(modifyServiceDataStart());
 
     if (demoModeEnabled) {
-      return dispatch(deleteServiceSuccess({serviceIDs}));
+      dispatch(deleteServiceSuccess({ serviceIDs }));
+      dispatch(createAlert("Services successfully deleted"));
     } else {
       const res = await fetch("/api/services", {
         method: "DELETE",
@@ -71,9 +73,11 @@ export function modifyServiceData(serviceIDs, demoModeEnabled) {
       const data = await res.json();
 
       if (data.error) {
-        return dispatch(modifyServiceDataFailure(data));
+        dispatch(modifyServiceDataFailure(data));
+        dispatch(createAlert(`Error: ${data.error}`, 2));
       } else {
-        return dispatch(deleteServiceSuccess(data));
+        dispatch(deleteServiceSuccess(data));
+        dispatch(createAlert("Services successfully deleted"));
       }
     }
   };

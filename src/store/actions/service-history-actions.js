@@ -1,4 +1,5 @@
 import * as ActionTypes from "../action-types";
+import createAlert from "./alert-actions";
 
 function fetchServiceHistoryDataStart() {
   return {
@@ -126,18 +127,25 @@ export function modifyServiceHistory(
       requestMethod !== "delete"
     ) {
       dispatch(modifyServiceHistoryFailure("Invalid Request"));
+      dispatch(createAlert("Invalid Request", 2));
     } else if (demoModeEnabled) {
       switch (requestMethod) {
         case "put":
-          return dispatch(
+          dispatch(
             editServiceRecordSuccess(processRecordData(serviceHistoryData))
           );
+          dispatch(createAlert("Service record has been successfully changed"));
+          break;
         case "post":
-          return dispatch(
+          dispatch(
             addServiceRecordSuccess(processRecordData(serviceHistoryData))
           );
+          dispatch(createAlert("New service record added"));
+          break;
         case "delete":
-          return dispatch(deleteServiceRecordSuccess(serviceHistoryData));
+          dispatch(deleteServiceRecordSuccess(serviceHistoryData));
+          dispatch(createAlert("Service record has been deleted"));
+          break;
         default:
       }
     } else {
@@ -150,15 +158,22 @@ export function modifyServiceHistory(
       const data = await res.json();
 
       if (data.error) {
-        return dispatch(modifyServiceHistoryFailure(data));
+        dispatch(modifyServiceHistoryFailure(data));
+        dispatch(createAlert(`Error: ${data.error}`, 2));
       } else {
         switch (requestMethod) {
           case "put":
-            return dispatch(editServiceRecordSuccess(data));
+            dispatch(editServiceRecordSuccess(data));
+            dispatch(createAlert("Service record has been successfully changed"));
+            break;
           case "post":
-            return dispatch(addServiceRecordSuccess(data));
+            dispatch(addServiceRecordSuccess(data));
+            dispatch(createAlert("New service record added"));
+            break;
           case "delete":
-            return dispatch(deleteServiceRecordSuccess(data));
+            dispatch(deleteServiceRecordSuccess(data));
+            dispatch(createAlert("Service record has been deleted"));
+            break;
           default:
         }
       }

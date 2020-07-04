@@ -58,6 +58,10 @@ export const addActions = [
     type: ActionTypes.ADD_SERVICE_RECORD_SUCCESS,
     payload: addPayload,
   },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: { message: "New service record added", type: "success" },
+  },
 ];
 
 export const addDemoActions = [
@@ -65,6 +69,10 @@ export const addDemoActions = [
   {
     type: ActionTypes.ADD_SERVICE_RECORD_SUCCESS,
     payload: addDemoPayload,
+  },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: { message: "New service record added", type: "success" },
   },
 ];
 
@@ -108,6 +116,13 @@ export const editActions = [
     type: ActionTypes.EDIT_SERVICE_RECORD_SUCCESS,
     payload: editPayload,
   },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {
+      message: "Service record has been successfully changed",
+      type: "success",
+    },
+  },
 ];
 
 export const deleteData = { id: 1 };
@@ -120,6 +135,13 @@ export const deleteActions = [
     type: ActionTypes.DELETE_SERVICE_RECORD_SUCCESS,
     payload: deletePayload,
   },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {
+      message: "Service record has been deleted",
+      type: "success",
+    },
+  },
 ];
 
 export const modifyErrorData = addData;
@@ -131,5 +153,12 @@ export const modifyErrorActions = [
   {
     type: ActionTypes.MODIFY_SERVICE_HISTORY_FAILURE,
     payload: { error: "Unable to modify service history" },
+  },
+  {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: {
+      message: "Error: Unable to modify service history",
+      type: "danger",
+    },
   },
 ];

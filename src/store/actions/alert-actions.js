@@ -1,31 +1,39 @@
 import * as ActionTypes from "../action-types";
 
-export const ALERT_TYPES = { SUCCESS: "success", DANGER: "danger" }
+const ALERT_TYPES = { SUCCESS: "success", DANGER: "danger" };
 
-let alertCounter = 0;
-
-function displayAlert(id, message, type) {
-    return {
-        type: ActionTypes.DISPLAY_ALERT,
-        payload: {id: id, message: message, type: type }
-    }
+function displayAlert(message, type) {
+  return {
+    type: ActionTypes.DISPLAY_ALERT,
+    payload: { message: message, type: type },
+  };
 }
 
-function removeAlert(id) {
-    return {
-        type: ActionTypes.REMOVE_ALERT,
-        payload: id
-    }
+function removeAlert() {
+  return async (dispatch) =>
+    setTimeout(
+      () =>
+        dispatch({
+          type: ActionTypes.REMOVE_ALERT,
+        }),
+      3000
+    );
 }
 
-export function createAlert(message, type) {
-    return async (dispatch) => {
-        let alertID = alertCounter;
-
-        dispatch(displayAlert(alertID, message, type));
-        setTimeout(() => dispatch(removeAlert(alertID)), 3000)
-
-        alertCounter++;
+export default function createAlert(message, type) {
+  return async (dispatch) => {
+    let alertType;
+    switch (type) {
+      case 1:
+        alertType = ALERT_TYPES.SUCCESS;
+        break;
+      case 2:
+        alertType = ALERT_TYPES.DANGER;
+        break;
+      default:
+        alertType = ALERT_TYPES.SUCCESS;
     }
+    dispatch(displayAlert(message, alertType));
+    dispatch(removeAlert());
+  };
 }
-

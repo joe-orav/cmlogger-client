@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getMergedServiceRecords,
   getServiceHistoryDataLoading,
@@ -57,7 +57,10 @@ const Item = ({ services, car, date }) => {
   );
 };
 
-const RecordList = ({ serviceHistory, serviceHistoryDataLoading }) => {
+const RecordList = () => {
+  const serviceHistory = useSelector(getMergedServiceRecords);
+  const serviceHistoryDataLoading = useSelector(getServiceHistoryDataLoading);
+
   return serviceHistoryDataLoading ? (
     <LoadingIcon />
   ) : serviceHistory.length === 0 ? (
@@ -81,11 +84,4 @@ const RecordList = ({ serviceHistory, serviceHistoryDataLoading }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    serviceHistory: getMergedServiceRecords(state),
-    serviceHistoryDataLoading: getServiceHistoryDataLoading(state),
-  };
-};
-
-export default connect(mapStateToProps)(RecordList);
+export default RecordList;

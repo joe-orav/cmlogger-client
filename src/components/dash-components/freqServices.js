@@ -6,7 +6,7 @@ import {
 } from "../../store/selectors";
 import NoData from "./noData";
 import LoadingIcon from "../loading";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import Table from "react-bootstrap/Table";
 
 const FreqServTable = styled(Table)`
@@ -37,7 +37,10 @@ const Item = ({ service }) => {
   );
 };
 
-const FrequentServicesList = ({ savedServices, serviceHistoryDataLoading }) => {
+const FrequentServicesList = () => {
+  const savedServices = useSelector(getSavedServices);
+  const serviceHistoryDataLoading = useSelector(getServiceHistoryDataLoading);
+
   let savedServicesValues = Object.values(savedServices);
   return serviceHistoryDataLoading ? (
     <LoadingIcon />
@@ -67,11 +70,4 @@ const FrequentServicesList = ({ savedServices, serviceHistoryDataLoading }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    savedServices: getSavedServices(state),
-    serviceHistoryDataLoading: getServiceHistoryDataLoading(state),
-  };
-};
-
-export default connect(mapStateToProps)(FrequentServicesList);
+export default FrequentServicesList;

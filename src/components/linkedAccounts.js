@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import Image from "react-bootstrap/Image";
 import checkIcon from "../img/connect-check.svg";
 import { SDLink } from "./defaultLink";
 import { getAccounts, getUserId } from "../store/selectors";
 import { disconnectAccount } from "../store/actions/user-actions";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const ItemContainer = styled.div`
   display: flex;
@@ -99,12 +99,16 @@ const AccountProviderItem = ({
   );
 };
 
-const LinkedAccounts = ({
-  accountList,
-  userId,
-  disconnectAccount,
-  connectionAttempt,
-}) => {
+const LinkedAccounts = ({ connectionAttempt }) => {
+  const accountList = useSelector(getAccounts);
+  const userId = useSelector(getUserId);
+  const dispatch = useDispatch();
+
+  const disconnectAccountDispatch = useCallback(
+    (providerName) => dispatch(disconnectAccount({ userId, providerName })),
+    [dispatch, userId]
+  );
+
   let hasMultipleAccounts =
     accountList.filter((acc) => acc.connected).length > 1;
 
@@ -116,10 +120,7 @@ const LinkedAccounts = ({
           account={acc}
           enableDisconnect={hasMultipleAccounts}
           disconnectAction={() =>
-            disconnectAccount({
-              userId: userId,
-              providerName: acc.providerName.toLowerCase(),
-            })
+            disconnectAccountDispatch(acc.providerName.toLowerCase())
           }
         />
       ))}
@@ -133,13 +134,4 @@ const LinkedAccounts = ({
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    accountList: getAccounts(state),
-    userId: getUserId(state),
-  };
-};
-
-const mapDispatchToProps = { disconnectAccount };
-
-export default connect(mapStateToProps, mapDispatchToProps)(LinkedAccounts);
+export default LinkedAccounts;

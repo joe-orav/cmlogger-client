@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getMergedServiceRecords,
-  getCars,
+  getCarCount,
   getServiceHistoryDataLoading,
 } from "../store/selectors";
 import LoadingIcon from "../components/loading";
@@ -78,7 +78,11 @@ const TableHeader = ({ label }) => {
   );
 };
 
-function ServiceHistory({ carsCount, serviceHistory, serviceHistoryDataLoading }) {
+function ServiceHistory() {
+  const carsCount = useSelector(getCarCount);
+  const serviceHistory = useSelector(getMergedServiceRecords);
+  const serviceHistoryDataLoading = useSelector(getServiceHistoryDataLoading);
+
   useEffect(() => {
     setPageTitle("Service History");
   });
@@ -127,12 +131,4 @@ function ServiceHistory({ carsCount, serviceHistory, serviceHistoryDataLoading }
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    carsCount: getCars(state).length,
-    serviceHistory: getMergedServiceRecords(state),
-    serviceHistoryDataLoading: getServiceHistoryDataLoading(state),
-  };
-};
-
-export default connect(mapStateToProps)(ServiceHistory);
+export default ServiceHistory;

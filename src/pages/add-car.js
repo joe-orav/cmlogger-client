@@ -12,7 +12,7 @@ import {
   getUserId,
 } from "../store/selectors";
 import { modifyCarData } from "../store/actions/car-actions";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const YEAR_MAX = new Date().getFullYear(),
@@ -67,13 +67,13 @@ function validateQuery(id, cars) {
   return { id: -1 };
 }
 
-function AddCar({
-  demoModeEnabled,
-  cars,
-  carsDataLoading,
-  userId,
-  modifyCarData,
-}) {
+function AddCar() {
+  const demoModeEnabled = useSelector(getDemoModeState);
+  const cars = useSelector(getCars);
+  const carsDataLoading = useSelector(getCarsDataLoading);
+  const userId = useSelector(getUserId);
+  const dispatch = useDispatch();
+
   let urlQuery = queryString.parse(useLocation().search);
   let history = useHistory();
   let formValues = { id: -1 };
@@ -105,7 +105,7 @@ function AddCar({
         vin: vinVal,
       };
       let request = dataID === -1 ? "post" : "put";
-      modifyCarData(formData, request, demoModeEnabled);
+      dispatch(modifyCarData(formData, request, demoModeEnabled));
       history.goBack();
     }
 
@@ -188,15 +188,4 @@ function AddCar({
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    demoModeEnabled: getDemoModeState(state),
-    cars: getCars(state),
-    carsDataLoading: getCarsDataLoading(state),
-    userId: getUserId(state),
-  };
-};
-
-const mapDispatchToProps = { modifyCarData };
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddCar);
+export default AddCar;

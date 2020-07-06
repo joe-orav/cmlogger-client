@@ -6,10 +6,13 @@ import CarItem from "../components/carItem";
 import AddCarItem from "../components/addCarItem";
 import PageWrapper from "../components/pageWrapper";
 import LoadingIcon from "../components/loading";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getCars, getCarsDataLoading } from "../store/selectors";
 
-function Cars({ cars, carsDataLoading }) {
+function Cars() {
+  const cars = useSelector(getCars);
+  const carsDataLoading = useSelector(getCarsDataLoading);
+
   useEffect(() => {
     setPageTitle("My Cars");
   });
@@ -32,11 +35,4 @@ function Cars({ cars, carsDataLoading }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    cars: getCars(state),
-    carsDataLoading: getCarsDataLoading(state),
-  };
-};
-
-export default connect(mapStateToProps)(Cars);
+export default Cars;

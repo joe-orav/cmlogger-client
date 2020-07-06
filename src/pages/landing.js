@@ -1,14 +1,16 @@
 import React from "react";
-import { getUser } from "../store/selectors";
-import { connect } from "react-redux";
+import { getUserId } from "../store/selectors";
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Header from "../components/landing-sections/header";
 import Feature from "../components/landing-sections/feature";
 import Demo from "../components/landing-sections/demo";
 import Footer from "../components/landing-sections/footer";
 
-function LandingPage({ user }) {
-  return user.id !== null ? (
+function LandingPage() {
+  const userId = useSelector(getUserId);
+
+  return userId !== null ? (
     <Redirect to="/dashboard" />
   ) : (
     <>
@@ -20,10 +22,4 @@ function LandingPage({ user }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: getUser(state),
-  };
-};
-
-export default connect(mapStateToProps)(LandingPage);
+export default LandingPage;

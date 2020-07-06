@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import PageWrapper from "../components/pageWrapper";
 import { SettingsSection, SectionItem } from "../components/settingsSection";
 import {
@@ -13,18 +13,31 @@ import ItemListManager from "../components/itemListManager";
 import LinkedAccounts from "../components/linkedAccounts";
 import DeleteAccount from "../components/deleteAccount";
 import setPageTitle from "../utils/pageTitle";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { modifyServiceData } from "../store/actions/service-actions";
 import { modifyLocationData } from "../store/actions/locations-actions";
 
-function Settings({
-  orphanedLocations,
-  orphanedServices,
-  dataLoaded,
-  modifyServiceData,
-  modifyLocationData,
-  demoModeEnabled,
-}) {
+function Settings() {
+  const orphanedLocations = useSelector(getOrphanedLocations);
+  const orphanedServices = useSelector(getOrphanedServices);
+  const dataLoaded = useSelector(getDataLoaded);
+  const demoModeEnabled = useSelector(getDemoModeState);
+  const dispatch = useDispatch();
+
+  const modifyServiceDataDispatch = useCallback(
+    (data, demo) => {
+      dispatch(modifyServiceData(data, demo));
+    },
+    [dispatch]
+  );
+
+  const modifyLocationDataDispatch = useCallback(
+    (data, demo) => {
+      dispatch(modifyLocationData(data, demo));
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     setPageTitle("Settings");
   });
@@ -44,7 +57,7 @@ function Settings({
               return { id: item.id, value: item.sname };
             })}
             dataLoaded={dataLoaded}
-            removeAction={modifyServiceData}
+            removeAction={modifyServiceDataDispatch}
           />
         </SectionItem>
         <SectionItem
@@ -56,7 +69,7 @@ function Settings({
               return { id: item.id, value: item.name };
             })}
             dataLoaded={dataLoaded}
-            removeAction={modifyLocationData}
+            removeAction={modifyLocationDataDispatch}
           />
         </SectionItem>
       </SettingsSection>
@@ -77,15 +90,4 @@ function Settings({
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    orphanedServices: getOrphanedServices(state),
-    orphanedLocations: getOrphanedLocations(state),
-    dataLoaded: getDataLoaded(state),
-    demoModeEnabled: getDemoModeState(state),
-  };
-};
-
-const mapDispatchToProps = { modifyServiceData, modifyLocationData };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default Settings;

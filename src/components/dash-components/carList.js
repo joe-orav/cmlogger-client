@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getCars, getCarsDataLoading } from "../../store/selectors";
 import NoData from "./noData";
 import LoadingIcon from "../loading";
@@ -39,7 +39,10 @@ const Item = ({ imgSrc, label }) => {
   );
 };
 
-const CarList = ({ cars, carsDataLoading }) => {
+const CarList = () => {
+  const cars = useSelector(getCars);
+  const carsDataLoading = useSelector(getCarsDataLoading);
+
   return carsDataLoading ? (
     <LoadingIcon />
   ) : cars.length === 0 ? (
@@ -62,11 +65,4 @@ const CarList = ({ cars, carsDataLoading }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    cars: getCars(state),
-    carsDataLoading: getCarsDataLoading(state),
-  };
-};
-
-export default connect(mapStateToProps)(CarList);
+export default CarList;

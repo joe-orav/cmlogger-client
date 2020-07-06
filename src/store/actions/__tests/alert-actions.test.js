@@ -8,13 +8,15 @@ const mockStore = configureStore(middlewares);
 const store = mockStore([]);
 
 describe("Dispatching alerts", () => {
+  jest.useFakeTimers();
   let message = "Test Message";
 
   afterEach(() => {
     store.clearActions();
+    jest.clearAllTimers();
   });
 
-  test("Dispatching a successful alert", (done) => {
+  test("Dispatching a successful alert", () => {
     let expectedActions = [
       {
         type: ActionTypes.DISPLAY_ALERT,
@@ -26,14 +28,12 @@ describe("Dispatching alerts", () => {
     ];
 
     return store.dispatch(createAlert(message)).then(() => {
-      setTimeout(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-        done();
-      }, 3000);
+      jest.advanceTimersByTime(3000);
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 
-  test("Dispatching a danger alert", (done) => {
+  test("Dispatching a danger alert", () => {
     let expectedActions = [
       {
         type: ActionTypes.DISPLAY_ALERT,
@@ -45,10 +45,8 @@ describe("Dispatching alerts", () => {
     ];
 
     return store.dispatch(createAlert(message, 2)).then(() => {
-      setTimeout(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-        done();
-      }, 3000);
+      jest.advanceTimersByTime(3000);
+      expect(store.getActions()).toEqual(expectedActions);
     });
   });
 });

@@ -12,8 +12,8 @@ import RecordList from "../components/dash-components/recordList";
 import AccountList from "../components/dash-components/accountList";
 import FrequentServicesList from "../components/dash-components/freqServices";
 import FrequentLocationsList from "../components/dash-components/freqLocations";
-import { getCars, getServiceHistory, getTotalCost } from "../store/selectors";
-import { connect } from "react-redux";
+import { getServiceHistory, getTotalCost, getCarCount } from "../store/selectors";
+import { useSelector } from "react-redux";
 
 const DashRow = styled(Row)`
   margin-top: 30px;
@@ -102,10 +102,15 @@ const DashCard = ({ title, children, full }) => {
   );
 };
 
-function Dashboard({ carsCount, recordCount, totalCost }) {
+function Dashboard() {
+  const carsCount = useSelector(getCarCount);
+  const recordCount = useSelector(getServiceHistory).length;
+  const totalCost = useSelector(getTotalCost);
+
   useEffect(() => {
     setPageTitle("Dashboard");
   });
+
   return (
     <PageWrapper pageTitle="Dashboard">
       <Col>
@@ -149,12 +154,4 @@ function Dashboard({ carsCount, recordCount, totalCost }) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    carsCount: getCars(state).length,
-    recordCount: getServiceHistory(state).length,
-    totalCost: getTotalCost(state),
-  };
-};
-
-export default connect(mapStateToProps)(Dashboard);
+export default Dashboard;

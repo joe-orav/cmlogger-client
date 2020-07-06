@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getUserId } from "../store/selectors";
 import { deleteAccount } from "../store/actions/user-actions";
 
 const DeleteCheck = styled(Form.Check)`
   margin-bottom: 10px;
-  
+
   @media (min-width: 576px) {
     margin-bottom: 0px;
   }
 `;
 
-const DeleteAccount = ({ userId, deleteAccount }) => {
+const DeleteAccount = () => {
+  const userId = useSelector(getUserId);
   const [deletionConfirmed, setDeletionConfirmation] = useState(false);
+  const dispatch = useDispatch();
+
+  const deleteAccountDispatch = useCallback(() =>
+    dispatch(deleteAccount({ userId })),
+    [dispatch, userId]
+  );
 
   return (
     <div>
@@ -29,7 +36,7 @@ const DeleteAccount = ({ userId, deleteAccount }) => {
       <Button
         variant="danger"
         disabled={!deletionConfirmed}
-        onClick={() => deleteAccount({ userId: userId })}
+        onClick={() => deleteAccountDispatch()}
       >
         Delete Account
       </Button>
@@ -37,12 +44,4 @@ const DeleteAccount = ({ userId, deleteAccount }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    userId: getUserId(state),
-  };
-};
-
-const mapDispatchToProps = { deleteAccount };
-
-export default connect(mapStateToProps, mapDispatchToProps)(DeleteAccount);
+export default DeleteAccount;

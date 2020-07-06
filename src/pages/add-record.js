@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   getMergedServiceRecords,
   getUserId,
@@ -76,13 +76,13 @@ function validateQuery(query, serviceHistory) {
   return { id: -1, carID: carID, carFieldDisabled: carID > 0 };
 }
 
-function AddRecord({
-  serviceHistory,
-  userId,
-  dataLoaded,
-  modifyServiceHistory,
-  demoModeEnabled,
-}) {
+function AddRecord() {
+  const serviceHistory = useSelector(getMergedServiceRecords);
+  const userId = useSelector(getUserId);
+  const dataLoaded = useSelector(getDataLoaded);
+  const demoModeEnabled = useSelector(getDemoModeState);
+  const dispatch = useDispatch();
+
   let urlQuery = queryString.parse(useLocation().search);
   let history = useHistory();
   let currentDate = new Date();
@@ -142,7 +142,7 @@ function AddRecord({
       };
 
       let request = dataId === -1 ? "post" : "put";
-      modifyServiceHistory(formData, request, demoModeEnabled);
+      dispatch(modifyServiceHistory(formData, request, demoModeEnabled));
       history.goBack();
     }
 
@@ -209,15 +209,4 @@ function AddRecord({
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    serviceHistory: getMergedServiceRecords(state),
-    userId: getUserId(state),
-    dataLoaded: getDataLoaded(state),
-    demoModeEnabled: getDemoModeState(state),
-  };
-};
-
-const mapDispatchToProps = { modifyServiceHistory };
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddRecord);
+export default AddRecord;

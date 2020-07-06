@@ -1,15 +1,11 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import { getServices } from "../../store/selectors";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const mapStateToProps = (state) => {
-  return {
-    servicesList: getServices(state),
-  };
-};
+export default ({ value, setValue, required }) => {
+  const servicesList = useSelector(getServices);
 
-export default connect(mapStateToProps)(({ servicesList, value, setValue, required }) => {
   function handleItemSelection(e) {
     let optionsList = Object.assign({}, e.target.options);
     let selectedValues = [];
@@ -44,4 +40,4 @@ export default connect(mapStateToProps)(({ servicesList, value, setValue, requir
       </Form.Text>
     </Form.Group>
   );
-});
+};

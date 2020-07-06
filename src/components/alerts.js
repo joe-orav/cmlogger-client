@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getAlerts } from "../store/selectors";
 import styled from "styled-components";
 import Alert from "react-bootstrap/Alert";
@@ -29,7 +29,9 @@ const AppAlert = styled(Alert)`
   }
 `;
 
-const AlertContainer = ({ alerts }) => {
+const AlertContainer = () => {
+  const alerts = useSelector(getAlerts);
+
   return (
     <Content>
       {alerts.map((alert) => (
@@ -41,10 +43,4 @@ const AlertContainer = ({ alerts }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    alerts: getAlerts(state),
-  };
-};
-
-export default connect(mapStateToProps)(AlertContainer);
+export default AlertContainer;

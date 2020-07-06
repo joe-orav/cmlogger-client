@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import logo from "../img/logo.png";
 import toggleIcon from "../img/collapsed-nav.png";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getUser } from "../store/selectors";
 import styled from "styled-components";
 import ProfileNav from "./profileNav";
@@ -75,7 +75,9 @@ const SiteNavLink = styled(Link).attrs(() => ({
   }
 `;
 
-const SiteLayout = ({ hideNavBar, user, children }) => {
+const SiteLayout = ({ hideNavBar, children }) => {
+  const user = useSelector(getUser);
+
   useEffect(() => {
     let toggleBtn = document.querySelector("#nav-toggle-btn");
 
@@ -120,10 +122,4 @@ const SiteLayout = ({ hideNavBar, user, children }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: getUser(state),
-  };
-};
-
-export default connect(mapStateToProps)(SiteLayout);
+export default SiteLayout;

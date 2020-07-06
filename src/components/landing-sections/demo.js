@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setDemoModeStateTo } from "../../store/actions/demo-actions";
 
 const ContentContainer = styled.div`
@@ -29,22 +29,23 @@ const Text = styled.p`
   }
 `;
 
-const mapDispatchToProps = { setDemoModeStateTo };
+export default () => {
+  const dispatch = useDispatch();
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(({ setDemoModeStateTo }) => {
+  const setDemoModeDispatch = useCallback(() => {
+    dispatch(setDemoModeStateTo(true));
+  }, [dispatch]);
+
   return (
     <Row className="bg-light">
       <Col>
         <ContentContainer>
           <Text>Have a dry run with CMLogger</Text>
-          <Button onClick={() => setDemoModeStateTo(true)} size="lg">
+          <Button onClick={setDemoModeDispatch} size="lg">
             Try the demo
           </Button>
         </ContentContainer>
       </Col>
     </Row>
   );
-});
+};

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import logo from "../img/logo.png";
 import googleLogo from "../img/google-logo.svg";
 import facebookLogo from "../img/facebook-logo.svg";
 import demoPerson from "../img/demo-person.svg";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { getUser } from "../store/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserId } from "../store/selectors";
 import setPageTitle from "../utils/pageTitle";
 import styled, { css } from "styled-components";
 import Row from "react-bootstrap/Row";
@@ -90,7 +90,7 @@ const LoginBtn = styled.a.attrs(() => ({
           background: #323232;
 
           &:hover {
-            background: rgba(50,50,50, 0.9);
+            background: rgba(50, 50, 50, 0.9);
             color: rgba(255, 255, 255, 0.9);
           }
         `;
@@ -119,14 +119,21 @@ const InfoText = styled.p`
 
 const InfoLink = styled.a`
   text-decoration: underline;
-`; 
+`;
 
-function Login({user, setDemoModeStateTo}) {
+function Login() {
+  const userId = useSelector(getUserId);
+  const dispatch = useDispatch();
+
+  const setDemoModeDispatch = useCallback(() => {
+    dispatch(setDemoModeStateTo(true));
+  }, [dispatch]);
+
   useEffect(() => {
     setPageTitle("Login");
   });
 
-  return user.id != null ? (
+  return userId != null ? (
     <Redirect to="/dashboard" />
   ) : (
     <PageRow $bg={loginBg}>
@@ -152,30 +159,26 @@ function Login({user, setDemoModeStateTo}) {
               </LoginBtnLogoCtr>
               Continue with Facebook
             </LoginBtn>
-            <LoginBtn onClick={() => setDemoModeStateTo(true)} href="#/" service="demo">
+            <LoginBtn onClick={setDemoModeDispatch} href="#/" service="demo">
               <LoginBtnLogoCtr>
                 <Image src={demoPerson} fluid />
               </LoginBtnLogoCtr>
-              Continue as Demo User
+              Continue with Demo User
             </LoginBtn>
           </Card.Body>
         </LoginCard>
         <InfoText>
-          <InfoLink as={Link} target="_blank" to="/privacy-policy">Privacy Policy</InfoLink> |
-          Made by { " " } 
-          <InfoLink target="_blank" href="http://josephoravbiere.com/">Joseph Oravbiere</InfoLink>
+          <InfoLink as={Link} target="_blank" to="/privacy-policy">
+            Privacy Policy
+          </InfoLink>{" "}
+          | Made by{" "}
+          <InfoLink target="_blank" href="http://josephoravbiere.com/">
+            Joseph Oravbiere
+          </InfoLink>
         </InfoText>
       </PageCol>
     </PageRow>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: getUser(state),
-  };
-};
-
-const mapDispatchToProps = { setDemoModeStateTo };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

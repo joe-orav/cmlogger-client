@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { getAccounts } from "../../store/selectors";
 
 const Wrapper = styled.div`
-    padding: 5px 5px 0 5px;
+  padding: 5px 5px 0 5px;
 `;
 
 const ItemContainer = styled.div`
@@ -13,7 +13,7 @@ const ItemContainer = styled.div`
 `;
 
 const ProviderName = styled.p`
-    font-weight: 500;
+  font-weight: 500;
 `;
 
 const Item = ({ account }) => {
@@ -27,7 +27,8 @@ const Item = ({ account }) => {
   );
 };
 
-const AccountList = ({ accountList }) => {
+const AccountList = () => {
+  const accountList = useSelector(getAccounts);
   return (
     <Wrapper>
       {accountList.map((account, i) => (
@@ -37,10 +38,4 @@ const AccountList = ({ accountList }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    accountList: getAccounts(state),
-  };
-};
-
-export default connect(mapStateToProps)(AccountList);
+export default AccountList;

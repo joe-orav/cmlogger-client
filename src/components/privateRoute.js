@@ -1,18 +1,17 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import { getUser } from "../store/selectors";
+import { useSelector } from "react-redux";
+import { getUserId } from "../store/selectors";
 
-function PrivateRoute1({ user, path, render, ...rest }) {
-    return (
-        <Route {...rest} path={path} render={() => user.id != null ? render : <Redirect to="/login" />} />
-    )
+function PrivateRoute({ path, render, ...rest }) {
+  const userId = useSelector(getUserId);
+  return (
+    <Route
+      {...rest}
+      path={path}
+      render={() => (userId != null ? render : <Redirect to="/login" />)}
+    />
+  );
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: getUser(state)
-    }
-}
-
-export default connect(mapStateToProps)(PrivateRoute1);
+export default PrivateRoute;

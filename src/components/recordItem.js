@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import trashIcon from "../img/trash-icon.png";
 import editIcon from "../img/edit-pen-icon.png";
 import { Link } from "react-router-dom";
 import DeleteOverlay from "./deleteItem";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
 import { getDemoModeState } from "../store/selectors";
 
@@ -82,9 +82,17 @@ const SummaryItem = ({ label, value }) => {
   );
 };
 
-const RecordItem = ({ index, record, demoModeEnabled, modifyServiceHistory }) => {
+const RecordItem = ({ index, record }) => {
+  const demoModeEnabled = useSelector(getDemoModeState);
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+
+  const modifyServiceHistoryDispatch = useCallback(() => {
+    dispatch(
+      modifyServiceHistory({ id: record.id }, "delete", demoModeEnabled)
+    );
+  }, [dispatch, record, demoModeEnabled]);
 
   let locationValues = record.location
     ? {
@@ -151,19 +159,11 @@ const RecordItem = ({ index, record, demoModeEnabled, modifyServiceHistory }) =>
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
           text={"Are you sure you want to delete this record?"}
-          action={() => modifyServiceHistory({ id: record.id }, "delete", demoModeEnabled)}
+          action={modifyServiceHistoryDispatch}
         />
       </ContainerCol>
     </Row>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    demoModeEnabled: getDemoModeState(state),
-  };
-};
-
-const mapDispatchToProps = { modifyServiceHistory };
-
-export default connect(mapStateToProps, mapDispatchToProps)(RecordItem);
+export default RecordItem;

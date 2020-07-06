@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import imgImport from "../utils/imgImport";
 import { SDRouteLink, SDLink } from "./defaultLink";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import DeleteOverlay from "./deleteItem";
 import { getDemoModeState } from "../store/selectors";
@@ -31,7 +31,14 @@ const CardVIN = styled(Card.Text)`
   font-size: 0.88rem;
 `;
 
-const CarItem = ({ car, modifyCarData, demoModeEnabled }) => {
+const CarItem = ({ car }) => {
+  const demoModeEnabled = useSelector(getDemoModeState);
+  const dispatch = useDispatch();
+
+  const modifyCarCataDispatch = useCallback(() => {
+    dispatch(modifyCarData({ id: car.id }, "delete", demoModeEnabled));
+  }, [dispatch, demoModeEnabled, car]);
+
   const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
   return (
     <Col className="mt-3">
@@ -43,7 +50,9 @@ const CarItem = ({ car, modifyCarData, demoModeEnabled }) => {
         </Card.Body>
         <CarCardFooter>
           <SDRouteLink to={`/add-car?id=${car.id}`}>Edit</SDRouteLink>
-          <SDRouteLink to={`/add-record?carid=${car.id}`}>Add Record</SDRouteLink>
+          <SDRouteLink to={`/add-record?carid=${car.id}`}>
+            Add Record
+          </SDRouteLink>
           <SDLink href="#/" onClick={() => setShowDeleteOverlay(true)}>
             Delete
           </SDLink>
@@ -52,19 +61,11 @@ const CarItem = ({ car, modifyCarData, demoModeEnabled }) => {
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
           text={"Are you sure you want to delete this car?"}
-          action={() => modifyCarData({id: car.id}, "delete", demoModeEnabled)}
+          action={() => modifyCarCataDispatch()}
         />
       </CarCard>
     </Col>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    demoModeEnabled: getDemoModeState(state),
-  };
-};
-
-const mapDispatchToProps = { modifyCarData }
-
-export default connect(mapStateToProps, mapDispatchToProps)(CarItem);
+export default CarItem;

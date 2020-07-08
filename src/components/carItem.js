@@ -2,14 +2,12 @@ import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import imgImport from "../utils/imgImport";
 import { SDRouteLink, SDLink } from "./defaultLink";
 import { useSelector, useDispatch } from "react-redux";
 import { modifyCarData } from "../store/actions/car-actions";
 import DeleteOverlay from "./deleteItem";
 import { getDemoModeState } from "../store/selectors";
-
-let siteImages = imgImport(require.context("../img", false));
+import CarIcon from "../utils/carIcons";
 
 const CarCard = styled(Card)`
   position: relative;
@@ -43,7 +41,7 @@ const CarItem = ({ car }) => {
   return (
     <Col className="mt-3">
       <CarCard>
-        <Card.Img variant="top" src={siteImages[car.type]} alt={car.type} />
+        <Card.Img variant="top" src={CarIcon[car.type]} alt={car.type} />
         <Card.Body className="bg-primary text-light">
           <Card.Title className="h5">{car.fullname}</Card.Title>
           <CardVIN>{`VIN: ${car.vin ? car.vin : "Not Provided"}`}</CardVIN>

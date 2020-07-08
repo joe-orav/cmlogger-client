@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const OverlayContainer = styled.div`
   background: rgba(104, 104, 104, 0.95);
-  display: flex;
   display: ${(props) => (props.show ? "flex" : "none")};
   flex-direction: column;
   justify-content: center;

@@ -34,11 +34,13 @@ const AlertContainer = () => {
 
   return (
     <Content>
-      {alerts.map((alert) => (
-        <AppAlert key={alert.id} variant={alert.type}>
-          {alert.message}
-        </AppAlert>
-      ))}
+      {alerts.map((alert, i) => {
+        return (
+          <AppAlert key={i} variant={alert.type}>
+            {alert.message}
+          </AppAlert>
+        );
+      })}
     </Content>
   );
 };

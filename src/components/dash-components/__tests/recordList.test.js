@@ -1,10 +1,48 @@
 import React from "react";
-import ServicesField from "../servicesField";
-import { render, screen, fireEvent } from "../../../utils/test-utils";
+import RecordList from "../recordList";
+import { render, screen } from "../../../utils/test-utils";
 import "@testing-library/jest-dom/extend-expect";
-import userEvent from "@testing-library/user-event";
 
-const initialState = {
+const initialStateWOData = {
+  demoMode: false,
+  user: {
+    loading: false,
+    error: null,
+    profile: {
+      id: 0,
+      name: "Test User",
+      googleConnected: true,
+      facebookConnected: true,
+      google_pic: "http://path/to/google_picture",
+      facebook_pic: "http://path/to/fb_picture",
+      default_pic: "http://path/to/google_picture",
+    },
+  },
+  cars: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  serviceHistory: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  services: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  locations: {
+    items: [],
+    loading: false,
+    error: null,
+  },
+  alerts: [],
+  fetchComplete: true,
+};
+
+const initialStateWithData = {
   demoMode: false,
   user: {
     loading: false,
@@ -76,38 +114,15 @@ const initialState = {
   fetchComplete: true,
 };
 
-test("Field has options from state", () => {
-  render(<ServicesField />, { initialState });
-
-  expect(screen.getAllByRole("option")).toHaveLength(2);
-  expect(screen.getByText("Oil Change")).toBeInTheDocument();
-  expect(screen.getByText("Tire replacement")).toBeInTheDocument();
+test("Message is shown that no data is available", () => {
+  render(<RecordList />, { initialState: initialStateWOData });
+  expect(screen.getByText("No Data Available")).toBeInTheDocument();
 });
 
-test("Field displays provided value", () => {
-  render(<ServicesField value={[100]} />, { initialState });
-
-  expect(screen.getByLabelText("Services")).toHaveValue(["100"]);
-});
-
-test("Field is disabled", () => {
-  render(<ServicesField required />, {
-    initialState,
-  });
-
-  expect(screen.getByLabelText("Services")).toBeRequired();
-});
-
-test("Field recieves selected items", () => {
-  const mockSetValue = jest.fn();
-  render(<ServicesField setValue={mockSetValue} />, { initialState });
-
-  userEvent.selectOptions(screen.getByLabelText("Services"), ["100", "200"]);
-
-  let options = screen.getAllByRole("option");
-
-  expect(options[0].selected).toBe(true);
-  expect(options[1].selected).toBe(true);
-
-  expect(mockSetValue).toHaveBeenLastCalledWith([100,200]);
+test("Service History info is displayed", () => {
+  render(<RecordList />, { initialState: initialStateWithData });
+  expect(screen.getByText("Oil Change, Tire replacement")).toBeInTheDocument();
+  expect(screen.getByText("2020 Ford Fusion")).toBeInTheDocument();
+  expect(screen.getByText("10/17/2020")).toBeInTheDocument();
+  expect(screen.getByRole("link")).toHaveAttribute("href", "/service-history");
 });

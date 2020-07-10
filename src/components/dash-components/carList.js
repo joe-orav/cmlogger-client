@@ -4,11 +4,9 @@ import { useSelector } from "react-redux";
 import { getCars, getCarsDataLoading } from "../../store/selectors";
 import NoData from "./noData";
 import LoadingIcon from "../loading";
-import imgImport from "../../utils/imgImport";
 import Media from "react-bootstrap/Media";
 import { SDRouteLink } from "../defaultLink";
-
-let siteImages = imgImport(require.context("../../img", false));
+import CarIcon from "../../utils/carIcons";
 
 const CarListWrapper = styled.div`
   display: flex;
@@ -53,7 +51,7 @@ const CarList = () => {
         {cars.map((car) => (
           <Item
             key={car.id}
-            imgSrc={siteImages[car.type]}
+            imgSrc={CarIcon[car.type]}
             label={car.fullname}
           />
         ))}

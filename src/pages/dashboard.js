@@ -7,64 +7,16 @@ import Container from "react-bootstrap/Container";
 import styled from "styled-components";
 import CardColumns from "react-bootstrap/CardColumns";
 import Card from "react-bootstrap/Card";
+import Overview from "../components/dash-components/overview";
 import CarList from "../components/dash-components/carList";
 import RecordList from "../components/dash-components/recordList";
 import AccountList from "../components/dash-components/accountList";
 import FrequentServicesList from "../components/dash-components/freqServices";
 import FrequentLocationsList from "../components/dash-components/freqLocations";
-import { getServiceHistory, getTotalCost, getCarCount } from "../store/selectors";
-import { useSelector } from "react-redux";
 
 const DashRow = styled(Row)`
   margin-top: 30px;
 `;
-
-const StatOverviewBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 2px solid #cfcfcf;
-
-  @media (min-width: 992px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-  }
-`;
-
-const StatContainer = styled.div`
-  text-align: center;
-  border-bottom: 1px solid #cfcfcf;
-  padding: 0 10px;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  @media (min-width: 992px) {
-    border-bottom: none;
-  }
-`;
-
-const StatLabel = styled.p`
-  margin: 10px 10px 5px;
-`;
-
-const StatValue = styled.p`
-  font-size: 3rem;
-  font-weight: 500;
-  margin: 0;
-  margin-bottom: 10px;
-`;
-
-const StatOverview = ({ label, value }) => {
-  return (
-    <StatContainer>
-      <StatLabel>{label}</StatLabel>
-      <StatValue>{value}</StatValue>
-    </StatContainer>
-  );
-};
 
 const DashCardColumns = styled(CardColumns)`
   @media (min-width: 576px) {
@@ -103,10 +55,6 @@ const DashCard = ({ title, children, full }) => {
 };
 
 function Dashboard() {
-  const carsCount = useSelector(getCarCount);
-  const recordCount = useSelector(getServiceHistory).length;
-  const totalCost = useSelector(getTotalCost);
-
   useEffect(() => {
     setPageTitle("Dashboard");
   });
@@ -116,16 +64,7 @@ function Dashboard() {
       <Col>
         <Container className="mx-auto">
           <DashRow>
-            <Col xs="12">
-              <StatOverviewBlock>
-                <StatOverview label="Total # of Cars" value={carsCount} />
-                <StatOverview label="Services Recorded" value={recordCount} />
-                <StatOverview
-                  label="Total Spent on Services"
-                  value={`$${totalCost}`}
-                />
-              </StatOverviewBlock>
-            </Col>
+            <Overview />
           </DashRow>
           <DashRow>
             <Col xs="12">

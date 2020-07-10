@@ -14,20 +14,11 @@ import {
 import { modifyCarData } from "../store/actions/car-actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-
-const YEAR_MAX = new Date().getFullYear(),
-  YEAR_MIN = YEAR_MAX - 85;
-const yearRange = Array.from(
-  { length: YEAR_MAX - YEAR_MIN + 1 },
-  (v, i) => YEAR_MAX - i
-);
-const carTypes = {
-  sedan: "Sedan",
-  minivan: "Minivan",
-  suv: "SUV",
-  truck: "Truck",
-  van: "Van",
-};
+import TypeField from "../components/add-car-fields/typeField";
+import YearField from "../components/add-car-fields/yearField";
+import MakeField from "../components/add-car-fields/makeField";
+import ModelField from "../components/add-car-fields/modelField";
+import VinField from "../components/add-car-fields/vinField";
 
 const AddCarForm = styled(Form)`
   max-width: 90%;
@@ -45,7 +36,7 @@ const FormButton = styled(Button)`
   margin-left: 20px;
 `;
 
-function validateQuery(id, cars) {
+export function validateQuery(id, cars) {
   let queryID = /^\d+$/.test(id) ? parseInt(id, 10) : 0;
 
   if (queryID > 0) {
@@ -84,7 +75,9 @@ function AddCar() {
 
   const [dataID] = useState(formValues.id);
   const [typeVal, setTypeVal] = useState(formValues.type || "sedan");
-  const [yearVal, setYearVal] = useState(formValues.year || yearRange[0]);
+  const [yearVal, setYearVal] = useState(
+    formValues.year || new Date().getFullYear()
+  );
   const [makeVal, setMakeVal] = useState(formValues.make || "");
   const [modelVal, setModelVal] = useState(formValues.model || "");
   const [vinVal, setVinVal] = useState(formValues.vin || "");
@@ -113,70 +106,15 @@ function AddCar() {
   }
 
   return (
-    <FormPage title={dataID === -1 ? "Add Car" : `Edit Car: ${formValues.name}`}>
+    <FormPage
+      title={dataID === -1 ? "Add Car" : `Edit Car: ${formValues.name}`}
+    >
       <AddCarForm noValidate validated={validated} onSubmit={handleSubmission}>
-        <Form.Group controlId="carType">
-          <Form.Label>Type</Form.Label>
-          <Form.Control
-            as="select"
-            value={typeVal}
-            onChange={(e) => setTypeVal(e.target.value)}
-            required
-          >
-            {Object.keys(carTypes).map((k) => (
-              <option key={k} value={k}>
-                {carTypes[k]}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="carYear">
-          <Form.Label>Year</Form.Label>
-          <Form.Control
-            as="select"
-            value={yearVal}
-            onChange={(e) => setYearVal(e.target.value)}
-            required
-          >
-            {yearRange.map((y) => (
-              <option key={y} value={y}>
-                {y}
-              </option>
-            ))}
-          </Form.Control>
-        </Form.Group>
-        <Form.Group controlId="carMake">
-          <Form.Label>Make</Form.Label>
-          <Form.Control
-            type="text"
-            value={makeVal}
-            onChange={(e) => setMakeVal(e.target.value)}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            Please enter the make of your car
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group controlId="carModel">
-          <Form.Label>Model</Form.Label>
-          <Form.Control
-            type="text"
-            value={modelVal}
-            onChange={(e) => setModelVal(e.target.value)}
-            required
-          />
-          <Form.Control.Feedback type="invalid">
-            Please enter the model of your car
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group controlId="carVIN">
-          <Form.Label>VIN #</Form.Label>
-          <Form.Control
-            type="text"
-            value={vinVal}
-            onChange={(e) => setVinVal(e.target.value)}
-          />
-        </Form.Group>
+        <TypeField value={typeVal} setValue={setTypeVal} />
+        <YearField value={yearVal} setValue={setYearVal} />
+        <MakeField value={makeVal} setValue={setMakeVal} />
+        <ModelField value={modelVal} setValue={setModelVal} />
+        <VinField value={vinVal} setValue={setVinVal} />
         <ButtonContainer>
           <FormButton type="submit">Save</FormButton>
           <FormButton forwardedAs={Link} to="/cars" variant="danger">

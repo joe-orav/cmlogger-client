@@ -39,7 +39,7 @@ const FormButton = styled(Button)`
   margin-left: 20px;
 `;
 
-function validateQuery(query, serviceHistory) {
+export function validateQuery(query, serviceHistory) {
   let queryID = /^\d+$/.test(query.id) ? parseInt(query.id, 10) : 0;
   let carID = /^\d+$/.test(query.carid) ? parseInt(query.carid, 10) : 0;
 

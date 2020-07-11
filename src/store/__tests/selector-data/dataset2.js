@@ -165,8 +165,8 @@ export let getOrphanedLocationsOutput = [{
   zip_code: "123456",
 }];
 
-export let getSavedServicesOutput = {};
+export let getSavedServicesOutput = [];
 
-export let getSavedLocationsOutput = {};
+export let getSavedLocationsOutput = [];
 
 export let getTotalCostOutput = "0.00";

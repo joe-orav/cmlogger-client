@@ -73,7 +73,7 @@ const RecordList = () => {
             key={record.id}
             services={record.services.map((s) => s.sname).join(", ")}
             car={record.car.fullname}
-            date={record.dateString}
+            date={record.date}
           />
         ))}
       </div>

@@ -6,7 +6,7 @@ import * as Dataset3 from "./selector-data/dataset3";
 describe.each([
   [1, Dataset1],
   [2, Dataset2],
-  [2, Dataset3],
+  [3, Dataset3],
 ])("Test Selectors using data set %i", (i, dataset) => {
   let state;
 

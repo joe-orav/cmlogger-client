@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import moment from "moment";
 
 export const getDemoModeState = (state) => state.demoMode;
 export const getUser = (state) => state.user.profile;
@@ -39,48 +40,31 @@ export const getMergedServiceRecords = createSelector(
   getLocations,
   getServiceHistory,
   (cars, services, locations, serviceHistory) => {
-    function formatDate(date) {
-      return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-    }
-
-    function parseDateString(rawDate) {
-      let dateStringRegex = /^[0-9]{4}-[0-9]{2}-[0-9]{2}/;
-      let pulledDateString = rawDate.match(dateStringRegex)[0];
-      const [year, month, day] = pulledDateString
-        .split("-")
-        .map((dateValue) => parseInt(dateValue));
-
-      let parsedDate = new Date(year, month - 1, day);
-
-      return { parsedDate: parsedDate, dateString: formatDate(parsedDate) };
-    }
-
     let mergedServiceRecords = serviceHistory.map((serviceRecord) => {
-      let newSHObj = Object.assign(
-        {},
-        serviceRecord,
-        {
-          car: cars.filter((c) => c.id === serviceRecord.car_id)[0],
-          services: services.filter(
-            (s) => serviceRecord.provided_services_ids.indexOf(s.id) !== -1
-          ),
-          location: serviceRecord.location_id
-            ? locations.filter((l) => l.id === serviceRecord.location_id)[0]
-            : null,
-        },
-        parseDateString(serviceRecord.service_date)
+      let car = cars.filter((c) => c.id === serviceRecord.car_id)[0];
+      let servicesList = services.filter(
+        (s) => serviceRecord.provided_services_ids.indexOf(s.id) !== -1
       );
+      let location = serviceRecord.location_id
+        ? locations.filter((l) => l.id === serviceRecord.location_id)[0]
+        : null;
 
-      delete newSHObj["car_id"];
-      delete newSHObj["location_id"];
-      delete newSHObj["provided_services_ids"];
+      let mergedData = {
+        id: serviceRecord.id,
+        cost: serviceRecord.cost,
+        notes: serviceRecord.notes,
+        car: car,
+        services: servicesList,
+        location: location,
+        date: moment(serviceRecord.service_date).format("MM/DD/YYYY"),
+      };
 
-      return newSHObj;
+      return mergedData;
     });
 
     mergedServiceRecords.sort((record1, record2) => {
-      let date1 = new Date(record1.service_date).getTime();
-      let date2 = new Date(record2.service_date).getTime();
+      let date1 = moment(record1.date, "MM/DD/YYYY").valueOf();
+      let date2 = moment(record2.date, "MM/DD/YYYY").valueOf();
 
       return date2 - date1;
     });
@@ -133,7 +117,7 @@ export const getSavedServices = createSelector(
         } else {
           savedServices[service.id] = {
             name: service.sname,
-            date: record.dateString,
+            date: record.date,
             count: 1,
           };
         }
@@ -159,7 +143,7 @@ export const getSavedLocations = createSelector(
         } else {
           savedLocations[id] = {
             name: name,
-            date: record.dateString,
+            date: record.date,
             count: 1,
           };
         }

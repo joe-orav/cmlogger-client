@@ -158,7 +158,6 @@ export let getAccountsOutput = [
 export let getMergedServiceRecordsOutput = [
   {
     id: 100,
-    service_date: "2020-10-17T04:00:00.000Z",
     cost: "100.00",
     notes: null,
     car: {
@@ -184,8 +183,7 @@ export let getMergedServiceRecordsOutput = [
       state: "TS",
       zip_code: "123456",
     },
-    parsedDate: new Date("2020", "09", "17"),
-    dateString: "10/17/2020",
+    date: "10/17/2020",
   },
 ];
 
@@ -193,13 +191,13 @@ export let getOrphanedServicesOutput = [];
 
 export let getOrphanedLocationsOutput = [];
 
-export let getSavedServicesOutput = {
-  100: { name: "Oil Change", date: "10/17/2020", count: 1 },
-  200: { name: "Tire replacement", date: "10/17/2020", count: 1 },
-};
+export let getSavedServicesOutput = [
+  { name: "Oil Change", date: "10/17/2020", count: 1 },
+  { name: "Tire replacement", date: "10/17/2020", count: 1 },
+];
 
-export let getSavedLocationsOutput = {
-  100: { name: "Test Place", date: "10/17/2020", count: 1 },
-};
+export let getSavedLocationsOutput = [
+  { name: "Test Place", date: "10/17/2020", count: 1 },
+];
 
 export let getTotalCostOutput = "100.00";

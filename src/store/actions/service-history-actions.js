@@ -1,5 +1,6 @@
 import * as ActionTypes from "../action-types";
 import createAlert from "./alert-actions";
+import moment from "moment";
 
 function fetchServiceHistoryDataStart() {
   return {
@@ -94,7 +95,7 @@ export function processRecordData(serviceHistoryData) {
     id: serviceHistoryData.id === -1 ? Date.now() : serviceHistoryData.id,
     user_id: serviceHistoryData.user_id,
     car_id: serviceHistoryData.car_id,
-    service_date: new Date(serviceHistoryData.date).toISOString(),
+    service_date: moment(serviceHistoryData.date).toISOString(),
     location_id:
       serviceHistoryData.location_id === 0
         ? newLocation.id

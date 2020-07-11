@@ -109,7 +109,7 @@ const RecordItem = ({ index, record }) => {
     <Row className="border-bottom">
       <ContainerCol>
         <SummaryRow className="pt-3" onClick={() => setIsOpen(!isOpen)}>
-          <SummaryItem label="Date" value={record.dateString} />
+          <SummaryItem label="Date" value={record.date} />
           <SummaryItem label="Car" value={record.car.fullname} />
           <SummaryItem
             label="Service(s) Provided"

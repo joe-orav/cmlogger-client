@@ -109,7 +109,7 @@ describe("Dispatching actions for modifying service history data", () => {
     ${ServiceHistoryActionsData.addData}         | ${ServiceHistoryActionsData.addPayload}         | ${"post"}   | ${ServiceHistoryActionsData.addActions}         | ${false}
     ${ServiceHistoryActionsData.addData}         | ${ServiceHistoryActionsData.addDemoPayload}     | ${"post"}   | ${ServiceHistoryActionsData.addDemoActions}     | ${true}
     ${ServiceHistoryActionsData.editData}        | ${ServiceHistoryActionsData.editPayload}        | ${"put"}    | ${ServiceHistoryActionsData.editActions}        | ${false}
-    ${ServiceHistoryActionsData.editData}        | ${ServiceHistoryActionsData.editPayload}        | ${"put"}    | ${ServiceHistoryActionsData.editActions}        | ${true}
+    ${ServiceHistoryActionsData.editData}        | ${ServiceHistoryActionsData.editDemoPayload}    | ${"put"}    | ${ServiceHistoryActionsData.editDemoActions}    | ${true}
     ${ServiceHistoryActionsData.deleteData}      | ${ServiceHistoryActionsData.deletePayload}      | ${"delete"} | ${ServiceHistoryActionsData.deleteActions}      | ${false}
     ${ServiceHistoryActionsData.deleteData}      | ${ServiceHistoryActionsData.deletePayload}      | ${"delete"} | ${ServiceHistoryActionsData.deleteActions}      | ${true}
     ${ServiceHistoryActionsData.modifyErrorData} | ${ServiceHistoryActionsData.modifyErrorPayload} | ${"post"}   | ${ServiceHistoryActionsData.modifyErrorActions} | ${false}

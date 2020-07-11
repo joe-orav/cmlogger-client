@@ -3,7 +3,7 @@ import * as ActionTypes from "../../../action-types";
 export const addData = {
   id: -1,
   user_id: 0,
-  date: "12-25-2020",
+  date: "2020-12-25",
   car_id: 1,
   location_id: -1,
   location_name: "",
@@ -79,7 +79,7 @@ export const addDemoActions = [
 export const editData = {
   id: 1,
   user_id: 0,
-  date: "12-20-2020",
+  date: "2020-12-20",
   car_id: 1,
   location_id: -1,
   location_name: "",
@@ -124,6 +124,8 @@ export const editActions = [
     },
   },
 ];
+
+export const editDemoActions = editActions;
 
 export const deleteData = { id: 1 };
 

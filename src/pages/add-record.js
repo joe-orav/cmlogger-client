@@ -22,6 +22,7 @@ import AddlServicesField from "../components/add-record-fields/addlServicesField
 import NotesField from "../components/add-record-fields/notesField";
 import { modifyServiceHistory } from "../store/actions/service-history-actions";
 import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 const AddRecordForm = styled(Form)`
   max-width: 90%;
@@ -46,7 +47,7 @@ export function validateQuery(query, serviceHistory) {
   if (queryID > 0) {
     let recordItem = serviceHistory.filter((record) => record.id === queryID);
     if (recordItem.length > 0) {
-      let { car, cost, parsedDate, location, notes, services } = recordItem[0];
+      let { car, cost, date, location, notes, services } = recordItem[0];
 
       let locationData =
         location === null
@@ -64,9 +65,7 @@ export function validateQuery(query, serviceHistory) {
         id: queryID,
         carID: car.id,
         cost: cost,
-        date: `${parsedDate.getFullYear()}-${
-          parsedDate.getMonth() + 1
-        }-${parsedDate.getDate()}`,
+        date: moment(date).format("YYYY-MM-DD"),
         notes: notes,
         services: services.map((service) => service.id),
       });
@@ -85,7 +84,6 @@ function AddRecord() {
 
   let urlQuery = queryString.parse(useLocation().search);
   let history = useHistory();
-  let currentDate = new Date();
   let formValues = {};
 
   if (dataLoaded) {
@@ -94,10 +92,7 @@ function AddRecord() {
 
   const [dataId] = useState(formValues.id || -1);
   const [dateValue, setDateValue] = useState(
-    formValues.date ||
-      `${currentDate.getFullYear()}-${
-        currentDate.getMonth() + 1
-      }-${currentDate.getDate()}`
+    formValues.date || moment().format("YYYY-MM-DD")
   );
   const [carServicedValue, setCarServicedValue] = useState(
     formValues.carID || 0

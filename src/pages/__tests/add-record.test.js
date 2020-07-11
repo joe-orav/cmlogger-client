@@ -81,7 +81,6 @@ const initialState = {
 const mergedServiceRecords = [
   {
     id: 100,
-    service_date: "2020-10-17T04:00:00.000Z",
     cost: "100.00",
     notes: null,
     car: {
@@ -107,8 +106,7 @@ const mergedServiceRecords = [
       state: "NJ",
       zip_code: "123456",
     },
-    parsedDate: new Date("2020", "09", "17"),
-    dateString: "10/17/2020",
+    date: "10/17/2020",
   },
 ];
 

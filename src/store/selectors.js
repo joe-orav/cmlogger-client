@@ -65,9 +65,7 @@ export const getMergedServiceRecords = createSelector(
             (s) => serviceRecord.provided_services_ids.indexOf(s.id) !== -1
           ),
           location: serviceRecord.location_id
-            ? locations.filter(
-                (l) => l.id === serviceRecord.location_id
-              )[0]
+            ? locations.filter((l) => l.id === serviceRecord.location_id)[0]
             : null,
         },
         parseDateString(serviceRecord.service_date)
@@ -142,7 +140,9 @@ export const getSavedServices = createSelector(
       });
     });
 
-    return savedServices;
+    return Object.values(savedServices).sort((val1, val2) => {
+      return val2.count - val1.count;
+    });
   }
 );
 
@@ -166,7 +166,9 @@ export const getSavedLocations = createSelector(
       }
     });
 
-    return savedLocations;
+    return Object.values(savedLocations).sort((val1, val2) => {
+      return val2.count - val1.count;
+    });
   }
 );
 

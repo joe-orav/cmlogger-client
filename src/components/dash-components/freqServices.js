@@ -41,10 +41,9 @@ const FrequentServicesList = () => {
   const savedServices = useSelector(getSavedServices);
   const serviceHistoryDataLoading = useSelector(getServiceHistoryDataLoading);
 
-  let savedServicesValues = Object.values(savedServices);
   return serviceHistoryDataLoading ? (
     <LoadingIcon />
-  ) : savedServicesValues.length === 0 ? (
+  ) : savedServices.length === 0 ? (
     <NoData />
   ) : (
     <FreqServTable bordered size="sm">
@@ -62,7 +61,7 @@ const FrequentServicesList = () => {
         </tr>
       </thead>
       <tbody>
-        {savedServicesValues.map((val, i) => (
+        {savedServices.slice(0, 5).map((val, i) => (
           <Item key={i} service={val} />
         ))}
       </tbody>

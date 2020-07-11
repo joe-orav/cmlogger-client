@@ -95,7 +95,12 @@ export function processRecordData(serviceHistoryData) {
     user_id: serviceHistoryData.user_id,
     car_id: serviceHistoryData.car_id,
     service_date: new Date(serviceHistoryData.date).toISOString(),
-    location_id: newLocation ? newLocation.id : null,
+    location_id:
+      serviceHistoryData.location_id === 0
+        ? newLocation.id
+        : serviceHistoryData.location_id === -1
+        ? null
+        : serviceHistoryData.location_id,
     cost: parseFloat(serviceHistoryData.cost).toFixed(2),
     notes: serviceHistoryData.notes,
     provided_services_ids: [
@@ -164,7 +169,9 @@ export function modifyServiceHistory(
         switch (requestMethod) {
           case "put":
             dispatch(editServiceRecordSuccess(data));
-            dispatch(createAlert("Service record has been successfully changed"));
+            dispatch(
+              createAlert("Service record has been successfully changed")
+            );
             break;
           case "post":
             dispatch(addServiceRecordSuccess(data));

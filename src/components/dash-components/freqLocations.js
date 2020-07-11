@@ -40,10 +40,9 @@ const FrequentLocationsList = () => {
   const savedLocations = useSelector(getSavedLocations);
   const serviceHistoryDataLoading = useSelector(getServiceHistoryDataLoading);
 
-  let savedLocationsValues = Object.values(savedLocations);
   return serviceHistoryDataLoading ? (
     <LoadingIcon />
-  ) : savedLocationsValues.length === 0 ? (
+  ) : savedLocations.length === 0 ? (
     <NoData />
   ) : (
     <FreqLocationsTable bordered size="sm">
@@ -58,7 +57,7 @@ const FrequentLocationsList = () => {
         </tr>
       </thead>
       <tbody>
-        {savedLocationsValues.map((val, i) => (
+        {savedLocations.slice(0, 5).map((val, i) => (
           <Item key={i} location={val} />
         ))}
       </tbody>

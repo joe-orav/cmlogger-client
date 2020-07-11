@@ -48,7 +48,7 @@ const CarList = () => {
   ) : (
     <CarListWrapper>
       <div>
-        {cars.map((car) => (
+        {cars.slice(0, 5).map((car) => (
           <Item
             key={car.id}
             imgSrc={CarIcon[car.type]}

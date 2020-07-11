@@ -68,7 +68,7 @@ const RecordList = () => {
   ) : (
     <div>
       <div>
-        {serviceHistory.map((record) => (
+        {serviceHistory.slice(0, 5).map((record) => (
           <Item
             key={record.id}
             services={record.services.map((s) => s.sname).join(", ")}

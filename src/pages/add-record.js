@@ -65,7 +65,7 @@ export function validateQuery(query, serviceHistory) {
         id: queryID,
         carID: car.id,
         cost: cost,
-        date: moment(date).format("YYYY-MM-DD"),
+        date: moment(date, "MM/DD/YYYY").format("YYYY-MM-DD"),
         notes: notes,
         services: services.map((service) => service.id),
       });

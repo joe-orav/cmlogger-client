@@ -164,8 +164,12 @@ export const getTotalCost = createSelector(
       0
     );
 
-    if (totalCost > 999999) {
+    if (totalCost >= 999999999) {
+      return `1B+`;
+    } else if (totalCost >= 999999) {
       return `${(totalCost / 1000000).toFixed(2)}m`;
+    } else if (totalCost >= 99999) {
+      return `${(totalCost / 1000).toFixed(0)}k`;
     }
 
     return totalCost.toFixed(2);

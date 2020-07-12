@@ -56,7 +56,7 @@ export const getMergedServiceRecords = createSelector(
         car: car,
         services: servicesList,
         location: location,
-        date: moment(serviceRecord.service_date).format("MM/DD/YYYY"),
+        date: moment(serviceRecord.service_date).utc().format("MM/DD/YYYY"),
       };
 
       return mergedData;

@@ -10,7 +10,7 @@ test("Field displays provided value", () => {
 
 test("Field is required", () => {
   render(<AddlServicesField required />);
-  expect(screen.getByLabelText("Additional Services")).toBeRequired();
+  expect(screen.getByLabelText("Services (New)")).toBeRequired();
 });
 
 test("Field set value function is called", () => {
@@ -18,7 +18,7 @@ test("Field set value function is called", () => {
 
   render(<AddlServicesField value="" setValue={mockSetValue} required />);
 
-  fireEvent.change(screen.getByLabelText("Additional Services"), {
+  fireEvent.change(screen.getByLabelText("Services (New)"), {
     target: { value: "Hello" },
   });
 

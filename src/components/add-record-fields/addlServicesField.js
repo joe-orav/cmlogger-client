@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 export default ({ value, setValue, required }) => {
   return (
     <Form.Group className="col-12" controlId="addlServices">
-      <Form.Label>Additional Services</Form.Label>
+      <Form.Label>Services (New)</Form.Label>
       <Form.Control
         type="text"
         value={value}
@@ -12,7 +12,7 @@ export default ({ value, setValue, required }) => {
         required={required}
       />
       <Form.Text muted>
-        Additional services must be separated by commas
+        Newly entered services must be separated by commas
       </Form.Text>
     </Form.Group>
   );

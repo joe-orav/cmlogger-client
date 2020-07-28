@@ -8,7 +8,7 @@ test("Value remains the same when invalid input is recieved 1", () => {
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
 
-  fireEvent.change(screen.getByLabelText("Total Cost of Service"), {
+  fireEvent.change(screen.getByLabelText("Total Cost of Service(s)"), {
     target: { value: "10R" },
   });
 
@@ -20,7 +20,7 @@ test("Value remains the same when invalid input is recieved 2", () => {
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
 
-  fireEvent.change(screen.getByLabelText("Total Cost of Service"), {
+  fireEvent.change(screen.getByLabelText("Total Cost of Service(s)"), {
     target: { value: "%me3" },
   });
 
@@ -32,7 +32,7 @@ test("Value remains the same when invalid input is recieved 3", () => {
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
 
-  fireEvent.change(screen.getByLabelText("Total Cost of Service"), {
+  fireEvent.change(screen.getByLabelText("Total Cost of Service(s)"), {
     target: { value: "34.56.2" },
   });
 
@@ -44,7 +44,7 @@ test("Value remains the same when valid input is recieved 1", () => {
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
 
-  fireEvent.change(screen.getByLabelText("Total Cost of Service"), {
+  fireEvent.change(screen.getByLabelText("Total Cost of Service(s)"), {
     target: { value: "35" },
   });
 
@@ -56,7 +56,7 @@ test("Value remains the same when valid input is recieved 2", () => {
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
 
-  fireEvent.change(screen.getByLabelText("Total Cost of Service"), {
+  fireEvent.change(screen.getByLabelText("Total Cost of Service(s)"), {
     target: { value: "24.0" },
   });
 

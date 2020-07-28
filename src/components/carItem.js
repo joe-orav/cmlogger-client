@@ -58,7 +58,7 @@ const CarItem = ({ car }) => {
         <DeleteOverlay
           show={showDeleteOverlay}
           setShow={setShowDeleteOverlay}
-          text={"Are you sure you want to delete this car?"}
+          text={"Are you sure you want to delete this car? All service records for this car will also be deleted"}
           action={() => modifyCarCataDispatch()}
         />
       </CarCard>

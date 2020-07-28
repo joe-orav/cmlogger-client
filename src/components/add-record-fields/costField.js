@@ -15,7 +15,7 @@ export default ({ value, setValue }) => {
 
   return (
     <Form.Group className="col-12" controlId="cost">
-      <Form.Label>Total Cost of Service</Form.Label>
+      <Form.Label>Total Cost of Service(s)</Form.Label>
       <InputGroup>
         <InputGroup.Prepend>
           <InputGroup.Text>$</InputGroup.Text>

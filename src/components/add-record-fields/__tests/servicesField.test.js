@@ -1,6 +1,6 @@
 import React from "react";
 import ServicesField from "../servicesField";
-import { render, screen, fireEvent } from "../../../utils/test-utils";
+import { render, screen } from "../../../utils/test-utils";
 import "@testing-library/jest-dom/extend-expect";
 import userEvent from "@testing-library/user-event";
 
@@ -87,7 +87,7 @@ test("Field has options from state", () => {
 test("Field displays provided value", () => {
   render(<ServicesField value={[100]} />, { initialState });
 
-  expect(screen.getByLabelText("Services")).toHaveValue(["100"]);
+  expect(screen.getByLabelText("Services (Saved)")).toHaveValue(["100"]);
 });
 
 test("Field is disabled", () => {
@@ -95,14 +95,14 @@ test("Field is disabled", () => {
     initialState,
   });
 
-  expect(screen.getByLabelText("Services")).toBeRequired();
+  expect(screen.getByLabelText("Services (Saved)")).toBeRequired();
 });
 
 test("Field recieves selected items", () => {
   const mockSetValue = jest.fn();
   render(<ServicesField setValue={mockSetValue} />, { initialState });
 
-  userEvent.selectOptions(screen.getByLabelText("Services"), ["100", "200"]);
+  userEvent.selectOptions(screen.getByLabelText("Services (Saved)"), ["100", "200"]);
 
   let options = screen.getAllByRole("option");
 

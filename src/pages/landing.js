@@ -6,6 +6,7 @@ import Header from "../components/landing-sections/header";
 import Feature from "../components/landing-sections/feature";
 import Demo from "../components/landing-sections/demo";
 import Footer from "../components/landing-sections/footer";
+import CookieConsent from "../components/landing-sections/cookie";
 
 function LandingPage() {
   const userId = useSelector(getUserId);
@@ -18,6 +19,7 @@ function LandingPage() {
       <Feature />
       <Demo />
       <Footer />
+      <CookieConsent />
     </>
   );
 }

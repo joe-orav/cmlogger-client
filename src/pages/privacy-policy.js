@@ -45,8 +45,8 @@ function PrivacyPolicy() {
             Your privacy is important to us. It is CMLogger's policy to respect
             your privacy regarding any information we may collect from you
             across our website,{" "}
-            <SDLink href="https://cmlogger.herokuapp.com/">
-              https://cmlogger.herokuapp.com/
+            <SDLink href="https://cmlogger.com/">
+              https://cmlogger.com/
             </SDLink>
             , and other sites we own and operate.
           </Para>

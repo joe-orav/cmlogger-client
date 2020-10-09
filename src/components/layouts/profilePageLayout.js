@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
-import logo from "../img/logo.png";
-import toggleIcon from "../img/collapsed-nav.png";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getUser } from "../store/selectors";
-import styled from "styled-components";
-import ProfileNav from "./profileNav";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Image from "react-bootstrap/Image";
-import Nav from "react-bootstrap/Nav";
+import React, { useEffect } from "react"
+import logo from "../../img/logo.png"
+import toggleIcon from "../../img/collapsed-nav.png"
+import { Link } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { getUser } from "../../store/selectors"
+import styled from "styled-components"
+import ProfileNav from "./profileNav"
+import Container from "react-bootstrap/Container"
+import Navbar from "react-bootstrap/Navbar"
+import Image from "react-bootstrap/Image"
+import Nav from "react-bootstrap/Nav"
 
 const LayoutWrapper = styled.div`
   display: flex;
   min-height: 100vh;
-`;
+`
 
 const SiteContent = styled.div`
   align-self: stretch;
@@ -24,7 +24,7 @@ const SiteContent = styled.div`
     padding-left: 175px;
     padding-top: 0;
   }
-`;
+`
 
 const SiteNavBar = styled(Navbar)`
   position: fixed;
@@ -36,15 +36,15 @@ const SiteNavBar = styled(Navbar)`
     width: 175px;
     height: 100%;
   }
-`;
+`
 
 const NavbarToggleButton = styled(Navbar.Toggle)`
   padding: 0.25rem 2px;
-`;
+`
 
 const ToggleIcon = styled.span`
   background-image: url(${(props) => props.icon});
-`;
+`
 
 const SiteBrand = styled(Link)`
   width: 140px;
@@ -54,7 +54,7 @@ const SiteBrand = styled(Link)`
     padding-top: 15px;
     margin-right: 0;
   }
-`;
+`
 
 const SiteNav = styled(Nav)`
   align-self: start;
@@ -62,7 +62,7 @@ const SiteNav = styled(Nav)`
   @media (min-width: 768px) {
     margin-top: 1.5rem;
   }
-`;
+`
 
 const SiteNavLink = styled(Link).attrs(() => ({
   className: "nav-item nav-link",
@@ -73,20 +73,20 @@ const SiteNavLink = styled(Link).attrs(() => ({
     padding-left: 0.3rem !important;
     padding-right: 0.3rem !important;
   }
-`;
+`
 
-const SiteLayout = ({ hideNavBar, children }) => {
-  const user = useSelector(getUser);
+export default ({ children }) => {
+  const user = useSelector(getUser)
 
   useEffect(() => {
-    let toggleBtn = document.querySelector("#nav-toggle-btn");
+    let toggleBtn = document.querySelector("#nav-toggle-btn")
 
     if (toggleBtn && !toggleBtn.classList.contains("collapsed")) {
-      toggleBtn.click();
+      toggleBtn.click()
     }
-  });
+  })
 
-  return !hideNavBar ? (
+  return (
     <LayoutWrapper>
       <SiteNavBar expand="md" variant="none" className="bg-primary">
         <NavbarToggleButton id="nav-toggle-btn" aria-controls="cm-navbar-nav">
@@ -115,11 +115,5 @@ const SiteLayout = ({ hideNavBar, children }) => {
         <Container fluid>{children}</Container>
       </SiteContent>
     </LayoutWrapper>
-  ) : (
-    <Container fluid className="h-100 bg-light">
-      {children}
-    </Container>
-  );
-};
-
-export default SiteLayout;
+  )
+}

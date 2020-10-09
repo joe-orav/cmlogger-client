@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link, useLocation } from "react-router-dom";
-import FormPage from "../components/formPage";
+import ProfileFormPageWrapper from "../components/layouts/profileFormPageWrapper";
 import queryString from "query-string";
 import {
   getDemoModeState,
@@ -106,7 +106,7 @@ function AddCar() {
   }
 
   return (
-    <FormPage
+    <ProfileFormPageWrapper
       title={dataID === -1 ? "Add Car" : `Edit Car: ${formValues.name}`}
     >
       <AddCarForm noValidate validated={validated} onSubmit={handleSubmission}>
@@ -122,7 +122,7 @@ function AddCar() {
           </FormButton>
         </ButtonContainer>
       </AddCarForm>
-    </FormPage>
+    </ProfileFormPageWrapper>
   );
 }
 

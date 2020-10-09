@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import setPageTitle from "../utils/pageTitle";
-import PageWrapper from "../components/pageWrapper";
+import ProfilePageWrapper from "../components/layouts/profilePageWrapper";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
@@ -60,7 +60,7 @@ function Dashboard() {
   });
 
   return (
-    <PageWrapper pageTitle="Dashboard">
+    <ProfilePageWrapper pageTitle="Dashboard">
       <Col>
         <Container className="mx-auto">
           <DashRow>
@@ -89,7 +89,7 @@ function Dashboard() {
           </DashRow>
         </Container>
       </Col>
-    </PageWrapper>
+    </ProfilePageWrapper>
   );
 }
 

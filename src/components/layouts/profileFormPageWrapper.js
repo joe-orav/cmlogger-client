@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { SDLink } from "./defaultLink";
+import { SDLink } from "../defaultLink";
 import { useHistory } from "react-router-dom";
 
 const PageContent = styled.div`

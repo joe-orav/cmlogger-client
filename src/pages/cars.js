@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CarItem from "../components/carItem";
 import AddCarItem from "../components/addCarItem";
-import PageWrapper from "../components/pageWrapper";
+import ProfilePageWrapper from "../components/layouts/profilePageWrapper";
 import LoadingIcon from "../components/loading";
 import { useSelector } from "react-redux";
 import { getCars, getCarsDataLoading } from "../store/selectors";
@@ -18,7 +18,7 @@ function Cars() {
   });
 
   return (
-    <PageWrapper pageTitle="My Cars">
+    <ProfilePageWrapper pageTitle="My Cars">
       {carsDataLoading ? (
         <LoadingIcon />
       ) : (
@@ -31,7 +31,7 @@ function Cars() {
           </Row>
         </Col>
       )}
-    </PageWrapper>
+    </ProfilePageWrapper>
   );
 }
 

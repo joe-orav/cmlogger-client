@@ -9,7 +9,7 @@ import LoadingIcon from "../components/loading";
 import setPageTitle from "../utils/pageTitle";
 import RecordItem from "../components/recordItem";
 import styled, { css } from "styled-components";
-import PageWrapper from "../components/pageWrapper";
+import ProfilePageWrapper from "../components/layouts/profilePageWrapper";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -88,7 +88,7 @@ function ServiceHistory() {
   });
 
   return (
-    <PageWrapper pageTitle="Service History">
+    <ProfilePageWrapper pageTitle="Service History">
       <Col className="mt-3 mt-md-2">
         <Row>
           <DescriptionCol xs="12" sm="6">
@@ -127,7 +127,7 @@ function ServiceHistory() {
             )}
         </Container>
       </Col>
-    </PageWrapper>
+    </ProfilePageWrapper>
   );
 }
 

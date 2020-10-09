@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FormPage from "../components/formPage";
+import ProfileFormPageWrapper from "../components/layouts/profileFormPageWrapper";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
@@ -145,7 +145,7 @@ function AddRecord() {
   }
 
   return (
-    <FormPage
+    <ProfileFormPageWrapper
       title={`${dataId === -1 ? "Add" : "Edit"} Service Record`}
       contentWidth="500"
     >
@@ -200,7 +200,7 @@ function AddRecord() {
           </FormButton>
         </ButtonContainer>
       </AddRecordForm>
-    </FormPage>
+    </ProfileFormPageWrapper>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react";
-import PageWrapper from "../components/pageWrapper";
+import ProfilePageWrapper from "../components/layouts/profilePageWrapper";
 import { SettingsSection, SectionItem } from "../components/settingsSection";
 import {
   getOrphanedServices,
@@ -46,7 +46,7 @@ function Settings() {
   let connectionAttempt = urlQuery.addaccount;
 
   return (
-    <PageWrapper pageTitle="Settings" spacing="4">
+    <ProfilePageWrapper pageTitle="Settings" spacing="4">
       <SettingsSection label="General">
         <SectionItem
           label="Remove Orphaned Services"
@@ -86,7 +86,7 @@ function Settings() {
           </SectionItem>
         </SettingsSection>
       )}
-    </PageWrapper>
+    </ProfilePageWrapper>
   );
 }
 

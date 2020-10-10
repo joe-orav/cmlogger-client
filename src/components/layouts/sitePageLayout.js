@@ -10,6 +10,8 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { SDRouteLink } from "../defaultLink"
 import Container from "react-bootstrap/Container"
+import { useSelector } from "react-redux"
+import { getUserId } from "../../store/selectors"
 
 const NavBarCol = styled(Col)`
   padding: 0;
@@ -23,46 +25,51 @@ const NavContentWrapper = styled.div`
   display: flex;
   width: 100%;
   margin: 0 auto;
+  align-items: center;
 
   @media (min-width: 768px) {
     width: 80%;
   }
 `
 
-export default ({ children }) => (
-  <Container fluid className="h-100 bg-light">
-    <Row>
-      <NavBarCol xs="12">
-        <Navbar
-          bg="primary"
-          variant="dark"
-          className="px-4 py-3 align-items-center"
-        >
-          <NavContentWrapper>
-            <Navbar.Brand>
-              <NavImgContainer>
-                <SDRouteLink to="/">
-                  <Image src={logo} fluid />
-                </SDRouteLink>
-              </NavImgContainer>
-            </Navbar.Brand>
-            <Button
-              as={Link}
-              className="ml-auto"
-              to="/login"
-              variant="outline-light"
-            >
-              Log in
-            </Button>
-          </NavContentWrapper>
-        </Navbar>
-      </NavBarCol>
-      <Col xs="12" className="py-4 bg-light">
-        {children}
-      </Col>
-      <Col>
-        <Footer />
-      </Col>
-    </Row>
-  </Container>
-)
+export default ({ children }) => {
+  const userId = useSelector(getUserId)
+
+  return (
+    <Container fluid className="h-100 bg-light">
+      <Row>
+        <NavBarCol xs="12">
+          <Navbar
+            bg="primary"
+            variant="dark"
+            className="px-4 py-3 align-items-center"
+          >
+            <NavContentWrapper>
+              <Navbar.Brand>
+                <NavImgContainer>
+                  <SDRouteLink to="/">
+                    <Image src={logo} fluid />
+                  </SDRouteLink>
+                </NavImgContainer>
+              </Navbar.Brand>
+              <Button
+                as={Link}
+                className="ml-auto"
+                to={userId === null ? "/login" : "/dashboard"}
+                variant="outline-light"
+              >
+                {userId === null ? "Log in" : "My Account"}
+              </Button>
+            </NavContentWrapper>
+          </Navbar>
+        </NavBarCol>
+        <Col xs="12" className="py-4 bg-light">
+          {children}
+        </Col>
+        <Col>
+          <Footer />
+        </Col>
+      </Row>
+    </Container>
+  )
+}

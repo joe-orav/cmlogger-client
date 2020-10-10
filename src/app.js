@@ -18,10 +18,12 @@ import PrivateRoute from "./components/privateRoute"
 import ProfilePageLayout from "./components/layouts/profilePageLayout"
 import ProfilePageNoLayout from "./components/layouts/profilePageNoLayout"
 import SitePageLayout from "./components/layouts/sitePageLayout"
+import ScrollToTop from "./components/scrollToTop"
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Switch>
         <Route
           path="/privacy-policy"

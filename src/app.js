@@ -12,6 +12,7 @@ import NotFoundPage from "./pages/404"
 import PrivacyPolicy from "./pages/privacy-policy"
 import Terms from "./pages/terms"
 import Contact from "./pages/contact"
+import About from "./pages/about"
 import AlertContainer from "./components/alerts"
 import PrivateRoute from "./components/privateRoute"
 import ProfilePageLayout from "./components/layouts/profilePageLayout"
@@ -75,6 +76,14 @@ function App() {
           render={
             <ProfilePageLayout>
               <Settings />
+            </ProfilePageLayout>
+          }
+        />
+        <PrivateRoute
+          path="/about"
+          render={
+            <ProfilePageLayout>
+              <About />
             </ProfilePageLayout>
           }
         />

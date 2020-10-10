@@ -170,10 +170,10 @@ function Login() {
         <InfoText>
           <InfoLink as={Link} target="_blank" to="/privacy-policy">
             Privacy Policy
-          </InfoLink>{" "}
-          | Made by{" "}
-          <InfoLink target="_blank" href="http://josephoravbiere.com/">
-            Joseph Oravbiere
+          </InfoLink>
+          {" "}|{" "}
+          <InfoLink as={Link} target="_blank" to="/terms">
+            Terms of Services
           </InfoLink>
         </InfoText>
       </PageCol>

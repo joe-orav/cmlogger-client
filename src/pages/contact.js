@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { SDLink } from "../components/defaultLink"
 import SitePageWrapper, { Para } from "../components/layouts/sitePageWrapper"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
@@ -48,14 +47,7 @@ function Contact() {
         using the app. Any feedback or feature suggestions you may have is also
         appreciated!
       </Para>
-      <Para>
-        CMLogger is developed and maintained by{" "}
-        <SDLink href="https://josephoravbiere.com/" target="__blank">
-          Joseph Oravbiere
-        </SDLink>
-        .
-      </Para>
-      <Form className="py-3" onSubmit={handleFormSubmission}>
+      <Form className="py-2" onSubmit={handleFormSubmission}>
         <Form.Group controlId="email">
           <Form.Control type="email" name="email" placeholder="Email address" />
         </Form.Group>
@@ -71,6 +63,7 @@ function Contact() {
           variant="primary"
           type="submit"
           className="d-block mx-auto my-0"
+          size="lg"
         >
           Submit
         </Button>

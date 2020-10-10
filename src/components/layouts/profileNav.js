@@ -54,8 +54,8 @@ const NavExpanded = ({ name, icon }) => {
         <ProfileLink as={Link} to="/settings" title="Settings">
           <i className="fas fa-cog"></i>
         </ProfileLink>
-        <ProfileLink as={Link} to="/privacy-policy" target="_blank" title="Privacy Policy">
-          <i className="fas fa-file-alt"></i>
+        <ProfileLink as={Link} to="/about" title="About CMLogger">
+          <i className="fas fa-info-circle"></i>
         </ProfileLink>
         <ProfileLink href="/logout" title="Sign out">
           <i className="fas fa-sign-out-alt"></i>
@@ -74,7 +74,7 @@ const NavCondensed = ({ name, icon }) => {
       <Dropdown.Menu alignRight>
         <Dropdown.Header as="h5">{name}</Dropdown.Header>
         <DropdownItem forwardedAs={Link} to="/settings">Settings</DropdownItem>
-        <DropdownItem forwardedAs={Link} target="_blank" to="/privacy-policy">Privacy Policy</DropdownItem>
+        <DropdownItem forwardedAs={Link} to="/about">About CMLogger</DropdownItem>
         <Dropdown.Divider />
         <DropdownItem href="/logout">Sign Out</DropdownItem>
       </Dropdown.Menu>

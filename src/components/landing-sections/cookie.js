@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import React from "react"
+import styled from "styled-components"
+import Button from "react-bootstrap/Button"
+import { Link } from "react-router-dom"
+import useLocalStorage from "../../hooks/useLocalStorage"
 
 const Wrapper = styled.div`
   position: fixed;
@@ -9,7 +10,7 @@ const Wrapper = styled.div`
   width: 100%;
   left: 0;
   right: 0;
-`;
+`
 
 const ContentContainer = styled.div`
   background: #212529;
@@ -24,7 +25,7 @@ const ContentContainer = styled.div`
     max-width: 750px;
     justify-content: center;
   }
-`;
+`
 
 const TextContainer = styled.div`
   margin-bottom: 25px;
@@ -33,7 +34,7 @@ const TextContainer = styled.div`
     max-width: 400px;
     margin-bottom: 0;
   }
-`;
+`
 
 const ConsentText = styled.p`
   font-size: 1.05rem;
@@ -41,17 +42,17 @@ const ConsentText = styled.p`
   @media (min-width: 768px) {
     margin-bottom: 0;
   }
-`;
+`
 
 const BtnContainer = styled.div`
   @media (min-width: 768px) {
     margin-left: 30px;
   }
-`;
+`
 
 const AcceptBtn = styled(Button)`
   margin-right: 20px;
-`;
+`
 
 const PrivacyLink = styled(Button)`
   color: #fff;
@@ -59,22 +60,19 @@ const PrivacyLink = styled(Button)`
   &:hover {
     color: #000;
   }
-`;
+`
 
 export default () => {
-  const [showMessage, setShowMessage] = useState(false);
-
-  useEffect(() => {
-    let cookieConsentAccepted = localStorage.getItem("cookieConsentAccepted");
-    if (!cookieConsentAccepted) setShowMessage(true);
-  }, [showMessage]);
+  const [cookieConsentAccepted, setCookieConsentAcceptance] = useLocalStorage(
+    "cookieConsentAccepted",
+    false
+  )
 
   function handleCookieAcception() {
-    localStorage.setItem("cookieConsentAccepted", true);
-    setShowMessage(false);
+    setCookieConsentAcceptance(true)
   }
 
-  return showMessage ? (
+  return !cookieConsentAccepted ? (
     <Wrapper>
       <ContentContainer>
         <TextContainer>
@@ -98,5 +96,5 @@ export default () => {
         </BtnContainer>
       </ContentContainer>
     </Wrapper>
-  ) : null;
-};
+  ) : null
+}

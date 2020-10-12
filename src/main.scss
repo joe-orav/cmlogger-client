@@ -4,31 +4,44 @@ $link-color: #fff;
 
 @import "~bootstrap/scss/bootstrap";
 
-html, body, #root {
-    height: 100%;
+html,
+body,
+#root {
+  height: 100%;
 }
 
-.was-validated .custom-select:valid, .was-validated .service-select:valid, 
-.custom-select.is-valid, .is-valid.service-select {
-    @extend .custom-select;
+.was-validated .custom-select:valid,
+.was-validated .service-select:valid,
+.custom-select.is-valid,
+.is-valid.service-select {
+  @extend .custom-select;
 }
 
-.was-validated .custom-select:valid:focus, 
-.was-validated .service-select:valid:focus, .custom-select.is-valid:focus, 
+.was-validated .custom-select:valid:focus,
+.was-validated .service-select:valid:focus,
+.custom-select.is-valid:focus,
 .is-valid.service-select:focus {
-    @extend .custom-select:focus;
+  @extend .custom-select:focus;
 }
 
-.was-validated .form-control:valid, 
-.was-validated .is-valid.form-control:valid, 
+.was-validated .form-control:valid,
+.was-validated .is-valid.form-control:valid,
 .is-valid.form-control {
-    background: #fff;
-    border-color: #ced4da;
+  background: #fff;
+  border-color: #ced4da;
 }
 
-.was-validated .form-control:valid:focus, 
-.was-validated .is-valid.form-control:focus:valid, 
+.was-validated .form-control:valid:focus,
+.was-validated .is-valid.form-control:focus:valid,
 .is-valid.form-control:focus {
-    border-color: #a8a8a8;
-    box-shadow: 0 0 0 0.2rem rgba(104, 104, 104, 0.25);
+  border-color: #a8a8a8;
+  box-shadow: 0 0 0 0.2rem rgba(104, 104, 104, 0.25);
+}
+
+.page-link {
+  color: $primary;
+
+  &:hover {
+    color: $primary;
+  }
 }

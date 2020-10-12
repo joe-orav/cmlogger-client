@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import ProfileFormPageWrapper from "../components/layouts/profileFormPageWrapper";
 import queryString from "query-string";
 import {
@@ -13,7 +13,6 @@ import {
 } from "../store/selectors";
 import { modifyCarData } from "../store/actions/car-actions";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import TypeField from "../components/add-car-fields/typeField";
 import YearField from "../components/add-car-fields/yearField";
 import MakeField from "../components/add-car-fields/makeField";

@@ -102,6 +102,7 @@ const emptyState = {
 };
 
 test("Service History Page displays data", () => {
+  window.scrollTo = jest.fn();
   render(<ServiceHistory />, { initialState });
 
   expect(screen.getByText("Test Place")).toBeInTheDocument();
@@ -115,6 +116,7 @@ test("Service History Page displays data", () => {
 });
 
 test("Service History displays no data message", () => {
+  window.scrollTo = jest.fn();
   render(<ServiceHistory />, { initialState: emptyState });
 
   expect(screen.getByText("No records found")).toBeInTheDocument();

@@ -5,7 +5,7 @@ import {
   screen,
   fireEvent,
   waitForElement,
-} from "../../utils/test-utils";
+} from "../../../utils/test-utils";
 import "@testing-library/jest-dom/extend-expect";
 
 test("User info is shown on exapnded nav", () => {

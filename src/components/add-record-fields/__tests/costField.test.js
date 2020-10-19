@@ -3,7 +3,7 @@ import CostField from "../costField";
 import { render, screen, fireEvent } from "../../../utils/test-utils";
 import "@testing-library/jest-dom/extend-expect";
 
-test("Value remains the same when invalid input is recieved 1", () => {
+test("Value remains the same when invalid input is received 1", () => {
   let mockSetValue = jest.fn();
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
@@ -15,7 +15,7 @@ test("Value remains the same when invalid input is recieved 1", () => {
   expect(mockSetValue).toHaveBeenCalledWith("100.00");
 });
 
-test("Value remains the same when invalid input is recieved 2", () => {
+test("Value remains the same when invalid input is received 2", () => {
   let mockSetValue = jest.fn();
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
@@ -27,7 +27,7 @@ test("Value remains the same when invalid input is recieved 2", () => {
   expect(mockSetValue).toHaveBeenCalledWith("100.00");
 });
 
-test("Value remains the same when invalid input is recieved 3", () => {
+test("Value remains the same when invalid input is received 3", () => {
   let mockSetValue = jest.fn();
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
@@ -39,7 +39,7 @@ test("Value remains the same when invalid input is recieved 3", () => {
   expect(mockSetValue).toHaveBeenCalledWith("100.00");
 });
 
-test("Value remains the same when valid input is recieved 1", () => {
+test("Value remains the same when valid input is received 1", () => {
   let mockSetValue = jest.fn();
 
   render(<CostField value="100.00" setValue={mockSetValue} />);
@@ -51,7 +51,7 @@ test("Value remains the same when valid input is recieved 1", () => {
   expect(mockSetValue).toHaveBeenCalledWith("35");
 });
 
-test("Value remains the same when valid input is recieved 2", () => {
+test("Value remains the same when valid input is received 2", () => {
   let mockSetValue = jest.fn();
 
   render(<CostField value="100.00" setValue={mockSetValue} />);

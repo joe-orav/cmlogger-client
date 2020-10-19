@@ -2,18 +2,10 @@ import React from "react";
 import AccountList from "../accountList";
 import { render, screen } from "../../../utils/test-utils";
 import "@testing-library/jest-dom/extend-expect";
+import { User3, User4 } from "../../../mockdata/users";
 
 test("Correct info is displayed when both accounts are connected", () => {
-  let initialState = {
-    user: {
-      profile: {
-        googleConnected: true,
-        facebookConnected: true,
-      },
-    },
-  };
-
-  render(<AccountList />, { initialState });
+  render(<AccountList />, { initialState: User4 });
 
   let connectedAccounts = screen.getAllByText("Connected");
 
@@ -24,16 +16,7 @@ test("Correct info is displayed when both accounts are connected", () => {
 });
 
 test("Correct info is displayed when one account is connected", () => {
-  let initialState = {
-    user: {
-      profile: {
-        googleConnected: false,
-        facebookConnected: true,
-      },
-    },
-  };
-
-  render(<AccountList />, { initialState });
+  render(<AccountList />, { initialState: User3 });
 
   let connectedAccounts = screen.getAllByText("Connected");
 

@@ -2,24 +2,7 @@ import React from "react";
 import LocationFieldsGroup from "../locationFieldsGroup";
 import { render, screen, fireEvent } from "../../../utils/test-utils";
 import "@testing-library/jest-dom/extend-expect";
-
-let initialState = {
-  locations: {
-    items: [
-      {
-        id: 100,
-        user_id: 5,
-        name: "Test Place",
-        address: "123 Abc St",
-        city: "TestCity",
-        state: "NJ",
-        zip_code: "123456",
-      },
-    ],
-    loading: false,
-    error: null,
-  },
-};
+import { User1 } from "../../../mockdata/users";
 
 describe("Location not included", () => {
   const values = {
@@ -27,7 +10,7 @@ describe("Location not included", () => {
   };
 
   beforeEach(() => {
-    render(<LocationFieldsGroup values={values} />, { initialState });
+    render(<LocationFieldsGroup values={values} />, { initialState: User1 });
   });
 
   test("Saved Locations is set to correctly", () => {
@@ -90,7 +73,7 @@ describe("New Location", () => {
 
   beforeEach(() => {
     render(<LocationFieldsGroup values={values} setValues={mockSetValues} />, {
-      initialState,
+      initialState: User1,
     });
   });
 
@@ -181,12 +164,12 @@ describe("Location already selected", () => {
 
   beforeEach(() => {
     render(<LocationFieldsGroup values={values} />, {
-      initialState,
+      initialState: User1,
     });
   });
 
   test("Saved Locations is set correctly", () => {
-    expect(screen.getByLabelText("Saved Locations")).toHaveValue("100");
+    expect(screen.getByLabelText("Saved Locations")).toHaveValue("-1");
   });
 
   test("Location name is provided and uneditable", () => {
@@ -240,7 +223,7 @@ test("Location field value changes on select", () => {
   };
 
   render(<LocationFieldsGroup values={values} setValues={mockSetValues} />, {
-    initialState,
+    initialState: User1,
   });
 
   fireEvent.change(screen.getByLabelText("Saved Locations"), {
@@ -250,9 +233,9 @@ test("Location field value changes on select", () => {
   expect(mockSetValues.setLocName).toHaveBeenCalledWith("Test Place");
   expect(mockSetValues.setLocAddress).toHaveBeenCalledWith("123 Abc St");
   expect(mockSetValues.setLocCity).toHaveBeenCalledWith("TestCity");
-  expect(mockSetValues.setLocState).toHaveBeenCalledWith("NJ");
+  expect(mockSetValues.setLocState).toHaveBeenCalledWith("AZ");
   expect(mockSetValues.setLocZIP).toHaveBeenCalledWith("123456");
-  expect(mockSetValues.setSavedLocValue).toHaveBeenCalledWith(100);
+  expect(mockSetValues.setSavedLocValue).toHaveBeenCalledWith(102);
 
   fireEvent.change(screen.getByLabelText("Saved Locations"), {
     target: { selectedIndex: 1 },

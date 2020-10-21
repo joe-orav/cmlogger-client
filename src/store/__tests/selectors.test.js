@@ -1,45 +1,38 @@
 import * as Selectors from "../selectors";
-import * as Dataset1 from "./selector-data/dataset1";
-import * as Dataset2 from "./selector-data/dataset2";
-import * as Dataset3 from "./selector-data/dataset3";
+import {User1, User4, User6} from "../../mockdata/users"
+import {User1SelectorData, User4SelectorData, User6SelectorData} from "../../mockdata/selectors"
 
 describe.each([
-  [1, Dataset1],
-  [2, Dataset2],
-  [3, Dataset3],
-])("Test Selectors using data set %i", (i, dataset) => {
-  let state;
-
-  beforeAll(() => {
-    state = Object.assign({}, dataset.state);
-  });
-
+  [1, User1, User1SelectorData],
+  [2, User4, User4SelectorData],
+  [3, User6, User6SelectorData],
+])("Test Selectors using data set %i", (i, user, dataset) => {
   test.each`
     selector                                  | output
-    ${Selectors.getDemoModeState}             | ${dataset.getDemoModeStateOutput}
-    ${Selectors.getUser}                      | ${dataset.getUserOutput}
-    ${Selectors.getUserId}                    | ${dataset.getUserIdOutput}
-    ${Selectors.getServiceHistory}            | ${dataset.getServiceHistoryOutput}
-    ${Selectors.getServices}                  | ${dataset.getServicesOutput}
-    ${Selectors.getLocations}                 | ${dataset.getLocationsOutput}
-    ${Selectors.getAlerts}                    | ${dataset.getAlertsOutput}
-    ${Selectors.getCarsError}                 | ${dataset.getCarsErrorOutput}
-    ${Selectors.getServiceHistoryError}       | ${dataset.getServiceHistoryErrorOutput}
-    ${Selectors.getServicesError}             | ${dataset.getServicesErrorOutput}
-    ${Selectors.getLocationsError}            | ${dataset.getLocationsErrorOutput}
-    ${Selectors.getCarsDataLoading}           | ${dataset.getCarsDataLoadingOutput}
-    ${Selectors.getServiceHistoryDataLoading} | ${dataset.getServiceHistoryDataLoadingOutput}
-    ${Selectors.getDataLoaded}                | ${dataset.getDataLoadedOutput}
-    ${Selectors.getCarCount}                  | ${dataset.getCarCountOutput}
-    ${Selectors.getCars}                      | ${dataset.getCarsOutput}
-    ${Selectors.getAccounts}                  | ${dataset.getAccountsOutput}
-    ${Selectors.getMergedServiceRecords}      | ${dataset.getMergedServiceRecordsOutput}
-    ${Selectors.getOrphanedServices}          | ${dataset.getOrphanedServicesOutput}
-    ${Selectors.getOrphanedLocations}         | ${dataset.getOrphanedLocationsOutput}
-    ${Selectors.getSavedServices}             | ${dataset.getSavedServicesOutput}
-    ${Selectors.getSavedLocations}            | ${dataset.getSavedLocationsOutput}
-    ${Selectors.getTotalCost}                 | ${dataset.getTotalCostOutput}
+    ${Selectors.getDemoModeState}             | ${dataset.getDemoModeState}
+    ${Selectors.getUser}                      | ${dataset.getUser}
+    ${Selectors.getUserId}                    | ${dataset.getUserId}
+    ${Selectors.getServiceHistory}            | ${dataset.getServiceHistory}
+    ${Selectors.getServices}                  | ${dataset.getServices}
+    ${Selectors.getLocations}                 | ${dataset.getLocations}
+    ${Selectors.getAlerts}                    | ${dataset.getAlerts}
+    ${Selectors.getCarsError}                 | ${dataset.getCarsError}
+    ${Selectors.getServiceHistoryError}       | ${dataset.getServiceHistoryError}
+    ${Selectors.getServicesError}             | ${dataset.getServicesError}
+    ${Selectors.getLocationsError}            | ${dataset.getLocationsError}
+    ${Selectors.getCarsDataLoading}           | ${dataset.getCarsDataLoading}
+    ${Selectors.getServiceHistoryDataLoading} | ${dataset.getServiceHistoryDataLoading}
+    ${Selectors.getDataLoaded}                | ${dataset.getDataLoaded}
+    ${Selectors.getCarCount}                  | ${dataset.getCarCount}
+    ${Selectors.getCars}                      | ${dataset.getCars}
+    ${Selectors.getAccounts}                  | ${dataset.getAccounts}
+    ${Selectors.getMergedServiceRecords}      | ${dataset.getMergedServiceRecords}
+    ${Selectors.getOrphanedServices}          | ${dataset.getOrphanedServices}
+    ${Selectors.getOrphanedLocations}         | ${dataset.getOrphanedLocations}
+    ${Selectors.getSavedServices}             | ${dataset.getSavedServices}
+    ${Selectors.getSavedLocations}            | ${dataset.getSavedLocations}
+    ${Selectors.getTotalCost}                 | ${dataset.getTotalCost}
   `("$selector returns $output", ({ selector, output }) => {
-    expect(selector(state)).toEqual(output);
+    expect(selector(user)).toEqual(output);
   });
 });

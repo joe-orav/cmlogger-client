@@ -1,76 +1,53 @@
-import { fetchServicesData, modifyServiceData } from "../service-actions";
-import * as ServiceActionsData from "./data/service-actions-data";
-import * as ActionTypes from "../../action-types";
-import configureStore from "redux-mock-store";
-import thunk from "redux-thunk";
-import fetchMock from "fetch-mock";
+import { fetchServicesData, modifyServiceData } from "../service-actions"
+import configureStore from "redux-mock-store"
+import thunk from "redux-thunk"
+import fetchMock from "fetch-mock"
+import { serviceActions } from "../../../mockdata/actions"
 
-const middlewares = [thunk];
-const mockStore = configureStore(middlewares);
-const store = mockStore({ loading: false, error: null, items: [] });
+const middlewares = [thunk]
+const mockStore = configureStore(middlewares)
+const store = mockStore({ loading: false, error: null, items: [] })
 
 describe("Dispatching actions for retrieving service data", () => {
   afterEach(() => {
-    fetchMock.restore();
-    store.clearActions();
-  });
+    fetchMock.restore()
+    store.clearActions()
+  })
 
   test("Dispatching action when fetching succeeds", () => {
     fetchMock.mock("/api/services", {
-      body: [
-        { id: 100, user_id: 0, sname: "Oil Change" },
-        { id: 200, user_id: 0, sname: "Tire replacement" },
-      ],
+      body: serviceActions.fetch.payload,
       status: 200,
-    });
-
-    let expectedActions = [
-      { type: ActionTypes.FETCH_SERVICE_DATA_START },
-      {
-        type: ActionTypes.FETCH_SERVICE_DATA_SUCCESS,
-        payload: [
-          { id: 100, user_id: 0, sname: "Oil Change" },
-          { id: 200, user_id: 0, sname: "Tire replacement" },
-        ],
-      },
-    ];
+    })
 
     return store.dispatch(fetchServicesData()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
+      expect(store.getActions()).toEqual(serviceActions.fetch.actions)
+    })
+  })
 
   test("Dispatching action when fetching fails", () => {
     fetchMock.mock("/api/services", {
-      body: { error: "Unable to get services" },
+      body: serviceActions.fetch_error.payload,
       status: 200,
-    });
-
-    let expectedActions = [
-      { type: ActionTypes.FETCH_SERVICE_DATA_START },
-      {
-        type: ActionTypes.FETCH_SERVICE_DATA_FAILURE,
-        payload: { error: "Unable to get services" },
-      },
-    ];
+    })
 
     return store.dispatch(fetchServicesData()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-});
+      expect(store.getActions()).toEqual(serviceActions.fetch_error.actions)
+    })
+  })
+})
 
 describe("Dispatching actions for modifying services data", () => {
   afterEach(() => {
-    fetchMock.restore();
-    store.clearActions();
-  });
+    fetchMock.restore()
+    store.clearActions()
+  })
 
   test.each`
-    data                                  | payload                                  | expectedActions                          | demoModeEnabled
-    ${ServiceActionsData.deleteData}      | ${ServiceActionsData.deletePayload}      | ${ServiceActionsData.deleteActions}      | ${false}
-    ${ServiceActionsData.deleteData}      | ${ServiceActionsData.deletePayload}      | ${ServiceActionsData.deleteActions}      | ${true}
-    ${ServiceActionsData.modifyErrorData} | ${ServiceActionsData.modifyErrorPayload} | ${ServiceActionsData.modifyErrorActions} | ${false}
+    data                          | payload                          | expectedActions                  | demoModeEnabled
+    ${serviceActions.delete.data} | ${serviceActions.delete.payload} | ${serviceActions.delete.actions} | ${false}
+    ${serviceActions.delete.data} | ${serviceActions.delete.payload} | ${serviceActions.delete.actions} | ${true}
+    ${serviceActions.error.data}  | ${serviceActions.error.payload}  | ${serviceActions.error.actions}  | ${false}
   `(
     "Send delete method and return $expectedActions",
     ({ data, payload, expectedActions, demoModeEnabled }) => {
@@ -86,14 +63,14 @@ describe("Dispatching actions for modifying services data", () => {
             body: { serviceIDs: data },
             headers: { "Content-Type": "application/json" },
           }
-        );
+        )
       }
 
       return store
         .dispatch(modifyServiceData(data, demoModeEnabled))
         .then(() => {
-          expect(store.getActions()).toEqual(expectedActions);
-        });
+          expect(store.getActions()).toEqual(expectedActions)
+        })
     }
-  );
-});
+  )
+})

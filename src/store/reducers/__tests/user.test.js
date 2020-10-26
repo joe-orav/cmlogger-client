@@ -1,162 +1,71 @@
-import * as ActionTypes from "../../action-types";
-import userReducer from "../user";
-import carsReducer from "../cars";
-import serviceHistoryReducer from "../service-history";
-import servicesReducer from "../services";
-import locationsReducer from "../locations";
-import * as Cars from "./data/cars";
-import * as Services from "./data/services";
-import * as Locations from "./data/locations";
-import * as User from "./data/user";
-import * as ServiceHistory from "./data/service-history";
-import demoDefaultPic from "../../../img/default_pic.png";
+import * as ActionTypes from "../../action-types"
+import userReducer from "../user"
+import { userReducerData } from "../../../mockdata/reducers"
 
-describe("User information", () => {
-  let state;
+test("Create demo user when demo mode is enabled", () => {
+  let state = userReducer(userReducerData.demo.initialState, {
+    type: ActionTypes.ENABLE_DEMO_MODE,
+  })
 
-  beforeAll(() => {
-    state = {
-      loading: false,
-      error: null,
-      profile: {
-        id: null,
-        name: "",
-        googleConnected: false,
-        facebookConnected: false,
-        google_pic: null,
-        facebook_pic: null,
-        default_pic: null,
-      },
-    };
-  });
+  expect(state).toEqual(userReducerData.demo.newState)
+})
 
-  test("Loading user data", () => {
-    state = userReducer(state, {
-      type: ActionTypes.FETCH_USER_DATA_START,
-    });
-    expect(state).toEqual({
-      loading: true,
-      error: null,
-      profile: {
-        id: null,
-        name: "",
-        googleConnected: false,
-        facebookConnected: false,
-        google_pic: null,
-        facebook_pic: null,
-        default_pic: null,
-      },
-    });
-  });
+test("Initiating user data fetch", () => {
+  let state = userReducer(userReducerData.fetch.initialState, {
+    type: ActionTypes.FETCH_USER_DATA_START,
+  })
 
-  test("Get error when data retrieval fails", () => {
-    state = userReducer(state, {
-      type: ActionTypes.FETCH_USER_DATA_FAILURE,
-      payload: User.fetchError,
-    });
-    expect(state).toEqual(User.fetchErrorOutput);
-  });
+  expect(state).toEqual(userReducerData.fetch.start.newState)
+})
 
-  test("Get user data", () => {
-    state = userReducer(state, {
-      type: ActionTypes.FETCH_USER_DATA_SUCCESS,
-      payload: User.fetchData,
-    });
-    expect(state).toEqual(User.fetchDataOutput);
-  });
-
-  test("Disconnecting Google Account", () => {
-    state = userReducer(state, {
-      type: ActionTypes.DISCONNECT_ACCOUNT,
-      payload: User.disconnectGoogleAccount,
-    });
-    expect(state).toEqual(User.disconnectGoogleAccountOutput);
-    state = User.fetchDataOutput;
-  });
-
-  test("Disconnecting Facebook Account", () => {
-    state = userReducer(state, {
-      type: ActionTypes.DISCONNECT_ACCOUNT,
-      payload: User.disconnectFBAccount,
-    });
-    expect(state).toEqual(User.disconnectFBAccountOutput);
-    state = User.fetchDataOutput;
-  });
-
+describe("Fetching user data", () => {
   test.each`
-    payload                        | action                                    | output
-    ${User.disconnectAccountError} | ${ActionTypes.DISCONNECT_ACCOUNT_FAILURE} | ${User.disconnectAccountErrorOutput}
-    ${User.deleteAccountError}     | ${ActionTypes.DELETE_ACCOUNT_FAILURE}     | ${User.deleteAccountErrorOutput}
+    payload                                         | action                                 | newState
+    ${userReducerData.fetch_result.success.payload} | ${ActionTypes.FETCH_USER_DATA_SUCCESS} | ${userReducerData.fetch_result.success.newState}
+    ${userReducerData.fetch_result.failure.payload} | ${ActionTypes.FETCH_USER_DATA_FAILURE} | ${userReducerData.fetch_result.failure.newState}
   `(
-    "Return $output after receiving the $action action with the following data: $payload",
-    ({ payload, action, output }) => {
-      state = userReducer(state, { type: action, payload: payload });
-      expect(state).toEqual(output);
+    "Using the user reducer, return the correct state after receiving the $action action",
+    ({ payload, action, newState }) => {
+      let state = userReducer(userReducerData.fetch_result.initialState, {
+        type: action,
+        payload: payload,
+      })
+      expect(state).toEqual(newState)
     }
-  );
+  )
+})
 
-  test("Deleting account", () => {
-    state = userReducer(
-      {},
-      {
-        type: ActionTypes.DELETE_ACCOUNT,
-      }
-    );
-    expect(state).toEqual({
-      loading: false,
-      error: null,
-      profile: {
-        id: null,
-        name: "",
-        googleConnected: false,
-        facebookConnected: false,
-        google_pic: null,
-        facebook_pic: null,
-        default_pic: null,
-      },
-    });
-  });
-
-  test("Setting demo user", () => {
-    state = userReducer(
-      {},
-      {
-        type: ActionTypes.ENABLE_DEMO_MODE,
-      }
-    );
-    expect(state).toEqual({
-      loading: false,
-      error: null,
-      profile: {
-        id: 0,
-        name: "Demo User",
-        googleConnected: null,
-        facebookConnected: null,
-        google_pic: "",
-        facebook_pic: "",
-        default_pic: demoDefaultPic,
-      },
-    });
-  });
-});
-
-describe("Resetting data on account deletion", () => {
+describe("Disconnecting accounts", () => {
   test.each`
-    fetchedData                       | reducer
-    ${Cars.fetchDataOutput}           | ${carsReducer}
-    ${Services.fetchDataOutput}       | ${servicesReducer}
-    ${Locations.fetchDataOutput}      | ${locationsReducer}
-    ${ServiceHistory.fetchDataOutput} | ${serviceHistoryReducer}
+    payload                                        | action                                    | newState
+    ${userReducerData.disconnect.google.payload}   | ${ActionTypes.DISCONNECT_ACCOUNT}         | ${userReducerData.disconnect.google.newState}
+    ${userReducerData.disconnect.facebook.payload} | ${ActionTypes.DISCONNECT_ACCOUNT}         | ${userReducerData.disconnect.facebook.newState}
+    ${userReducerData.disconnect.failure.payload}  | ${ActionTypes.DISCONNECT_ACCOUNT_FAILURE} | ${userReducerData.disconnect.failure.newState}
   `(
-    "Return $output after receiving the $action action with the following data: $payload",
-    ({ fetchedData, reducer }) => {
-      let state = fetchedData;
-      state = reducer(state, { type: ActionTypes.DELETE_ACCOUNT });
-      expect(state).toEqual({
-        items: [],
-        loading: false,
-        error: null,
-      });
+    "Using the user reducer, return the correct state after receiving the $action action",
+    ({ payload, action, newState }) => {
+      let state = userReducer(userReducerData.disconnect.initialState, {
+        type: action,
+        payload: payload,
+      })
+      expect(state).toEqual(newState)
     }
-  );
-});
+  )
+})
+
+describe("Deleting user", () => {
+  test.each`
+    payload                                   | action                                | newState
+    ${userReducerData.delete.success.payload} | ${ActionTypes.DELETE_ACCOUNT}         | ${userReducerData.delete.success.newState}
+    ${userReducerData.delete.failure.payload} | ${ActionTypes.DELETE_ACCOUNT_FAILURE} | ${userReducerData.delete.failure.newState}
+  `(
+    "Using the user reducer, return the correct state after receiving the $action action",
+    ({ payload, action, newState }) => {
+      let state = userReducer(userReducerData.delete.initialState, {
+        type: action,
+        payload: payload,
+      })
+      expect(state).toEqual(newState)
+    }
+  )
+})

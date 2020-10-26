@@ -1,48 +1,28 @@
-import * as ActionTypes from "../../action-types";
-import alertsReducer from "../alerts";
-import * as Alerts from "./data/alerts";
+import * as ActionTypes from "../../action-types"
+import alertsReducer from "../alerts"
+import { alertsReducerData } from "../../../mockdata/reducers"
 
 describe("Alerts", () => {
-    let state;
-  
-    beforeAll(() => {
-      state = [];
-    });
-  
-    test("Display first alert", () => {
+  let state
+
+  beforeAll(() => {
+    state = alertsReducerData.initialState
+  })
+
+  test.each`
+    payload                          | action                       | newState
+    ${alertsReducerData.payloads[0]} | ${ActionTypes.DISPLAY_ALERT} | ${alertsReducerData.newStates[0]}
+    ${alertsReducerData.payloads[1]} | ${ActionTypes.DISPLAY_ALERT} | ${alertsReducerData.newStates[1]}
+    ${alertsReducerData.payloads[2]} | ${ActionTypes.REMOVE_ALERT}  | ${alertsReducerData.newStates[2]}
+    ${alertsReducerData.payloads[3]} | ${ActionTypes.REMOVE_ALERT}  | ${alertsReducerData.newStates[3]}
+  `(
+    "Using the alerts reducer, return the correct state after receiving the $action action",
+    ({ payload, action, newState }) => {
       state = alertsReducer(state, {
-        type: ActionTypes.DISPLAY_ALERT,
-        payload: Alerts.newAlert1,
-      });
-  
-      expect(state).toEqual(Alerts.newAlertOutput1);
-    });
-  
-    test("Display second alert", () => {
-      state = alertsReducer(state, {
-        type: ActionTypes.DISPLAY_ALERT,
-        payload: Alerts.newAlert2,
-      });
-  
-      expect(state).toEqual(Alerts.newAlertOutput2);
-    });
-  
-    test("Remove first alert", () => {
-      state = alertsReducer(state, {
-        type: ActionTypes.REMOVE_ALERT,
-        payload: Alerts.removeAlert1,
-      });
-  
-      expect(state).toEqual(Alerts.removeAlertOutput1);
-    });
-  
-    test("Remove second alert", () => {
-      state = alertsReducer(state, {
-        type: ActionTypes.REMOVE_ALERT,
-        payload: Alerts.removeAlert2,
-      });
-  
-      expect(state).toEqual(Alerts.removeAlertOutput2);
-    });
-  });
-  
+        type: action,
+        payload: payload,
+      })
+      expect(state).toEqual(newState)
+    }
+  )
+})

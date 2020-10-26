@@ -6,7 +6,7 @@ import serviceHistoryReducer from "./service-history";
 import servicesReducer from "./services";
 import locationsReducer from "./locations";
 import alertsReducer from "./alerts";
-import fetchReducer from "./fetch-complete";
+import fetchReducer from "./fetch";
 
 export default combineReducers({
   demoMode: demoReducer,

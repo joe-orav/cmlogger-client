@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import SitePageWrapper, { Para } from "../components/layouts/sitePageWrapper"
 import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
+import Recaptcha from "../components/recaptcha"
 
 function Contact() {
   const [formStatus, setFormStatus] = useState("")
@@ -49,7 +50,12 @@ function Contact() {
       </Para>
       <Form className="py-2" onSubmit={handleFormSubmission}>
         <Form.Group controlId="email">
-          <Form.Control type="email" name="email" placeholder="Email address" />
+          <Form.Control
+            type="email"
+            name="email"
+            placeholder="Email address"
+            required
+          />
         </Form.Group>
         <Form.Group controlId="message-area">
           <Form.Control
@@ -57,8 +63,10 @@ function Contact() {
             rows="8"
             name="message"
             placeholder="Enter message"
+            required
           />
         </Form.Group>
+        <Recaptcha siteKey="6LdflN0ZAAAAACAdW9LkW7EkGrfc26hxu0V22qpW" />
         <Button
           variant="primary"
           type="submit"

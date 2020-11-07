@@ -83,6 +83,7 @@ export function processRecordData(serviceHistoryData) {
           city: serviceHistoryData.city,
           state: serviceHistoryData.state,
           zip_code: serviceHistoryData.zip_code,
+          other: serviceHistoryData.loc_other
         };
 
   let newServices = serviceHistoryData.new_services.map((service, i) => ({

@@ -1,16 +1,16 @@
-import React, { useState, useCallback } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import styled from "styled-components";
-import Collapse from "react-bootstrap/Collapse";
-import Button from "react-bootstrap/Button";
-import trashIcon from "../img/trash-icon.png";
-import editIcon from "../img/edit-pen-icon.png";
-import { Link } from "react-router-dom";
-import DeleteOverlay from "./deleteItem";
-import { useSelector, useDispatch } from "react-redux";
-import { modifyServiceHistory } from "../store/actions/service-history-actions";
-import { getDemoModeState } from "../store/selectors";
+import React, { useState, useCallback } from "react"
+import Row from "react-bootstrap/Row"
+import Col from "react-bootstrap/Col"
+import styled from "styled-components"
+import Collapse from "react-bootstrap/Collapse"
+import Button from "react-bootstrap/Button"
+import trashIcon from "../img/trash-icon.png"
+import editIcon from "../img/edit-pen-icon.png"
+import { Link } from "react-router-dom"
+import DeleteOverlay from "./deleteItem"
+import { useSelector, useDispatch } from "react-redux"
+import { modifyServiceHistory } from "../store/actions/service-history-actions"
+import { getDemoModeState } from "../store/selectors"
 
 const DetailItem = ({ label, text, width }) => {
   return (
@@ -20,12 +20,12 @@ const DetailItem = ({ label, text, width }) => {
         {text}
       </p>
     </Col>
-  );
-};
+  )
+}
 
 const ContainerCol = styled(Col)`
   position: relative;
-`;
+`
 
 const SummaryRow = styled(Row)`
   text-align: center;
@@ -36,17 +36,17 @@ const SummaryRow = styled(Row)`
   &:hover {
     background: #e9ecef;
   }
-`;
+`
 
 const DetailsRow = styled(Row)`
   align-items: center;
   background: #dee2e6;
-`;
+`
 
 const ItemControls = styled(Col)`
   display: flex;
   justify-content: center;
-`;
+`
 
 const ControlBtn = styled(Button)`
   height: 40px;
@@ -62,7 +62,7 @@ const ControlBtn = styled(Button)`
     box-shadow: none;
     background-color: transparent;
   }
-`;
+`
 
 const InlineLabel = styled.span`
   display: inline-block;
@@ -70,7 +70,7 @@ const InlineLabel = styled.span`
   @media (min-width: 576px) {
     display: none;
   }
-`;
+`
 
 const SummaryItem = ({ label, value }) => {
   return (
@@ -79,31 +79,31 @@ const SummaryItem = ({ label, value }) => {
         <InlineLabel>{`${label}:`}</InlineLabel> {value}
       </p>
     </Col>
-  );
-};
+  )
+}
 
 const RecordItem = ({ index, record }) => {
-  const demoModeEnabled = useSelector(getDemoModeState);
-  const dispatch = useDispatch();
-  const [isOpen, setIsOpen] = useState(false);
-  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false);
+  const demoModeEnabled = useSelector(getDemoModeState)
+  const dispatch = useDispatch()
+  const [isOpen, setIsOpen] = useState(false)
+  const [showDeleteOverlay, setShowDeleteOverlay] = useState(false)
 
   const modifyServiceHistoryDispatch = useCallback(() => {
-    dispatch(
-      modifyServiceHistory({ id: record.id }, "delete", demoModeEnabled)
-    );
-  }, [dispatch, record, demoModeEnabled]);
+    dispatch(modifyServiceHistory({ id: record.id }, "delete", demoModeEnabled))
+  }, [dispatch, record, demoModeEnabled])
 
   let locationValues = record.location
     ? {
         name: record.location.name,
         address: `${record.location.address}, ${record.location.city}, 
-    ${record.location.state}, ${record.location.zip_code}`,
+    ${record.location.state}, ${record.location.zip_code}${
+          record.location.other ? ", " + record.location.other : ""
+        }`,
       }
     : {
         name: "Not Provided",
         address: "Not Provided",
-      };
+      }
 
   return (
     <Row className="border-bottom">
@@ -121,19 +121,19 @@ const RecordItem = ({ index, record }) => {
             <Col>
               <DetailsRow className="py-3">
                 <DetailItem
+                  label="Total Cost of Service"
+                  text={"$" + record.cost}
+                  width="12"
+                />
+                <DetailItem
                   label="Location"
                   text={locationValues.name}
-                  width="4"
+                  width="12"
                 />
                 <DetailItem
                   label="Address"
                   text={locationValues.address}
-                  width="4"
-                />
-                <DetailItem
-                  label="Total Cost of Service"
-                  text={"$" + record.cost}
-                  width="4"
+                  width="12"
                 />
                 <DetailItem
                   label="Notes"
@@ -163,7 +163,7 @@ const RecordItem = ({ index, record }) => {
         />
       </ContainerCol>
     </Row>
-  );
-};
+  )
+}
 
-export default RecordItem;
+export default RecordItem

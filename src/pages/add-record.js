@@ -59,6 +59,7 @@ export function validateQuery(query, serviceHistory) {
               city: location.city,
               state: location.state,
               zip: location.zip_code,
+              other: location.other
             };
 
       return Object.assign(locationData, {
@@ -106,6 +107,7 @@ function AddRecord() {
   const [locCity, setLocCity] = useState(formValues.city || "");
   const [locState, setLocState] = useState(formValues.state || "");
   const [locZIP, setLocZIP] = useState(formValues.zip || "");
+  const [locOther, setLocOther] = useState(formValues.other || "");
   const [servicesValues, setServicesValues] = useState(
     formValues.services || []
   );
@@ -130,6 +132,7 @@ function AddRecord() {
         city: locCity,
         state: locState,
         zip_code: locZIP,
+        loc_other: locOther,
         new_services: addlServices.length > 0 ? addlServices.split(",") : [],
         services: servicesValues,
         cost: totalCost.length === 0 ? "0.00" : totalCost,
@@ -170,6 +173,7 @@ function AddRecord() {
               locCity,
               locState,
               locZIP,
+              locOther
             }}
             setValues={{
               setSavedLocValue,
@@ -178,6 +182,7 @@ function AddRecord() {
               setLocCity,
               setLocState,
               setLocZIP,
+              setLocOther
             }}
           />
           <ServicesField

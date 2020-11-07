@@ -203,6 +203,7 @@ export const locationActions = {
       city: "TestCity",
       state: "TS",
       zip_code: "123456",
+      other: null
     },
     actions: [
       { type: ActionTypes.FETCH_LOCATION_DATA_START },
@@ -216,6 +217,7 @@ export const locationActions = {
           city: "TestCity",
           state: "TS",
           zip_code: "123456",
+          other: null
         },
       },
     ],
@@ -382,6 +384,7 @@ export const serviceHistoryActions = {
       city: "",
       state: "",
       zip_code: "",
+      loc_other: "",
       new_services: ["Oil change", "Tire replacement"],
       services: [1, 2, 3],
       cost: "12.34",
@@ -488,6 +491,7 @@ export const serviceHistoryActions = {
       city: "",
       state: "",
       zip_code: "",
+      loc_other: "",
       new_services: [],
       services: [1, 2, 3, 4, 5],
       cost: "12.34",
@@ -606,6 +610,7 @@ export const serviceHistoryActions = {
       city: "",
       state: "",
       zip_code: "",
+      loc_other: "",
       new_services: ["Oil change", "Tire replacement"],
       services: [1, 2, 3],
       cost: "12.34",

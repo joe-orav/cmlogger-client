@@ -269,6 +269,7 @@ export const locationsReducerData = {
           city: "TestCity",
           state: "TS",
           zip_code: "123456",
+          other: null
         },
         {
           id: 2,
@@ -278,6 +279,7 @@ export const locationsReducerData = {
           city: "CityPlace",
           state: "TS",
           zip_code: "46783",
+          other: "435 F57"
         },
       ],
       newState: {
@@ -290,6 +292,7 @@ export const locationsReducerData = {
             city: "TestCity",
             state: "TS",
             zip_code: "123456",
+            other: null,
           },
           {
             id: 2,
@@ -299,6 +302,7 @@ export const locationsReducerData = {
             city: "CityPlace",
             state: "TS",
             zip_code: "46783",
+            other: "435 F57",
           },
         ],
         loading: false,
@@ -325,6 +329,7 @@ export const locationsReducerData = {
           city: "TestCity",
           state: "TS",
           zip_code: "123456",
+          other: null,
         },
         {
           id: 2,
@@ -334,6 +339,7 @@ export const locationsReducerData = {
           city: "CityPlace",
           state: "TS",
           zip_code: "46783",
+          other: "435 F57"
         },
       ],
       loading: false,
@@ -349,6 +355,7 @@ export const locationsReducerData = {
           city: "NewCity",
           state: "TS",
           zip_code: "57356",
+          other: null,
         },
       },
       newState: {
@@ -361,6 +368,7 @@ export const locationsReducerData = {
             city: "TestCity",
             state: "TS",
             zip_code: "123456",
+            other: null,
           },
           {
             id: 2,
@@ -370,6 +378,7 @@ export const locationsReducerData = {
             city: "CityPlace",
             state: "TS",
             zip_code: "46783",
+            other: "435 F57",
           },
           {
             id: 3,
@@ -379,6 +388,7 @@ export const locationsReducerData = {
             city: "NewCity",
             state: "TS",
             zip_code: "57356",
+            other: null,
           },
         ],
         loading: false,
@@ -399,6 +409,7 @@ export const locationsReducerData = {
             city: "TestCity",
             state: "TS",
             zip_code: "123456",
+            other: null,
           },
           {
             id: 2,
@@ -408,6 +419,7 @@ export const locationsReducerData = {
             city: "CityPlace",
             state: "TS",
             zip_code: "46783",
+            other: "435 F57",
           },
           {
             id: 3,
@@ -417,6 +429,7 @@ export const locationsReducerData = {
             city: "NewCity",
             state: "TS",
             zip_code: "57356",
+            other: null
           },
         ],
         loading: false,
@@ -435,6 +448,7 @@ export const locationsReducerData = {
             city: "TestCity",
             state: "TS",
             zip_code: "123456",
+            other: null,
           },
           {
             id: 3,
@@ -444,6 +458,7 @@ export const locationsReducerData = {
             city: "NewCity",
             state: "TS",
             zip_code: "57356",
+            other: null
           },
         ],
         loading: false,
@@ -462,6 +477,7 @@ export const locationsReducerData = {
             city: "TestCity",
             state: "TS",
             zip_code: "123456",
+            other: null,
           },
           {
             id: 3,
@@ -471,6 +487,7 @@ export const locationsReducerData = {
             city: "NewCity",
             state: "TS",
             zip_code: "57356",
+            other: null,
           },
         ],
         loading: false,

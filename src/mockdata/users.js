@@ -72,6 +72,7 @@ export const User1 = {
         city: "TestCity",
         state: "AZ",
         zip_code: "123456",
+        other: null,
       },
     ],
     loading: false,
@@ -152,6 +153,7 @@ export const User2 = {
         city: "TestCity",
         state: "AZ",
         zip_code: "123456",
+        other: "947 2G6"
       },
     ],
     loading: false,
@@ -304,6 +306,7 @@ export const User4 = {
         city: "TestCity",
         state: "TS",
         zip_code: "123456",
+        other: "F3J 937",
       },
       {
         id: 312,
@@ -313,6 +316,7 @@ export const User4 = {
         city: "Townsville",
         state: "AZ",
         zip_code: "78901",
+        other: null,
       },
     ],
     loading: false,

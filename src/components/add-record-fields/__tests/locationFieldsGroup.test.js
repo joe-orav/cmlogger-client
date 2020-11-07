@@ -34,7 +34,7 @@ describe("Location not included", () => {
   });
 
   test("City is empty, disabled and not required", () => {
-    let cityField = screen.getByLabelText("City");
+    let cityField = screen.getByLabelText("City/Town");
 
     expect(cityField).toHaveValue("");
     expect(cityField).toBeDisabled();
@@ -42,7 +42,7 @@ describe("Location not included", () => {
   });
 
   test("State is empty, disabled and not required", () => {
-    let stateField = screen.getByLabelText("State");
+    let stateField = screen.getByLabelText("State/Province");
 
     expect(stateField).toHaveValue("");
     expect(stateField).toBeDisabled();
@@ -50,11 +50,19 @@ describe("Location not included", () => {
   });
 
   test("ZIP Code is empty, disabled and not required", () => {
-    let zipCodeField = screen.getByLabelText("ZIP Code");
+    let zipCodeField = screen.getByLabelText("Postal Code");
 
     expect(zipCodeField).toHaveValue("");
     expect(zipCodeField).toBeDisabled();
     expect(zipCodeField).not.toBeRequired();
+  });
+
+  test("Other is empty, disabled and not required", () => {
+    let otherField = screen.getByLabelText("Other Address Information");
+
+    expect(otherField).toHaveValue("");
+    expect(otherField).toBeDisabled();
+    expect(otherField).not.toBeRequired();
   });
 });
 
@@ -69,6 +77,7 @@ describe("New Location", () => {
     setLocCity: jest.fn(),
     setLocState: jest.fn(),
     setLocZIP: jest.fn(),
+    setLocOther: jest.fn(),
   };
 
   beforeEach(() => {
@@ -110,7 +119,7 @@ describe("New Location", () => {
   });
 
   test("City is required and editable", () => {
-    let cityField = screen.getByLabelText("City");
+    let cityField = screen.getByLabelText("City/Town");
 
     expect(cityField).toHaveValue("");
     expect(cityField).not.toBeDisabled();
@@ -124,7 +133,7 @@ describe("New Location", () => {
   });
 
   test("State is required and editable", () => {
-    let stateField = screen.getByLabelText("State");
+    let stateField = screen.getByLabelText("State/Province");
 
     expect(stateField).toHaveValue("");
     expect(stateField).not.toBeDisabled();
@@ -138,7 +147,7 @@ describe("New Location", () => {
   });
 
   test("ZIP Code is required and editable", () => {
-    let zipCodeField = screen.getByLabelText("ZIP Code");
+    let zipCodeField = screen.getByLabelText("Postal Code");
 
     expect(zipCodeField).toHaveValue("");
     expect(zipCodeField).not.toBeDisabled();
@@ -150,6 +159,19 @@ describe("New Location", () => {
 
     expect(mockSetValues.setLocZIP).toHaveBeenCalledWith("12345");
   });
+
+  test("Other is editable", () => {
+    let otherField = screen.getByLabelText("Other Address Information");
+
+    expect(otherField).toHaveValue("");
+    expect(otherField).not.toBeDisabled();
+
+    fireEvent.change(otherField, {
+      target: { value: "123 ABC" },
+    });
+
+    expect(mockSetValues.setLocOther).toHaveBeenCalledWith("123 ABC");
+  });
 });
 
 describe("Location already selected", () => {
@@ -160,6 +182,7 @@ describe("Location already selected", () => {
     locCity: "TestCity",
     locState: "NJ",
     locZIP: "123456",
+    locOther: "123 ABC"
   };
 
   beforeEach(() => {
@@ -187,24 +210,31 @@ describe("Location already selected", () => {
   });
 
   test("City is provided and uneditable", () => {
-    let cityField = screen.getByLabelText("City");
+    let cityField = screen.getByLabelText("City/Town");
 
     expect(cityField).toHaveValue("TestCity");
     expect(cityField).toBeDisabled();
   });
 
   test("State is provided and uneditable", () => {
-    let stateField = screen.getByLabelText("State");
+    let stateField = screen.getByLabelText("State/Province");
 
     expect(stateField).toHaveValue("NJ");
     expect(stateField).toBeDisabled();
   });
 
   test("ZIP Code is provided and uneditable", () => {
-    let zipCodeField = screen.getByLabelText("ZIP Code");
+    let zipCodeField = screen.getByLabelText("Postal Code");
 
     expect(zipCodeField).toHaveValue("123456");
     expect(zipCodeField).toBeDisabled();
+  });
+
+  test("Other is provided and uneditable", () => {
+    let otherField = screen.getByLabelText("Other Address Information");
+
+    expect(otherField).toHaveValue("123 ABC");
+    expect(otherField).toBeDisabled();
   });
 });
 
@@ -220,6 +250,7 @@ test("Location field value changes on select", () => {
     setLocState: jest.fn(),
     setLocZIP: jest.fn(),
     setSavedLocValue: jest.fn(),
+    setLocOther: jest.fn(),
   };
 
   render(<LocationFieldsGroup values={values} setValues={mockSetValues} />, {
@@ -235,6 +266,7 @@ test("Location field value changes on select", () => {
   expect(mockSetValues.setLocCity).toHaveBeenCalledWith("TestCity");
   expect(mockSetValues.setLocState).toHaveBeenCalledWith("AZ");
   expect(mockSetValues.setLocZIP).toHaveBeenCalledWith("123456");
+  expect(mockSetValues.setLocOther).toHaveBeenCalledWith("");
   expect(mockSetValues.setSavedLocValue).toHaveBeenCalledWith(102);
 
   fireEvent.change(screen.getByLabelText("Saved Locations"), {
@@ -246,5 +278,6 @@ test("Location field value changes on select", () => {
   expect(mockSetValues.setLocCity).toHaveBeenCalledWith("");
   expect(mockSetValues.setLocState).toHaveBeenCalledWith("");
   expect(mockSetValues.setLocZIP).toHaveBeenCalledWith("");
+  expect(mockSetValues.setLocOther).toHaveBeenCalledWith("");
   expect(mockSetValues.setSavedLocValue).toHaveBeenLastCalledWith(0);
 });

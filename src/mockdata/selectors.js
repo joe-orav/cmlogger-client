@@ -34,6 +34,7 @@ export const User1SelectorData = {
       city: "TestCity",
       state: "AZ",
       zip_code: "123456",
+      other: null,
     },
   ],
   getAlerts: [{ message: "This is a test success message", type: "success" }],
@@ -89,6 +90,7 @@ export const User1SelectorData = {
         city: "TestCity",
         state: "AZ",
         zip_code: "123456",
+        other: null,
       },
     },
   ],
@@ -148,6 +150,7 @@ export const User4SelectorData = {
       city: "TestCity",
       state: "TS",
       zip_code: "123456",
+      other: "F3J 937",
     },
     {
       id: 312,
@@ -157,6 +160,7 @@ export const User4SelectorData = {
       city: "Townsville",
       state: "AZ",
       zip_code: "78901",
+      other: null,
     },
   ],
   getAlerts: [
@@ -239,6 +243,7 @@ export const User4SelectorData = {
         city: "TestCity",
         state: "TS",
         zip_code: "123456",
+        other: "F3J 937",
       },
       services: [
         { id: 350, user_id: 3, sname: "Oil Change" },
@@ -257,6 +262,7 @@ export const User4SelectorData = {
       city: "Townsville",
       state: "AZ",
       zip_code: "78901",
+      other: null,
     },
   ],
   getSavedServices: [
